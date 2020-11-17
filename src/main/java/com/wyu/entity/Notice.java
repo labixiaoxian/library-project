@@ -4,92 +4,103 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
- * 
+ *
  * @author 李达成
  * @since 2020/11/17
- * @implNote Serializable
+ *
  */
+@ApiModel
 public class Notice implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	// 公告ID
-	private Integer id;
-	// 公告名
-	private String noticeName;
-	// 公告内容
-	private String content;
-	// 发布时间
-	private Timestamp releaseTime;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    // 公告ID
+    @ApiModelProperty(value = "公告ID", example = "1")
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    // 公告名
+    @ApiModelProperty(value = "公告标题", example = "标题1")
+    private String noticeName;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    // 公告内容
+    @ApiModelProperty(value = "公告内容", example = "内容1")
+    private String content;
 
-	public String getNoticeName() {
-		return noticeName;
-	}
+    // 发布时间
+    @ApiModelProperty(value = "发布时间", example = "2020/11/18")
+    private Timestamp releaseTime;
 
-	public void setNoticeName(String noticeName) {
-		this.noticeName = noticeName;
-	}
+    public Notice() {
+        // super();
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public Notice(Integer id, String noticeName, String content, Timestamp releaseTime) {
+        // super();
+        this.id = id;
+        this.noticeName = noticeName;
+        this.content = content;
+        this.releaseTime = releaseTime;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!(obj instanceof Notice)) {
+            return false;
+        }
+        Notice other = (Notice) obj;
+        return Objects.equals(content, other.content) && Objects.equals(id, other.id)
+                && Objects.equals(noticeName, other.noticeName) && Objects.equals(releaseTime, other.releaseTime);
+    }
 
-	public Timestamp getReleaseTime() {
-		return releaseTime;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public void setReleaseTime(Timestamp releaseTime) {
-		this.releaseTime = releaseTime;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(content, id, noticeName, releaseTime);
-	}
+    public String getNoticeName() {
+        return noticeName;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof Notice)) {
-			return false;
-		}
-		Notice other = (Notice) obj;
-		return Objects.equals(content, other.content) && Objects.equals(id, other.id)
-				&& Objects.equals(noticeName, other.noticeName) && Objects.equals(releaseTime, other.releaseTime);
-	}
+    public Timestamp getReleaseTime() {
+        return releaseTime;
+    }
 
-	@Override
-	public String toString() {
-		return "Notice [id=" + id + ", noticeName=" + noticeName + ", content=" + content + ", releaseTime="
-				+ releaseTime + "]";
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(content, id, noticeName, releaseTime);
+    }
 
-	public Notice(Integer id, String noticeName, String content, Timestamp releaseTime) {
-		// super();
-		this.id = id;
-		this.noticeName = noticeName;
-		this.content = content;
-		this.releaseTime = releaseTime;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public Notice() {
-		// super();
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setNoticeName(String noticeName) {
+        this.noticeName = noticeName;
+    }
+
+    public void setReleaseTime(Timestamp releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Notice [id=" + id + ", noticeName=" + noticeName + ", content=" + content + ", releaseTime="
+                + releaseTime + "]";
+    }
 
 }
