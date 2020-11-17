@@ -47,3 +47,6 @@
 2020-11-17 12:14:12.164 [main] INFO  com.wyu.LibraryProjectApplicationTests - Starting LibraryProjectApplicationTests on PC7 with PID 5216 (started by Administrator in C:\Users\Administrator\Desktop\git repo\library-project)
 2020-11-17 12:14:12.166 [main] INFO  com.wyu.LibraryProjectApplicationTests - No active profile set, falling back to default profiles: default
 2020-11-17 12:14:18.207 [main] INFO  com.wyu.LibraryProjectApplicationTests - Started LibraryProjectApplicationTests in 6.625 seconds (JVM running for 8.572)
+2020-11-17 14:27:36.696 [main] INFO  com.wyu.LibraryProjectApplicationTests - Starting LibraryProjectApplicationTests on PC7 with PID 10548 (started by Administrator in C:\Users\Administrator\Desktop\git repo\library-project)
+2020-11-17 14:27:36.697 [main] INFO  com.wyu.LibraryProjectApplicationTests - No active profile set, falling back to default profiles: default
+2020-11-17 14:27:41.816 [main] INFO  com.wyu.LibraryProjectApplicationTests - Started LibraryProjectApplicationTests in 5.715 seconds (JVM running for 8.61)

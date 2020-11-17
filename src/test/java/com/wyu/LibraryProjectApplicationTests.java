@@ -33,6 +33,6 @@ class LibraryProjectApplicationTests {
 		Notice notice = new Notice(null, "这是个标题", "这是内容", null);
 		noticeDao.insert(notice);
 		System.out.println(noticeDao.getById(1));
-
+		noticeDao.deleteById(1);
 	}
 }

@@ -119,3 +119,22 @@
 2020-11-17 12:14:19.299 [main] DEBUG com.wyu.dao.NoticeDao.getById - ==>  Preparing: select * from lib_notice where id = ? 
 2020-11-17 12:14:19.299 [main] DEBUG com.wyu.dao.NoticeDao.getById - ==> Parameters: 1(Integer)
 2020-11-17 12:14:19.305 [main] DEBUG com.wyu.dao.NoticeDao.getById - <==      Total: 1
+2020-11-17 14:27:36.697 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 14:27:43.056 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 14:27:43.080 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 14:27:43.097 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 14:27:43.099 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 14:27:43.099 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 14:27:43.112 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 14:27:43.113 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 14:27:43.113 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 14:27:43.116 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 14:27:43.142 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,?,?,null) 
+2020-11-17 14:27:43.149 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 这是个标题(String), 这是内容(String)
+2020-11-17 14:27:43.229 [main] DEBUG com.wyu.dao.NoticeDao.insert - <==    Updates: 1
+2020-11-17 14:27:43.230 [main] DEBUG com.wyu.dao.NoticeDao.deleteById - ==>  Preparing: delete from lib_notice where id = ? 
+2020-11-17 14:27:43.230 [main] DEBUG com.wyu.dao.NoticeDao.deleteById - ==> Parameters: 1(Integer)
+2020-11-17 14:27:43.242 [main] DEBUG com.wyu.dao.NoticeDao.deleteById - <==    Updates: 1
+2020-11-17 14:27:43.243 [main] DEBUG com.wyu.dao.NoticeDao.getById - ==>  Preparing: select * from lib_notice where id = ? 
+2020-11-17 14:27:43.243 [main] DEBUG com.wyu.dao.NoticeDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 14:27:43.244 [main] DEBUG com.wyu.dao.NoticeDao.getById - <==      Total: 0
