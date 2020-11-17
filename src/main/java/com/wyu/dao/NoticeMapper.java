@@ -17,6 +17,10 @@ import com.wyu.entity.Notice;
  * 
  */
 public interface NoticeMapper {
+
+	@Select("select * from lib_notice where notice_name like %#{name}%")
+	public List<Notice> fuzzyQueryByname(String name);
+
 	/**
 	 * @apiNote 查询所有公告
 	 * @return 所有公告
