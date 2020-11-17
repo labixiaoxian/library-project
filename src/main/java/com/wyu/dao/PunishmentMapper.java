@@ -14,7 +14,14 @@ import com.wyu.entity.Punishment;
  * @since 2020/11/17
  *
  */
-public interface PunishmentDao {
+public interface PunishmentMapper {
+
+//	@Results(id="punishMap",value = {
+//			@Result(column = "id",property = "id",id = true,jdbcType = JdbcType.INTEGER),
+//			@Result(column = "user_id",property = "userId",),
+//			
+//	})
+
 	/**
 	 * @apiNote 根据惩罚表ID获取对应数据
 	 * @param id

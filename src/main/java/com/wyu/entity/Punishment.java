@@ -16,7 +16,7 @@ public class Punishment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// 惩罚ID
 	private Integer id;
-	// 用户ID
+	// 用户
 	private Integer userId;
 	// 罚金
 	private int fine;

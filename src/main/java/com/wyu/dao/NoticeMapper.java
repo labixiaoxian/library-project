@@ -16,7 +16,7 @@ import com.wyu.entity.Notice;
  * @since 2020/11/17
  * 
  */
-public interface NoticeDao {
+public interface NoticeMapper {
 	/**
 	 * @apiNote 查询所有公告
 	 * @return 所有公告

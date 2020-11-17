@@ -16,7 +16,7 @@ import com.wyu.entity.BorrowInfo;
  * @since 2020/11/17
  *
  */
-public interface BorrowInfoDao {
+public interface BorrowInfoMapper {
 	/**
 	 * @apiNote 通过借阅ID查询借阅信息
 	 * @param id
