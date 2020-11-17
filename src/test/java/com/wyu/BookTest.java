@@ -27,33 +27,36 @@ public class BookTest {
 	ThemeMapper themeMapper;
 	@Autowired
 	TypeMapper typeMapper;
-	@Test
-	void insertBook() {
-		Book book = new Book();
-		Country country = countryMapper.queryById(1);
-		Theme theme = themeMapper.queryById(1);
-		Type type = typeMapper.queryById(1);
-		book.setBookName("三只小猪");
-		book.setCountry(country);
-		book.setTheme(theme);
-		book.setType(type);
-		book.setInfo("三只小猪建造房子的故事");
-		book.setBookCount(100);
-		book.setSpace("1000");
-		int flag = bookMapper.newBook(book);
-		System.out.println(flag);
-	}
-	
-	@Test
-	void queryAll() {
-		List<Book> list= bookMapper.queryAll();
-		list.forEach(li->System.out.println(li));
-	}
-	
-	@Test
-	void queryLikeName() {
-		String name = "猪";
-		List<Book> list= bookMapper.queryByNameLike(name);
-		list.forEach(li->System.out.println(li));
-	}
+//	@Test
+//	void insertBook() {
+//		for(int i=1;i<100;i++) {
+//			
+//		}
+//		Book book = new Book();
+//		Country country = countryMapper.queryById(1);
+//		Theme theme = themeMapper.queryById(1);
+//		Type type = typeMapper.queryById(1);
+//		book.setBookName("三只小猪");
+//		book.setCountry(country);
+//		book.setTheme(theme);
+//		book.setType(type);
+//		book.setInfo("三只小猪建造房子的故事");
+//		book.setBookCount(100);
+//		book.setSpace("1000");
+//		int flag = bookMapper.newBook(book);
+//		System.out.println(flag);
+//	}
+//	
+//	@Test
+//	void queryAll() {
+//		List<Book> list= bookMapper.queryAll();
+//		list.forEach(li->System.out.println(li));
+//	}
+//	
+//	@Test
+//	void queryLikeName() {
+//		String name = "猪";
+//		List<Book> list= bookMapper.queryByNameLike(name);
+//		list.forEach(li->System.out.println(li));
+//	}
 }

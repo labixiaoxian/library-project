@@ -31,7 +31,8 @@ public class TypeService {
 		return flag;
 	}
 	public int deleteById() {
-		int flag = typeMapper.deleteById();
+		int id = 1;
+		int flag = typeMapper.deleteById(id);
 		return flag;
 	}
 }

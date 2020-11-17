@@ -32,7 +32,8 @@ public class CountryService {
 		return flag;
 	}
 	public int deleteById() {
-		int flag = countryMapper.deleteById();
+		int id = 1;
+		int flag = countryMapper.deleteById(id);
 		return flag;
 	}
 }

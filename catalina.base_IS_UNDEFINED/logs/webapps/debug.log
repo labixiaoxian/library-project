@@ -1,6 +1,0 @@
-2020-11-18 00:40:20.963 [restartedMain] DEBUG com.wyu.LibraryProjectApplication - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
-2020-11-18 00:44:31.691 [http-nio-8089-exec-5] DEBUG com.wyu.dao.NoticeMapper.listPagination - ==>  Preparing: select * from lib_notice order by release_time desc limit ?,? 
-2020-11-18 00:44:31.736 [http-nio-8089-exec-5] DEBUG com.wyu.dao.NoticeMapper.listPagination - ==> Parameters: 0(Integer), 10(Integer)
-2020-11-18 00:44:31.751 [http-nio-8089-exec-5] DEBUG com.wyu.dao.NoticeMapper.listPagination - <==      Total: 10
-2020-11-18 01:01:45.383 [restartedMain] DEBUG com.wyu.LibraryProjectApplication - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
-2020-11-18 01:43:38.287 [restartedMain] DEBUG com.wyu.LibraryProjectApplication - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
