@@ -1,0 +1,12 @@
+2020-11-18 00:59:31.148 [main] INFO  com.wyu.BookTest - Starting BookTest on LAPTOP-J931INCH with PID 3400 (started by 76943 in D:\IBM\library-project)
+2020-11-18 00:59:31.149 [main] INFO  com.wyu.BookTest - No active profile set, falling back to default profiles: default
+2020-11-18 00:59:36.810 [main] INFO  com.wyu.BookTest - Started BookTest in 6.123 seconds (JVM running for 7.915)
+2020-11-18 01:00:11.121 [main] INFO  com.wyu.BookTest - Starting BookTest on LAPTOP-J931INCH with PID 8552 (started by 76943 in D:\IBM\library-project)
+2020-11-18 01:00:11.123 [main] INFO  com.wyu.BookTest - No active profile set, falling back to default profiles: default
+2020-11-18 01:00:14.772 [main] INFO  com.wyu.BookTest - Started BookTest in 4.068 seconds (JVM running for 5.447)
+2020-11-18 01:03:44.009 [main] INFO  com.wyu.BookTest - Starting BookTest on LAPTOP-J931INCH with PID 2952 (started by 76943 in D:\IBM\library-project)
+2020-11-18 01:03:44.042 [main] INFO  com.wyu.BookTest - No active profile set, falling back to default profiles: default
+2020-11-18 01:03:51.172 [main] INFO  com.wyu.BookTest - Started BookTest in 7.687 seconds (JVM running for 10.142)
+2020-11-18 01:04:43.613 [main] INFO  com.wyu.CountryTest - Starting CountryTest on LAPTOP-J931INCH with PID 8556 (started by 76943 in D:\IBM\library-project)
+2020-11-18 01:04:43.615 [main] INFO  com.wyu.CountryTest - No active profile set, falling back to default profiles: default
+2020-11-18 01:04:50.536 [main] INFO  com.wyu.CountryTest - Started CountryTest in 7.456 seconds (JVM running for 9.852)
