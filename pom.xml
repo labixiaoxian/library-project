@@ -42,11 +42,11 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring-boot-starter</artifactId>
 			<version>1.5.3</version>
-		</dependency>
+		</dependency> -->
 		<!--mybatis相关依赖-->
 		<dependency>
 			<groupId>org.mybatis.spring.boot</groupId>

@@ -8,9 +8,13 @@ import java.util.Objects;
  * 
  * @author 李达成
  * @since 2020/11/17
- *
+ * @implNote Serializable
  */
 public class Notice implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 公告ID
 	private Integer id;
 	// 公告名

@@ -1,0 +1,121 @@
+2020-11-17 09:41:35.964 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:41:38.708 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:42:41.744 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:42:46.255 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:44:07.441 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:44:11.961 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:46:14.150 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:46:21.422 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 09:46:21.456 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 09:46:21.480 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 09:47:17.678 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 09:47:24.159 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 09:47:24.192 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 09:47:24.212 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 10:02:35.195 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 10:02:42.082 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 10:02:42.113 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 10:02:42.138 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 10:02:42.141 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 10:02:42.141 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 10:02:42.145 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 10:39:58.036 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 10:40:05.062 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 10:40:05.101 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 10:40:05.134 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 10:40:05.138 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 10:40:05.138 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 10:40:05.140 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 10:40:05.142 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 10:40:05.143 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 10:40:05.148 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 11:51:47.405 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 11:51:49.727 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 11:56:29.236 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 11:56:36.366 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 11:56:36.407 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 11:56:36.432 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 11:56:36.435 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 11:56:36.436 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 11:56:36.437 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 11:56:36.438 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 11:56:36.439 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 11:56:36.441 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 11:56:36.465 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,notice.noticeName,notice.content,null) 
+2020-11-17 11:56:36.466 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 
+2020-11-17 11:58:49.077 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 11:58:55.644 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 11:58:55.685 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 11:58:55.710 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 11:58:55.712 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 11:58:55.713 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 11:58:55.714 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 11:58:55.715 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 11:58:55.716 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 11:58:55.717 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 11:58:55.744 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,notice.noticeName,notice.content,null) 
+2020-11-17 11:58:55.745 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 
+2020-11-17 12:03:11.826 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 12:03:18.378 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 12:03:18.407 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 12:03:18.426 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 12:03:18.429 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 12:03:18.429 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 12:03:18.431 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 12:03:18.432 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 12:03:18.432 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 12:03:18.434 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 12:03:18.463 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,notice.noticeName,notice.content,null) 
+2020-11-17 12:03:18.464 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 
+2020-11-17 12:10:06.996 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 12:10:16.745 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 12:10:16.778 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 12:10:16.798 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 12:10:16.801 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 12:10:16.802 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 12:10:16.804 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 12:10:16.805 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 12:10:16.805 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 12:10:16.806 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 12:10:46.439 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,notice.noticeName,notice.content,null) 
+2020-11-17 12:10:46.477 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 
+2020-11-17 12:11:29.672 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 12:11:29.692 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 12:11:43.330 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 12:11:43.384 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 12:11:43.425 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 12:11:43.428 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 12:11:43.429 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 12:11:43.443 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 12:11:43.445 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 12:11:43.450 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 12:11:43.481 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 12:11:43.512 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,notice.noticeName,notice.content,null) 
+2020-11-17 12:11:43.513 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 
+2020-11-17 12:11:45.594 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 12:11:45.790 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 12:11:45.917 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 12:11:45.920 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 12:11:45.923 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 12:11:45.925 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 12:11:45.926 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 12:11:45.927 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 12:11:45.933 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 12:11:45.964 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,notice.noticeName,notice.content,null) 
+2020-11-17 12:11:45.966 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 
+2020-11-17 12:14:12.165 [main] DEBUG com.wyu.LibraryProjectApplicationTests - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-17 12:14:19.194 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==>  Preparing: select * from lib_borrow_info where id = ? 
+2020-11-17 12:14:19.229 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 12:14:19.249 [main] DEBUG com.wyu.dao.BorrowInfoDao.getById - <==      Total: 0
+2020-11-17 12:14:19.252 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==>  Preparing: select * from lib_borrow_info where DATE_SUB(now(), INTERVAL 30 DAY) > borrow_date 
+2020-11-17 12:14:19.252 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - ==> Parameters: 
+2020-11-17 12:14:19.253 [main] DEBUG com.wyu.dao.BorrowInfoDao.getOverDueInfo - <==      Total: 0
+2020-11-17 12:14:19.254 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==>  Preparing: select * from lib_borrow_info 
+2020-11-17 12:14:19.254 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - ==> Parameters: 
+2020-11-17 12:14:19.255 [main] DEBUG com.wyu.dao.BorrowInfoDao.list - <==      Total: 0
+2020-11-17 12:14:19.283 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==>  Preparing: insert into lib_notice values(null,?,?,null) 
+2020-11-17 12:14:19.291 [main] DEBUG com.wyu.dao.NoticeDao.insert - ==> Parameters: 这是个标题(String), 这是内容(String)
+2020-11-17 12:14:19.298 [main] DEBUG com.wyu.dao.NoticeDao.insert - <==    Updates: 1
+2020-11-17 12:14:19.299 [main] DEBUG com.wyu.dao.NoticeDao.getById - ==>  Preparing: select * from lib_notice where id = ? 
+2020-11-17 12:14:19.299 [main] DEBUG com.wyu.dao.NoticeDao.getById - ==> Parameters: 1(Integer)
+2020-11-17 12:14:19.305 [main] DEBUG com.wyu.dao.NoticeDao.getById - <==      Total: 1

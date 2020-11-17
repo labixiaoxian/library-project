@@ -11,6 +11,10 @@ import java.util.Objects;
  *
  */
 public class BorrowInfo implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 借阅ID
 	private Integer id;
 	// 用户ID
@@ -23,7 +27,7 @@ public class BorrowInfo implements Serializable {
 	private Timestamp returnDate;
 	// 审核状态，0为未审核，1为审核通过
 	private Integer examineState;
-	// 借阅状态，0为审核中，1为借阅中，2为借阅完毕
+	// 借阅状态，0为审核中，1为借阅中，2为借阅完毕，已归还
 	private Integer borrowState;
 	// 续借状态，0为未续借，1为已续借过
 	private Integer renewState;
