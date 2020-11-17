@@ -18,4 +18,5 @@
         <plugin interceptor="com.xiaoxian.o2o.dao.split.DynamicDataSourceInterceptor">
         </plugin>
     </plugins>-->
+    
 </configuration>

@@ -1,8 +1,11 @@
 package com.wyu.entity;
+
+import java.io.Serializable;
+
 /*
 * 图书实体类
  */
-public class Book {
+public class Book implements Serializable{
 	private int id;             //图书ID
 	private String bookName;    //图书名
 	private Country country;    //国家
@@ -63,6 +66,11 @@ public class Book {
 	}
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	@Override
+	public String toString() {
+		return "Book [id=" + id + ", bookName=" + bookName + ", country=" + country + ", theme=" + theme + ", type="
+				+ type + ", space=" + space + ", bookCount=" + bookCount + ", info=" + info + "]";
 	}
 	
 }

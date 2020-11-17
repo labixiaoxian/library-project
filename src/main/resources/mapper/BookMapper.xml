@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyu.dao.BookMapper">
+
+	<resultMap type="com.wyu.entity.Book" id="bookResultMap">
+		<id property="id" column="id" />
+		<result property="bookName" column="book_name"/>
+		<result property="space" column="space"/>
+		<result property="bookCount" column="book_count"/>
+		<result property="info" column="info"/>
+		<association property="country" javaType="com.wyu.entity.Country">
+			<id property="id" column="id"/>
+  			<result property="countryName" column="country_name"/>
+		</association>
+		<association property="theme" javaType="com.wyu.entity.Theme">
+			<id property="id" column="id"/>
+  			<result property="themeName" column="theme_name"/>
+		</association>
+		<association property="type" javaType="com.wyu.entity.Type">
+			<id property="id" column="id"/>
+  			<result property="typeName" column="type_name"/>
+		</association>
+	</resultMap>
+	
+	<select id="queryAll" resultMap="bookResultMap">
+		select 
+		b.id,b.book_name,
+		c.id,c.country_name,
+		t.id,t.theme_name,
+		p.id,p.type_name,
+		b.space,
+		b.book_count,
+		b.info
+		from 
+		lib_book b 
+		LEFT JOIN lib_country c on b.country_id=c.id 
+		LEFT JOIN lib_theme t on b.theme_id=t.id
+		LEFT JOIN lib_type p on b.type_id=p.id
+	</select>
+	
+	<select id="queryByNameLike" resultMap="bookResultMap" parameterType="String">
+		select 
+		b.id,b.book_name,
+		c.id,c.country_name,
+		t.id,t.theme_name,
+		p.id,p.type_name,
+		b.space,
+		b.book_count,
+		b.info 
+		from 
+		lib_book b 
+		LEFT JOIN lib_country c on b.country_id=c.id 
+		LEFT JOIN lib_theme t on b.theme_id=t.id
+		LEFT JOIN lib_type p on b.type_id=p.id
+		where b.book_name like "%"#{name}"%"
+	</select>
+	
+	<insert id="newBook" parameterType="com.wyu.entity.Book">
+		insert into 
+		lib_book(book_name,country_id,theme_id,type_id,space,book_count,info) 
+		values
+		(#{bookName},#{country.id},#{theme.id},#{type.id},#{space},#{bookCount},#{info})
+	</insert>
+	<delete id="deleteById" parameterType="int">
+		delete from lib_book where id=#{id}
+	</delete>
+	<update id="updateBook" parameterType="int">
+		
+	</update>
+</mapper>
