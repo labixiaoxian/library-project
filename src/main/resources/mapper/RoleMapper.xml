@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyu.dao.RoleMapper">
+
+    <insert id="insertRole" parameterType="com.wyu.entity.Role"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+        lib_role(role_name)
+        VALUES
+        (#{roleName})
+    </insert>
+
+</mapper>

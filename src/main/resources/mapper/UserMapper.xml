@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyu.dao.UserMapper">
+    <resultMap id="userMap" type="com.wyu.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="pwdHash" column="pwd_hash"/>
+        <result property="pwdSalt" column="pwd_salt"/>
+        <result property="borrowCount" column="borrow_count"/>
+        <result property="registerTime" column="register_time"/>
+        <result property="credit" column="credit"/>
+        <collection property="roles" javaType="list" ofType="Role">
+            <id column="id" property="id"/>
+            <result column="role_name" property="roleName"/>
+        </collection>
+    </resultMap>
+   <select id="findUserByUsername" parameterType="java.lang.String" resultType="com.wyu.entity.User">
+     SELECT
+     id,
+     username,
+     pwd_hash,
+     pwd_salt,
+     borrow_count,
+     register_time,
+     credit
+     FROM lib_user
+     WHERE username = #{username}
+    </select>
+    <insert id="insertUser" parameterType="com.wyu.entity.User"
+            useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        INSERT INTO
+        lib_user(username,pwd_hash,pwd_salt,borrow_count,register_time,credit)
+        VALUES
+        (#{username},#{pwdHash},#{pwdSalt},#{borrowCount},#{registerTime},#{credit})
+    </insert>
+
+    <delete id="deleteUserByUsername" parameterType="java.lang.String">
+        DELETE FROM
+        lib_user
+        WHERE username=#{username}
+    </delete>
+
+    <update id="updateUser" parameterType="com.wyu.entity.User" keyProperty="id" useGeneratedKeys="true">
+        UPDATE lib_user
+        <set>
+            <if test="username != null">username=#{username},</if>
+            <if test="pwdHash != null">pwd_hash=#{pwdHash},</if>
+            <if test="pwdSalt != null">pwd_salt=#{pwdSalt},</if>
+            <if test="borrowCount != null">borrow_count=#{borrowCount},</if>
+            <if test="registerTime != null">register_time=#{registerTime},</if>
+            <if test="credit != null">credit=#{credit}</if>
+        </set>
+        WHERE id = #{id};
+    </update>
+
+    <select id="findRolesByUsername" parameterType="java.lang.String" resultMap="userMap">
+        select
+        u.id ,
+        u.username,
+        u.pwd_hash,
+        u.pwd_salt,
+        u.borrow_count,
+        u.register_time,
+        u.credit,
+        r.id,
+        r.role_name
+        from lib_user u
+        LEFT JOIN lib_user_role ur on ur.user_id=u.id
+        LEFT JOIN lib_role r on ur.role_id= r.id
+        WHERE u.username = #{username}
+    </select>
+</mapper>

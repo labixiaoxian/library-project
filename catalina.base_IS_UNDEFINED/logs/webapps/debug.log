@@ -1,0 +1,98 @@
+2020-11-18 00:09:12.924 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:17:57.872 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:22:56.407 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:32:01.132 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:32:08.227 [main] DEBUG com.wyu.dao.UserMapper.insertUser - ==>  Preparing: INSERT INTO lib_user(username,pwd_hash,pwd_salt,borrow_count,register_time,credit) VALUES (?,?,?,?,?,?) 
+2020-11-18 00:32:08.252 [main] DEBUG com.wyu.dao.UserMapper.insertUser - ==> Parameters: xiaoxian(String), 123456(String), 123456(String), 10(Integer), 2020-11-18 00:32:07.636(Timestamp), 100(Integer)
+2020-11-18 00:32:08.263 [main] DEBUG com.wyu.dao.UserMapper.insertUser - <==    Updates: 1
+2020-11-18 00:34:09.803 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:34:16.512 [main] DEBUG com.wyu.dao.UserMapper.findUserByUsername - ==>  Preparing: SELECT id, username, pwd_hash, pwd_salt, borrow_count, register_time, credit FROM lib_user WHERE username = ? 
+2020-11-18 00:34:16.534 [main] DEBUG com.wyu.dao.UserMapper.findUserByUsername - ==> Parameters: xiaoxian(String)
+2020-11-18 00:34:16.550 [main] DEBUG com.wyu.dao.UserMapper.findUserByUsername - <==      Total: 1
+2020-11-18 00:35:28.301 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:35:34.161 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==>  Preparing: UPDATE lib_user SET pwd_salt=? WHERE id = ?; 
+2020-11-18 00:35:34.208 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==> Parameters: afafe(String), null
+2020-11-18 00:35:34.221 [main] DEBUG com.wyu.dao.UserMapper.updateUser - <==    Updates: 0
+2020-11-18 00:37:25.579 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:37:32.213 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==>  Preparing: UPDATE lib_user SET pwd_salt=? WHERE id = ?; 
+2020-11-18 00:37:32.240 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==> Parameters: afafe(String), 1(Integer)
+2020-11-18 00:37:32.268 [main] DEBUG com.wyu.dao.UserMapper.updateUser - <==    Updates: 1
+2020-11-18 00:38:47.508 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:38:53.944 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==>  Preparing: select u.id , u.username, u.pwd_hash, u.pwd_salt, u.borrow_count, u.register_time, u.credit r.id, r.role_name from lib_user u LEFT JOIN lib_user_role ur on ur.user_id=u.id LEFT JOIN lib_role r on ur.role_id= r.id WHERE u.username = ? 
+2020-11-18 00:38:53.967 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==> Parameters: xiaoxian(String)
+2020-11-18 00:39:46.210 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:39:52.792 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==>  Preparing: select u.id , u.username, u.pwd_hash, u.pwd_salt, u.borrow_count, u.register_time, u.credit, r.id, r.role_name from lib_user u LEFT JOIN lib_user_role ur on ur.user_id=u.id LEFT JOIN lib_role r on ur.role_id= r.id WHERE u.username = ? 
+2020-11-18 00:39:52.819 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==> Parameters: xiaoxian(String)
+2020-11-18 00:39:52.843 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - <==      Total: 1
+2020-11-18 00:42:33.015 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:42:39.412 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==>  Preparing: select u.id , u.username, u.pwd_hash, u.pwd_salt, u.borrow_count, u.register_time, u.credit, r.id, r.role_name from lib_user u LEFT JOIN lib_user_role ur on ur.user_id=u.id LEFT JOIN lib_role r on ur.role_id= r.id WHERE u.username = ? 
+2020-11-18 00:42:39.439 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==> Parameters: xiaoxian(String)
+2020-11-18 00:42:39.460 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - <==      Total: 1
+2020-11-18 00:44:36.362 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:44:42.890 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==>  Preparing: select u.id , u.username, u.pwd_hash, u.pwd_salt, u.borrow_count, u.register_time, u.credit, r.id, r.role_name from lib_user u LEFT JOIN lib_user_role ur on ur.user_id=u.id LEFT JOIN lib_role r on ur.role_id= r.id WHERE u.username = ? 
+2020-11-18 00:44:42.923 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - ==> Parameters: xiaoxian(String)
+2020-11-18 00:44:42.943 [main] DEBUG com.wyu.dao.UserMapper.findRolesByUsername - <==      Total: 1
+2020-11-18 00:49:12.892 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:49:19.601 [main] DEBUG com.wyu.dao.UserMapper.deleteUserByUsername - ==>  Preparing: DELETE FROM lib_user WHERE username=? 
+2020-11-18 00:49:19.623 [main] DEBUG com.wyu.dao.UserMapper.deleteUserByUsername - ==> Parameters: xiaoxian(String)
+2020-11-18 00:49:19.632 [main] DEBUG com.wyu.dao.UserMapper.deleteUserByUsername - <==    Updates: 1
+2020-11-18 00:49:39.198 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:49:45.753 [main] DEBUG com.wyu.dao.UserMapper.insertUser - ==>  Preparing: INSERT INTO lib_user(username,pwd_hash,pwd_salt,borrow_count,register_time,credit) VALUES (?,?,?,?,?,?) 
+2020-11-18 00:49:45.784 [main] DEBUG com.wyu.dao.UserMapper.insertUser - ==> Parameters: xiaoxian(String), 123456(String), 123456(String), 10(Integer), 2020-11-18 00:49:45.388(Timestamp), 100(Integer)
+2020-11-18 00:49:45.793 [main] DEBUG com.wyu.dao.UserMapper.insertUser - <==    Updates: 1
+2020-11-18 00:49:53.763 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:50:00.641 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==>  Preparing: UPDATE lib_user SET pwd_salt=? WHERE id = ?; 
+2020-11-18 00:50:00.668 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==> Parameters: afafe(String), 1(Integer)
+2020-11-18 00:50:00.671 [main] DEBUG com.wyu.dao.UserMapper.updateUser - <==    Updates: 0
+2020-11-18 00:50:15.732 [main] DEBUG com.wyu.dao.UserMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:50:22.484 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==>  Preparing: UPDATE lib_user SET pwd_salt=? WHERE id = ?; 
+2020-11-18 00:50:22.508 [main] DEBUG com.wyu.dao.UserMapper.updateUser - ==> Parameters: afafe(String), 1(Integer)
+2020-11-18 00:50:22.517 [main] DEBUG com.wyu.dao.UserMapper.updateUser - <==    Updates: 1
+2020-11-18 00:53:20.462 [main] DEBUG com.wyu.dao.RoleMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 00:53:27.162 [main] DEBUG com.wyu.dao.RoleMapper.insertRole - ==>  Preparing: INSERT INTO lib_role(role_name) VALUES (?) 
+2020-11-18 00:53:27.192 [main] DEBUG com.wyu.dao.RoleMapper.insertRole - ==> Parameters: user(String)
+2020-11-18 00:53:27.197 [main] DEBUG com.wyu.dao.RoleMapper.insertRole - <==    Updates: 1
+2020-11-18 02:02:32.715 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:02:39.125 [main] DEBUG com.wyu.dao.UserInfoMapper.insertUserInfo - ==>  Preparing: INSERT INTO lib_user_info(user_id,age,sex,birthday,nickname,email,telephone,address,personal_desc,picture) VALUES (?,?,?,?,?,?,?,?,?,?) 
+2020-11-18 02:02:39.168 [main] DEBUG com.wyu.dao.UserInfoMapper.insertUserInfo - ==> Parameters: 1(Integer), 22(Integer), 1(Integer), 2020-11-18 02:02:38.767(Timestamp), 小贤(String), 4548648f(String), 123456789(String), 五邑大学(String), 真帅(String), xxxx.jpg(String)
+2020-11-18 02:02:39.176 [main] DEBUG com.wyu.dao.UserInfoMapper.insertUserInfo - <==    Updates: 1
+2020-11-18 02:04:04.976 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:04:11.560 [main] DEBUG com.wyu.dao.UserInfoMapper.findUserInfoByUserId - ==>  Preparing: SELECT ui.id, ui.age, ui.sex, ui.birthday, ui.nickname, ui.email, ui.telephone, ui.address, ui.personal_desc, ui.picture, u.username, u.borrow_count, u.register_time, u.credit FROM lib_user_info ui, lib_user u WHERE ui.user_id = u.id AND ui.user_id = ? 
+2020-11-18 02:04:11.583 [main] DEBUG com.wyu.dao.UserInfoMapper.findUserInfoByUserId - ==> Parameters: 1(Integer)
+2020-11-18 02:04:11.601 [main] DEBUG com.wyu.dao.UserInfoMapper.findUserInfoByUserId - <==      Total: 1
+2020-11-18 02:04:54.276 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:05:00.715 [main] DEBUG com.wyu.dao.UserInfoMapper.findUserInfoById - ==>  Preparing: SELECT ui.id, ui.age, ui.sex, ui.birthday, ui.nickname, ui.email, ui.telephone, ui.address, ui.personal_desc, ui.picture, u.username, u.borrow_count, u.register_time, u.credit FROM lib_user_info ui, lib_user u WHERE ui.user_id = u.id AND ui.id = ? 
+2020-11-18 02:05:00.738 [main] DEBUG com.wyu.dao.UserInfoMapper.findUserInfoById - ==> Parameters: 1(Integer)
+2020-11-18 02:05:00.755 [main] DEBUG com.wyu.dao.UserInfoMapper.findUserInfoById - <==      Total: 1
+2020-11-18 02:09:31.126 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:09:37.857 [main] DEBUG com.wyu.dao.UserInfoMapper.updateUserInfo - ==>  Preparing: UPDATE lib_user_info SET birthday=?, email=? WHERE id = ?; 
+2020-11-18 02:09:37.885 [main] DEBUG com.wyu.dao.UserInfoMapper.updateUserInfo - ==> Parameters: 2020-11-18 02:09:37.283(Timestamp), 869160919@qq.com(String), null
+2020-11-18 02:09:37.890 [main] DEBUG com.wyu.dao.UserInfoMapper.updateUserInfo - <==    Updates: 0
+2020-11-18 02:10:23.330 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:10:29.932 [main] DEBUG com.wyu.dao.UserInfoMapper.updateUserInfo - ==>  Preparing: UPDATE lib_user_info SET birthday=?, email=? WHERE id = ?; 
+2020-11-18 02:10:29.960 [main] DEBUG com.wyu.dao.UserInfoMapper.updateUserInfo - ==> Parameters: 2020-11-18 02:10:29.491(Timestamp), 869160919@qq.com(String), 1(Integer)
+2020-11-18 02:10:29.971 [main] DEBUG com.wyu.dao.UserInfoMapper.updateUserInfo - <==    Updates: 1
+2020-11-18 02:15:25.392 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:15:31.911 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - ==>  Preparing: SELECT ui.id, ui.age, ui.sex, ui.birthday, ui.nickname, ui.email, ui.telephone, ui.address, ui.personal_desc, ui.picture, u.username, u.borrow_count, u.register_time, u.credit FROM lib_user_info ui, lib_user u WHERE ui.nickname like '%小%' AND ui.user_id = u.id ORDER BY ui.id DESC LIMIT ?,?; 
+2020-11-18 02:15:31.941 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - ==> Parameters: 0(Integer), 10(Integer)
+2020-11-18 02:15:31.962 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - <==      Total: 1
+2020-11-18 02:16:50.866 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:16:57.224 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - ==>  Preparing: SELECT ui.id, ui.age, ui.sex, ui.birthday, ui.nickname, ui.email, ui.telephone, ui.address, ui.personal_desc, ui.picture, u.username, u.borrow_count, u.register_time, u.credit FROM lib_user_info ui, lib_user u WHERE ui.nickname like '%小%' AND ui.user_id = u.id ORDER BY ui.id DESC LIMIT ?,?; 
+2020-11-18 02:16:57.250 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - ==> Parameters: 0(Integer), 10(Integer)
+2020-11-18 02:16:57.271 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - <==      Total: 1
+2020-11-18 02:16:57.282 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - ==>  Preparing: SELECT ui.id, ui.age, ui.sex, ui.birthday, ui.nickname, ui.email, ui.telephone, ui.address, ui.personal_desc, ui.picture, u.username, u.borrow_count, u.register_time, u.credit FROM lib_user_info ui, lib_user u WHERE ui.nickname like '%小%' and u.credit = ? AND ui.user_id = u.id ORDER BY ui.id DESC LIMIT ?,?; 
+2020-11-18 02:16:57.282 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - ==> Parameters: 100(Integer), 0(Integer), 10(Integer)
+2020-11-18 02:16:57.285 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfo - <==      Total: 1
+2020-11-18 02:18:08.966 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:18:41.031 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:18:47.625 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfoCount - ==>  Preparing: SELECT count(1) FROM lib_user_info ui, lib_user u WHERE ui.nickname like '%小%' AND ui.user_id = u.id 
+2020-11-18 02:18:47.648 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfoCount - ==> Parameters: 
+2020-11-18 02:18:47.669 [main] DEBUG com.wyu.dao.UserInfoMapper.queryUserInfoCount - <==      Total: 1
+2020-11-18 02:19:32.921 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:19:39.659 [main] DEBUG com.wyu.dao.UserInfoMapper.deleteUserInfoById - ==>  Preparing: DELETE FROM lib_user_info WHERE id=? 
+2020-11-18 02:19:39.684 [main] DEBUG com.wyu.dao.UserInfoMapper.deleteUserInfoById - ==> Parameters: 1(Integer)
+2020-11-18 02:19:39.696 [main] DEBUG com.wyu.dao.UserInfoMapper.deleteUserInfoById - <==    Updates: 1
+2020-11-18 02:20:00.798 [main] DEBUG com.wyu.dao.UserInfoMapperTest - Running with Spring Boot v2.3.0.RELEASE, Spring v5.2.6.RELEASE
+2020-11-18 02:20:07.346 [main] DEBUG com.wyu.dao.UserInfoMapper.insertUserInfo - ==>  Preparing: INSERT INTO lib_user_info(user_id,age,sex,birthday,nickname,email,telephone,address,personal_desc,picture) VALUES (?,?,?,?,?,?,?,?,?,?) 
+2020-11-18 02:20:07.387 [main] DEBUG com.wyu.dao.UserInfoMapper.insertUserInfo - ==> Parameters: 1(Integer), 22(Integer), 1(Integer), 2020-11-18 02:20:06.898(Timestamp), 小贤(String), 4548648f(String), 123456789(String), 五邑大学(String), 真帅(String), xxxx.jpg(String)
+2020-11-18 02:20:07.398 [main] DEBUG com.wyu.dao.UserInfoMapper.insertUserInfo - <==    Updates: 1
