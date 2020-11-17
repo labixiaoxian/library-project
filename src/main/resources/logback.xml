@@ -74,7 +74,7 @@
         </filter>
     </appender>
 
-    <logger name="com.xiaoxian.o2o" level="${log.level}" additivity="true">
+    <logger name="com.wyu" level="${log.level}" additivity="true">
         <appender-ref ref="debugAppender"/>
         <appender-ref ref="infoAppender"/>
         <appender-ref ref="errorAppender"/>
