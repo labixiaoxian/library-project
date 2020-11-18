@@ -2,101 +2,30 @@ package com.wyu.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.wyu.dao.NoticeMapper;
 import com.wyu.entity.Notice;
 
 /**
- *
+ * 
  * @author 李达成
- * @since 2020/11/17
+ * @since 2020/11/18
+ *
  */
-@Service
-public class NoticeService {
-    @Autowired
-    private NoticeMapper noticeMapper;
+public abstract class NoticeService {
+	public abstract void delete(Integer id);
 
-    /**
-     * @apiNote 根据ID删除一条公告
-     * @param id
-     */
-    public void delete(Integer id) {
-        noticeMapper.deleteById(id);
-    }
+	public abstract List<Notice> fuzzyQuery(String name);
 
-    /**
-     * @apiNote 模糊查询
-     * @param name
-     * @return
-     */
-    public List<Notice> fuzzyQuery(String name) {
-        name = "%" + name + "%";
-        return noticeMapper.fuzzyQueryByname(name);
-    }
+	public abstract List<Notice> fuzzyQueryPagination(String name, int currentPage, int size);
 
-    /**
-     * @apiNote 分页模糊查询
-     * @param name
-     * @param currentPage
-     * @param size
-     * @return
-     */
-    public List<Notice> fuzzyQueryPagination(String name, int currentPage, int size) {
-        name = "%" + name + "%";
-        return noticeMapper.fuzzyQueryBynamePagination(name, currentPage, size);
-    }
+	public abstract Notice get(Integer id);
 
-    /**
-     * @apiNote 根据ID查公告
-     * @param id
-     * @return
-     */
-    public Notice get(Integer id) {
-        return noticeMapper.getById(id);
-    }
+	public abstract Notice getLatestNotice();
 
-    /**
-     * @apiNote 获取最新公告
-     * @return
-     */
-    public Notice getLatestNotice() {
-        return noticeMapper.getLatestNotice();
-    }
+	public abstract void insert(Notice notice);
 
-    /**
-     * @apiNote 增加一条公告
-     * @param name
-     * @param content
-     */
-    public void insert(Notice notice) {
-        noticeMapper.insert(notice);
-    }
+	public abstract List<Notice> queryAll();
 
-    /**
-     * @apiNote 查询全部公告
-     * @return
-     */
-    public List<Notice> queryAll() {
-        return noticeMapper.list();
-    }
+	public abstract List<Notice> queryAllPagination(int currentPage, int size);
 
-    /**
-     * @apiNote 分页查询所有公告
-     * @param currentPage
-     * @param size
-     * @return
-     */
-    public List<Notice> queryAllPagination(int currentPage, int size) {
-        return noticeMapper.listPagination((currentPage - 1) * size, size);
-    }
-
-    /**
-     * @apiNote 更新一条公告
-     * @param notice
-     */
-    public void update(Notice notice) {
-        noticeMapper.update(notice);
-    }
+	public abstract void update(Notice notice);
 }
