@@ -1,6 +1,7 @@
 HELP.md
 target/
 bin/
+catalina.base_IS_UNDEFINED/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
