@@ -1,6 +1,7 @@
 package com.wyu.entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /*
 * 图书实体类
@@ -14,6 +15,7 @@ public class Book implements Serializable{
 	private String space;       //篇幅
 	private int bookCount;      //图书数量
 	private String info;        //详细信息
+	private Timestamp createDate;  //图书上架时间
 	
 	public Book() {
 		super();
@@ -67,10 +69,16 @@ public class Book implements Serializable{
 	public void setInfo(String info) {
 		this.info = info;
 	}
+	public Timestamp getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Timestamp createDate) {
+		this.createDate = createDate;
+	}
 	@Override
 	public String toString() {
 		return "Book [id=" + id + ", bookName=" + bookName + ", country=" + country + ", theme=" + theme + ", type="
-				+ type + ", space=" + space + ", bookCount=" + bookCount + ", info=" + info + "]";
+				+ type + ", space=" + space + ", bookCount=" + bookCount + ", info=" + info + ", createDate="
+				+ createDate + "]";
 	}
-	
 }

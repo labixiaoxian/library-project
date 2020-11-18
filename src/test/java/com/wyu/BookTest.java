@@ -20,43 +20,86 @@ import com.wyu.entity.Type;
 @SpringBootTest
 public class BookTest {
 	@Autowired
-	BookMapper bookMapper;
+	private BookMapper bookMapper;
 	@Autowired
-	CountryMapper countryMapper;
+	private CountryMapper countryMapper;
 	@Autowired
-	ThemeMapper themeMapper;
+	private ThemeMapper themeMapper;
 	@Autowired
-	TypeMapper typeMapper;
-//	@Test
-//	void insertBook() {
-//		for(int i=1;i<100;i++) {
-//			
-//		}
-//		Book book = new Book();
-//		Country country = countryMapper.queryById(1);
-//		Theme theme = themeMapper.queryById(1);
-//		Type type = typeMapper.queryById(1);
-//		book.setBookName("三只小猪");
-//		book.setCountry(country);
-//		book.setTheme(theme);
-//		book.setType(type);
-//		book.setInfo("三只小猪建造房子的故事");
-//		book.setBookCount(100);
-//		book.setSpace("1000");
-//		int flag = bookMapper.newBook(book);
-//		System.out.println(flag);
-//	}
-//	
-//	@Test
-//	void queryAll() {
-//		List<Book> list= bookMapper.queryAll();
-//		list.forEach(li->System.out.println(li));
-//	}
-//	
-//	@Test
-//	void queryLikeName() {
-//		String name = "猪";
-//		List<Book> list= bookMapper.queryByNameLike(name);
-//		list.forEach(li->System.out.println(li));
-//	}
+	private TypeMapper typeMapper;
+	@Test
+	void insertBook() {
+		for(int i=1;i<100;i++) {
+			Book book = new Book();
+			Country country = countryMapper.queryById(1);
+			Theme theme = themeMapper.queryById(1);
+			Type type = typeMapper.queryById(1);
+			book.setBookName("三只小猪"+i);
+			book.setCountry(country);
+			book.setTheme(theme);
+			book.setType(type);
+			book.setInfo("三只小猪建造房子的故事"+i);
+			book.setBookCount(100);
+			book.setSpace("1000");
+			int flag = bookMapper.newBook(book);
+			System.out.println(flag);
+		}
+	}
+	
+	@Test
+	void queryAll() {
+		List<Book> list= bookMapper.queryAll();
+		System.out.println(list.get(5).getCountry().getId());
+		//list.forEach(li->System.out.println(li));
+	}
+	
+	@Test
+	void queryById() {
+		int id = 10;
+		Book book = bookMapper.queryById(id);
+		System.out.println(book);
+	}
+	
+	@Test
+	void queryLikeName() {
+		String name = "猪";
+		List<Book> list= bookMapper.queryByNameLike(name);
+		list.forEach(li->System.out.println(li));
+	}
+	
+	@Test
+	void deleteBook() {
+		int id = 99;
+		int row = bookMapper.deleteById(id);
+		System.out.println(row);
+	}
+	
+	@Test
+	void updateBook() {
+		Book book = new Book();
+		book.setId(2);
+		book.setBookName("三只大猪");
+		book.setBookCount(200);
+		int row = bookMapper.updateBook(book);
+		System.out.println(row);
+	}
+	
+	@Test
+	void queryAllDivPage() {
+		int current = 3;
+		int size = 8;
+		int start = (current-1)*size;
+		List<Book> list = bookMapper.queryAllDivPage(start, size);
+		list.forEach(li->System.out.println(li));
+	}
+	
+	@Test
+	void queryByNameLikeDivPage() {
+		int current = 2;
+		int size = 5;
+		String name = "大猪";
+		int start = (current-1)*size;
+		List<Book> list = bookMapper.queryByNameLikeDivPage(name, start, size);
+		list.forEach(li->System.out.println(li));
+	}
 }

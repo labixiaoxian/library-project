@@ -10,16 +10,17 @@
 		<result property="space" column="space"/>
 		<result property="bookCount" column="book_count"/>
 		<result property="info" column="info"/>
-		<association property="country" javaType="com.wyu.entity.Country">
-			<id property="id" column="id"/>
+		<result property="createDate" column="create_date"/>
+		<association property="country" column="country_id" javaType="com.wyu.entity.Country" >
+			<id property="id" column="cid"/>
   			<result property="countryName" column="country_name"/>
 		</association>
-		<association property="theme" javaType="com.wyu.entity.Theme">
-			<id property="id" column="id"/>
+		<association property="theme" column="theme_id" javaType="com.wyu.entity.Theme">
+			<id property="id" column="tid"/>
   			<result property="themeName" column="theme_name"/>
 		</association>
-		<association property="type" javaType="com.wyu.entity.Type">
-			<id property="id" column="id"/>
+		<association property="type" column="type_id" javaType="com.wyu.entity.Type">
+			<id property="id" column="pid"/>
   			<result property="typeName" column="type_name"/>
 		</association>
 	</resultMap>
@@ -27,12 +28,13 @@
 	<select id="queryAll" resultMap="bookResultMap">
 		select 
 		b.id,b.book_name,
-		c.id,c.country_name,
-		t.id,t.theme_name,
-		p.id,p.type_name,
+		c.id cid,c.country_name,
+		t.id tid,t.theme_name,
+		p.id pid,p.type_name,
 		b.space,
 		b.book_count,
-		b.info
+		b.info,
+		b.create_date
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -40,32 +42,55 @@
 		LEFT JOIN lib_type p on b.type_id=p.id
 	</select>
 	
-	<select id="queryAllDivPage" resultMap="bookResultMap">
+	<select id="queryById" resultMap="bookResultMap" parameterType="int">
 		select 
 		b.id,b.book_name,
-		c.id,c.country_name,
-		t.id,t.theme_name,
-		p.id,p.type_name,
+		c.id cid,c.country_name,
+		t.id tid,t.theme_name,
+		p.id pid,p.type_name,
 		b.space,
 		b.book_count,
-		b.info
+		b.info,
+		b.create_date
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
 		LEFT JOIN lib_theme t on b.theme_id=t.id
 		LEFT JOIN lib_type p on b.type_id=p.id
+		where b.id=#{id}
+	</select>
+	
+	<select id="queryAllDivPage" resultMap="bookResultMap">
+		select 
+		b.id did,b.book_name,
+		c.id cid,c.country_name,
+		t.id tid,t.theme_name,
+		p.id pid,p.type_name,
+		b.space,
+		b.book_count,
+		b.info,
+		b.create_date
+		from 
+		lib_book b , lib_country c , lib_theme t , lib_type p 
+		where 
+		b.country_id=c.id 
+		and
+		b.theme_id=t.id
+		and 
+		b.type_id=p.id
 		limit #{current},#{size}
 	</select>
 	
 	<select id="queryByNameLike" resultMap="bookResultMap" >
 		select 
 		b.id,b.book_name,
-		c.id,c.country_name,
-		t.id,t.theme_name,
-		p.id,p.type_name,
+		c.id cid,c.country_name,
+		t.id tid,t.theme_name,
+		p.id pid,p.type_name,
 		b.space,
 		b.book_count,
-		b.info 
+		b.info,
+		b.create_date
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -82,7 +107,8 @@
 		p.id,p.type_name,
 		b.space,
 		b.book_count,
-		b.info 
+		b.info,
+		b.create_date
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -94,9 +120,9 @@
 	
 	<insert id="newBook" parameterType="com.wyu.entity.Book">
 		insert into 
-		lib_book(book_name,country_id,theme_id,type_id,space,book_count,info) 
+		lib_book(book_name,country_id,theme_id,type_id,space,book_count,info,create_date) 
 		values
-		(#{bookName},#{country.id},#{theme.id},#{type.id},#{space},#{bookCount},#{info})
+		(#{bookName},#{country.id},#{theme.id},#{type.id},#{space},#{bookCount},#{info},#{createDate})
 	</insert>
 	<delete id="deleteById" parameterType="int">
 		delete from lib_book where id=#{id}
@@ -106,22 +132,22 @@
 		lib_book 
 		<set>
 			<if test="bookName!=null">
-				book_name=#{bookName}
+				book_name=#{bookName},
 			</if>
 			<if test="country!=null">
-				country_id=#{country.id}
+				country_id=#{country.id},
 			</if>
 			<if test="theme!=null">
-				theme_id=#{theme.id}
+				theme_id=#{theme.id},
 			</if>
 			<if test="type!=null">
-				type_id=#{type.id}
+				type_id=#{type.id},
 			</if>
 			<if test="space!=null">
-				space=#{space}
+				space=#{space},
 			</if>
 			<if test="bookCount!=null">
-				book_count=#{bookCount}
+				book_count=#{bookCount},
 			</if>
 			<if test="info!=null">
 				info=#{info}

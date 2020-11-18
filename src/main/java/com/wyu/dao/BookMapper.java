@@ -18,6 +18,12 @@ public interface BookMapper {
 	 */
 	public List<Book> queryAll();
 	/**
+	 * @apiNote 通过ID查询书籍
+	 * @param id
+	 * @return
+	 */
+	public Book queryById(int id);
+	/**
 	 * @apiNote 书名的模糊查询
 	 * @param name
 	 * @return
@@ -36,6 +42,12 @@ public interface BookMapper {
 	 */
 	public int deleteById(@Param(value = "id") int id);
 	/**
+	 * @apiNote 更新书籍信息
+	 * @param book
+	 * @return
+	 */
+	public int updateBook(Book book);
+	/**
 	 * @apiNote 查询所有的书籍信息分页
 	 * @param current
 	 * @param size
@@ -49,5 +61,5 @@ public interface BookMapper {
 	 * @param size
 	 * @return
 	 */
-	public List<Book> queryAllDivPage(@Param("name") String name,@Param("current")int current,@Param("size")int size);
+	public List<Book> queryByNameLikeDivPage(@Param("name") String name,@Param("current")int current,@Param("size")int size);
 }
