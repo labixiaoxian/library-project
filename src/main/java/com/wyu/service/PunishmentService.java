@@ -19,9 +19,7 @@ public abstract class PunishmentService {
 
 	public abstract List<Punishment> getByUserId(Integer userId);
 
-	public abstract void insert(Punishment punishment);
-
 	public abstract void deleteById(Integer id);
 
-	public abstract void update(Punishment punishment);
+	public abstract List<Punishment> FuzzyqueryByNickName(String name, int current, int size);
 }

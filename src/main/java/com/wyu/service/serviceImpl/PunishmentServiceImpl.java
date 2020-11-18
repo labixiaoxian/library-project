@@ -1,5 +1,6 @@
 package com.wyu.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.wyu.dao.PunishmentMapper;
 import com.wyu.dao.UserInfoMapper;
 import com.wyu.entity.Punishment;
+import com.wyu.entity.UserInfo;
 import com.wyu.service.PunishmentService;
 
 /**
@@ -44,7 +46,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 */
 	@Override
 	public List<Punishment> queryAllPagination(int current, int size) {
-		List<Punishment> list = punishmentMapper.listPagination(current, size);
+		List<Punishment> list = punishmentMapper.listPagination((current - 1) * size, size);
 		for (Punishment punishment : list) {
 			punishment.setUserInfo(userInfoMapper.findUserInfoByUserId(punishment.getUserId()));
 		}
@@ -85,17 +87,6 @@ public class PunishmentServiceImpl extends PunishmentService {
 	}
 
 	/**
-	 * @apiNote 新增一条惩罚记录
-	 * @param punishment
-	 * @return
-	 */
-	@Override
-	public void insert(Punishment punishment) {
-		// TODO Auto-generated method stub
-		punishmentMapper.insert(punishment);
-	}
-
-	/**
 	 * @apiNote 删除一条惩罚记录
 	 * @param id
 	 * @return
@@ -106,15 +97,21 @@ public class PunishmentServiceImpl extends PunishmentService {
 		punishmentMapper.deleteById(id);
 	}
 
-	/**
-	 * @apiNote 更新罚金
-	 * @param punishment
-	 * @return
-	 */
-	@Override
-	public void update(Punishment punishment) {
-		// TODO Auto-generated method stub
-		punishmentMapper.updateFine(punishment);
-	}
+	public List<Punishment> FuzzyqueryByNickName(String name, int current, int size) {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setNickname(name);
+		try {
+			List<Punishment> result = new ArrayList<>();
+			List<UserInfo> list = userInfoMapper.queryUserInfo(userInfo, (current - 1) * size, size);
+			for (UserInfo info : list) {
+				result.addAll(punishmentMapper.getByUserId(info.getUser().getId()));
+			}
+			return result;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
 
+	}
 }
