@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -60,11 +61,19 @@ public interface PunishmentMapper {
 	 * @param punishment
 	 */
 	@Insert("insert into lib_punishment values(null,#{punishment.userId},#{punishment.fine},#{punishment.reason})")
-	public void insert(Punishment punishment);
+	public void insert(@Param("punishment") Punishment punishment);
 
+	/**
+	 * @apiNote 删除一条惩罚记录
+	 * @param id
+	 */
 	@Delete("delete from lib_punishment where id = #{id}")
 	public void deleteById(Integer id);
 
+	/**
+	 * @apiNote 更新罚金
+	 * @param punishment
+	 */
 	@Update("update lib_punishment set fine = #{punishment.fine} where id = #{punishment.id}")
-	public void updateFine(Punishment punishment);
+	public void updateFine(@Param("punishment") Punishment punishment);
 }

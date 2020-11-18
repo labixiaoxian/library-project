@@ -91,7 +91,7 @@ public interface BorrowInfoMapper {
 	 * @apiNote 查询逾期借阅信息
 	 * @return 所有逾期的借阅信息
 	 */
-	@Select("select * from lib_borrow_info where TIMESTAMPDIFF(DAY,now(),borrow_date) =1;")
+	@Select("select * from lib_borrow_info where TIMESTAMPDIFF(DAY,now(),borrow_date) =31;")
 	public List<BorrowInfo> getOverDueInfo();
 
 	/**
