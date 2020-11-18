@@ -14,6 +14,7 @@ public class Punishment implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	// 惩罚ID
 	private Integer id;
 	// 用户
@@ -22,6 +23,21 @@ public class Punishment implements Serializable {
 	private int fine;
 	// 罚款原因
 	private String reason;
+
+	// 用户信息
+	private UserInfo userInfo;
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public Integer getId() {
 		return id;
@@ -56,8 +72,14 @@ public class Punishment implements Serializable {
 	}
 
 	@Override
+	public String toString() {
+		return "Punishment [id=" + id + ", userId=" + userId + ", fine=" + fine + ", reason=" + reason + ", userInfo="
+				+ userInfo + "]";
+	}
+
+	@Override
 	public int hashCode() {
-		return Objects.hash(fine, id, reason, userId);
+		return Objects.hash(fine, id, reason, userId, userInfo);
 	}
 
 	@Override
@@ -70,12 +92,7 @@ public class Punishment implements Serializable {
 		}
 		Punishment other = (Punishment) obj;
 		return fine == other.fine && Objects.equals(id, other.id) && Objects.equals(reason, other.reason)
-				&& Objects.equals(userId, other.userId);
-	}
-
-	@Override
-	public String toString() {
-		return "Punishment [id=" + id + ", userId=" + userId + ", fine=" + fine + ", reason=" + reason + "]";
+				&& Objects.equals(userId, other.userId) && Objects.equals(userInfo, other.userInfo);
 	}
 
 	public Punishment(Integer id, Integer userId, int fine, String reason) {

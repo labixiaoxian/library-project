@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.wyu.entity.Punishment;
 
@@ -63,4 +64,7 @@ public interface PunishmentMapper {
 
 	@Delete("delete from lib_punishment where id = #{id}")
 	public void deleteById(Integer id);
+
+	@Update("update lib_punishment set fine = #{punishment.fine} where id = #{punishment.id}")
+	public void updateFine(Punishment punishment);
 }
