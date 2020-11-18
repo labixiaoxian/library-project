@@ -14,7 +14,7 @@ public interface BookService {
 	int deleteById(int id);
 	List<Book> queryAll();
 	List<Book> queryAllDivPage(int current,int size);
-	List<Book> queryLikeName(String name);
-	List<Book> queryLikeNameDivPage(String name,int current,int size);
+	List<Book> queryLikeName(String name,int country_id,int theme_id,int type_id,String space);
+	List<Book> queryLikeNameDivPage(String name,int country_id,int theme_id,int type_id,String space,int current,int size);
 	int updateBook(Book book);
 }

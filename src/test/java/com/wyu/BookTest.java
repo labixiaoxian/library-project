@@ -63,7 +63,11 @@ public class BookTest {
 	@Test
 	void queryLikeName() {
 		String name = "猪";
-		List<Book> list= bookMapper.queryByNameLike(name);
+		String space = "短篇小说";
+		int country_id = 0;
+		int theme_id = 1;
+		int type_id = 0;
+		List<Book> list= bookMapper.queryByNameLike(name,country_id,theme_id,type_id,space);
 		list.forEach(li->System.out.println(li));
 	}
 	
@@ -95,11 +99,15 @@ public class BookTest {
 	
 	@Test
 	void queryByNameLikeDivPage() {
-		int current = 2;
+		int current = 1;
 		int size = 5;
-		String name = "大猪";
+		String name = "猪";
+		String space = "1000";
+		int country_id = 1;
+		int theme_id = 1;
+		int type_id = 1;
 		int start = (current-1)*size;
-		List<Book> list = bookMapper.queryByNameLikeDivPage(name, start, size);
+		List<Book> list = bookMapper.queryByNameLikeDivPage(name,country_id,theme_id,type_id,space, start, size);
 		list.forEach(li->System.out.println(li));
 	}
 }

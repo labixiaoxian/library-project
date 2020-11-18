@@ -40,31 +40,56 @@ public class BookServiceImpl implements BookService{
 		row = bookMapper.deleteById(id);
 		return row;
 	}
-
+	/**
+	 * @apiNote 查询所有书籍信息
+	 */
 	@Override
 	public List<Book> queryAll() {
 		List<Book> list = bookMapper.queryAll();
 		return list;
 	}
-
+	/**
+	 * @apiNote 查询所有书籍信息（分页）
+	 * @param current
+	 * @param size
+	 */
 	@Override
 	public List<Book> queryAllDivPage(int current,int size) {
 		List<Book> list = bookMapper.queryAllDivPage((current-1)*size, size);
 		return list;
 	}
-
+	/**
+	 * @apiNote 查询所有书籍信息（模糊查询）
+	 * @param name
+	 * @param country_id
+	 * @param theme_id
+	 * @param type_id
+	 * @param space
+	 */
 	@Override
-	public List<Book> queryLikeName(String name) {
-		List<Book> list = bookMapper.queryByNameLike(name);
+	public List<Book> queryLikeName(String name,int country_id,int theme_id,int type_id,String space) {
+		List<Book> list = bookMapper.queryByNameLike(name, country_id, theme_id, type_id, space);
 		return list;
 	}
-
+	/**
+	 * @apiNote 查询所有书籍信息（模糊查询）（分页）
+	 * @param name
+	 * @param country_id
+	 * @param theme_id
+	 * @param type_id
+	 * @param space
+	 * @param current
+	 * @param size
+	 */
 	@Override
-	public List<Book> queryLikeNameDivPage(String name,int current,int size) {
-		List<Book> list = bookMapper.queryByNameLikeDivPage(name, (current-1)*size, size);
+	public List<Book> queryLikeNameDivPage(String name,int country_id,int theme_id,int type_id,String space,int current,int size) {
+		List<Book> list = bookMapper.queryByNameLikeDivPage(name,country_id,theme_id,type_id,space, (current-1)*size, size);
 		return list;
 	}
-
+	/**
+	 * @apiNote 更新书籍信息
+	 * @param book
+	 */
 	@Override
 	public int updateBook(Book book) {
 		int row = 0;

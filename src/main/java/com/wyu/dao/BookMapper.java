@@ -26,9 +26,15 @@ public interface BookMapper {
 	/**
 	 * @apiNote 书名的模糊查询
 	 * @param name
+	 * @param country_id
+	 * @param theme_id
+	 * @param type_id
+	 * @param space
 	 * @return
 	 */
-	public List<Book> queryByNameLike(@Param("name") String name);
+	public List<Book> queryByNameLike(@Param("name") String name,
+			@Param("country_id") int country_id,@Param("theme_id") int theme_id,
+			@Param("type_id") int type_id,@Param("space") String space);
 	/**
 	 * @apiNote 新建书籍信息
 	 * @param book
@@ -57,9 +63,16 @@ public interface BookMapper {
 	/**
 	 * @apiNote 模糊查询分页
 	 * @param name
+	 * @param country_id
+	 * @param theme_id
+	 * @param type_id
+	 * @param space
 	 * @param current
 	 * @param size
 	 * @return
 	 */
-	public List<Book> queryByNameLikeDivPage(@Param("name") String name,@Param("current")int current,@Param("size")int size);
+	public List<Book> queryByNameLikeDivPage(@Param("name") String name,
+			@Param("country_id")int country_id,@Param("theme_id")int theme_id,
+			@Param("type_id")int type_id,@Param("space")String space,
+			@Param("current")int current,@Param("size")int size);
 }

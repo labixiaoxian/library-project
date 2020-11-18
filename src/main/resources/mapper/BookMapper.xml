@@ -62,7 +62,7 @@
 	
 	<select id="queryAllDivPage" resultMap="bookResultMap">
 		select 
-		b.id did,b.book_name,
+		b.id,b.book_name,
 		c.id cid,c.country_name,
 		t.id tid,t.theme_name,
 		p.id pid,p.type_name,
@@ -96,15 +96,31 @@
 		LEFT JOIN lib_country c on b.country_id=c.id 
 		LEFT JOIN lib_theme t on b.theme_id=t.id
 		LEFT JOIN lib_type p on b.type_id=p.id
-		where b.book_name like "%"#{name}"%"
+		<where>
+			<if test="name!=null">
+				b.book_name like "%"#{name}"%"
+			</if>
+			<if test="country_id!=0">
+				and b.country_id=#{country_id}
+			</if>
+			<if test="theme_id!=0">
+				and b.theme_id=#{theme_id}
+			</if>
+			<if test="space!=null">
+				and space=#{space}
+			</if>
+			<if test="type_id!=0">
+				and b.type_id=#{type_id}
+			</if>
+		</where>
 	</select>
 	
 	<select id="queryByNameLikeDivPage" resultMap="bookResultMap" >
 		select 
 		b.id,b.book_name,
-		c.id,c.country_name,
-		t.id,t.theme_name,
-		p.id,p.type_name,
+		c.id cid,c.country_name,
+		t.id tid,t.theme_name,
+		p.id pid,p.type_name,
 		b.space,
 		b.book_count,
 		b.info,
@@ -114,7 +130,23 @@
 		LEFT JOIN lib_country c on b.country_id=c.id 
 		LEFT JOIN lib_theme t on b.theme_id=t.id
 		LEFT JOIN lib_type p on b.type_id=p.id
-		where b.book_name like "%"#{name}"%"
+		<where>
+			<if test="name!=null">
+				b.book_name like "%"#{name}"%"
+			</if>
+			<if test="country_id!=0">
+				and b.country_id=#{country_id}
+			</if>
+			<if test="theme_id!=0">
+				and b.theme_id=#{theme_id}
+			</if>
+			<if test="space!=null">
+				and space=#{space}
+			</if>
+			<if test="type_id!=0">
+				and b.type_id=#{type_id}
+			</if>
+		</where>
 		limit #{current},#{size}
 	</select>
 	
