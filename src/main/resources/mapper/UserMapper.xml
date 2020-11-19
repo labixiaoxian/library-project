@@ -11,6 +11,7 @@
         <result property="borrowCount" column="borrow_count"/>
         <result property="registerTime" column="register_time"/>
         <result property="credit" column="credit"/>
+        <result property="status" column="status"/>
         <collection property="roles" javaType="list" ofType="Role">
             <id column="id" property="id"/>
             <result column="role_name" property="roleName"/>
@@ -24,16 +25,30 @@
      pwd_salt,
      borrow_count,
      register_time,
-     credit
+     credit,
+     status
      FROM lib_user
      WHERE username = #{username}
+    </select>
+    <select id="findUserById" parameterType="java.lang.Integer" resultType="com.wyu.entity.User">
+        SELECT
+        id,
+        username,
+        pwd_hash,
+        pwd_salt,
+        borrow_count,
+        register_time,
+        credit,
+        status
+        FROM lib_user
+        WHERE id = #{userId}
     </select>
     <insert id="insertUser" parameterType="com.wyu.entity.User"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">
         INSERT INTO
-        lib_user(username,pwd_hash,pwd_salt,borrow_count,register_time,credit)
+        lib_user(username,pwd_hash,pwd_salt,borrow_count,register_time,credit,status)
         VALUES
-        (#{username},#{pwdHash},#{pwdSalt},#{borrowCount},#{registerTime},#{credit})
+        (#{username},#{pwdHash},#{pwdSalt},#{borrowCount},#{registerTime},#{credit},#{status})
     </insert>
 
     <delete id="deleteUserByUsername" parameterType="java.lang.String">
@@ -50,6 +65,7 @@
             <if test="pwdSalt != null">pwd_salt=#{pwdSalt},</if>
             <if test="borrowCount != null">borrow_count=#{borrowCount},</if>
             <if test="registerTime != null">register_time=#{registerTime},</if>
+            <if test="status != null">status=#{status},</if>
             <if test="credit != null">credit=#{credit}</if>
         </set>
         WHERE id = #{id};
@@ -64,6 +80,7 @@
         u.borrow_count,
         u.register_time,
         u.credit,
+        u.status,
         r.id,
         r.role_name
         from lib_user u
