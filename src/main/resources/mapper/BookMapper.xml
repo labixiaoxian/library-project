@@ -59,6 +59,7 @@
 		LEFT JOIN lib_theme t on b.theme_id=t.id
 		LEFT JOIN lib_type p on b.type_id=p.id
 		where b.id=#{id}
+		for update
 	</select>
 	
 	<select id="queryAllDivPage" resultMap="bookResultMap">
