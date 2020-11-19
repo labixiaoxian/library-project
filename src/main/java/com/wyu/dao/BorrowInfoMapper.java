@@ -25,6 +25,18 @@ public interface BorrowInfoMapper {
 	@Select("select * from lib_borrow_info where id = #{id}")
 	public BorrowInfo getById(Integer id);
 
+	@Select("select * from lib_borrow_info where user_id = #{userId} and borrow_state in (0,1)")
+	public List<BorrowInfo> getBookShelf(Integer userId);
+
+	/**
+	 * 
+	 * @param current
+	 * @param pageSize
+	 * @return
+	 */
+	@Select("select * from lib_borrow_info limit #{current},#{pageSize}")
+	public List<BorrowInfo> getBorrowInfosPagination(Integer current, Integer pageSize);
+
 	/**
 	 * 
 	 * @param name
@@ -155,7 +167,7 @@ public interface BorrowInfoMapper {
 	 * @apiNote 插入借阅信息。注：可不用填借阅id，审核状态，借阅状态和续借状态
 	 * @param BorrowInfo对象
 	 */
-	@Insert("insert into lib_borrow_info values(null,#{info.userId},#{info.userId},#{info.bookId},#{info.borrowDate},#{info.returnDate},null,null,null)")
+	@Insert("insert into lib_borrow_info values(null,#{info.userId},#{info.bookId},#{info.borrowDate},#{info.returnDate},0,0,0)")
 	public void insert(@Param("info") BorrowInfo info);
 
 	/**
@@ -170,10 +182,10 @@ public interface BorrowInfoMapper {
 	 * @param id
 	 * @param states
 	 */
-	@Update("update lib_borrow_info set borrow_state = #{states} where id = #{id]")
+	@Update("update lib_borrow_info set borrow_state = #{states} where id = #{id}")
 	public void updateStates(Integer id, Integer states);
 
-	@Update("update lib_borrow_info set borrow_state = 1,examine_state=1 where id = #{id]")
+	@Update("update lib_borrow_info set borrow_state = 1,examine_state=1 where id = #{id}")
 	public void approve(Integer id);
 
 	/**
