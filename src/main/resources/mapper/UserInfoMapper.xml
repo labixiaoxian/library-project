@@ -21,6 +21,7 @@
             <result column="borrow_count" property="borrowCount" />
             <result column="register_time" property="registerTime" />
             <result column="credit" property="credit" />
+            <result column="status" property="status" />
         </association>
     </resultMap>
    <select id="findUserInfoByUserId" parameterType="java.lang.Integer" resultMap="userInfoMap">
@@ -38,6 +39,7 @@
      u.username,
      u.borrow_count,
      u.register_time,
+     u.status,
      u.credit
      FROM
      lib_user_info ui,
@@ -62,6 +64,7 @@
         u.username,
         u.borrow_count,
         u.register_time,
+        u.status,
         u.credit
         FROM
         lib_user_info ui,
@@ -116,6 +119,7 @@
         u.username,
         u.borrow_count,
         u.register_time,
+        u.status,
         u.credit
         FROM
         lib_user_info ui,
