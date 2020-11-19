@@ -3,9 +3,12 @@ package com.wyu.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-/*
-* 图书实体类
- */
+/**
+*
+* @author 李润东
+* @since 2020/11/17
+*
+*/
 public class Book implements Serializable{
 	private int id;             //图书ID
 	private String bookName;    //图书名
@@ -21,6 +24,20 @@ public class Book implements Serializable{
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Book(String bookName, Country country, Theme theme, Type type, String space, int bookCount, String info,
+			Timestamp createDate) {
+		super();
+		this.bookName = bookName;
+		this.country = country;
+		this.theme = theme;
+		this.type = type;
+		this.space = space;
+		this.bookCount = bookCount;
+		this.info = info;
+		this.createDate = createDate;
+	}
+
 	public int getId() {
 		return id;
 	}

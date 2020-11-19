@@ -27,18 +27,18 @@ public interface CountryMapper {
 	 * @param country
 	 * @return
 	 */
-	public int newCountry(Country country);
+	public void newCountry(Country country);
 	/**
 	 * @apiNote 删除一个国家信息
 	 * @param id
 	 * @return
 	 */
-	public int deleteById(int id);
+	public void deleteById(int id);
 	/**
 	 * @apiNote 更新一个国家信息
 	 * @param country
 	 * @param countryName
 	 * @return
 	 */
-	public int updateById(Country country,String countryName);
+	public void update(Country country);
 }

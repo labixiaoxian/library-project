@@ -26,18 +26,18 @@ public interface TypeMapper {
 	 * @param type
 	 * @return
 	 */
-	public int newType(Type type);
+	public void newType(Type type);
 	/**
 	 * @apiNote 通过id删除一个类型信息
 	 * @param id
 	 * @return
 	 */
-	public int deleteById(int id);
+	public void deleteById(int id);
 	/**
 	 * @apiNote 更新一条类型信息
 	 * @param type
 	 * @param typeName
 	 * @return
 	 */
-	public int updateById(Type type,String typeName);
+	public void updateById(Type type);
 }

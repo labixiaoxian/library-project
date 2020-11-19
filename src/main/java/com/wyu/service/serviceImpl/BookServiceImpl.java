@@ -24,10 +24,8 @@ public class BookServiceImpl implements BookService{
 	 * @param book
 	 */
 	@Override
-	public int addBook(Book book) {
-		int row = 0;
-		row = bookMapper.newBook(book);
-		return row;
+	public void addBook(Book book) {
+		bookMapper.newBook(book);
 	}
 
 	/**
@@ -35,11 +33,10 @@ public class BookServiceImpl implements BookService{
 	 * @param id
 	 */
 	@Override
-	public int deleteById(int id) {
-		int row = 0;
-		row = bookMapper.deleteById(id);
-		return row;
+	public void deleteById(int id) {
+		bookMapper.deleteById(id);
 	}
+	
 	/**
 	 * @apiNote 查询所有书籍信息
 	 */
@@ -91,10 +88,17 @@ public class BookServiceImpl implements BookService{
 	 * @param book
 	 */
 	@Override
-	public int updateBook(Book book) {
-		int row = 0;
-		row = bookMapper.updateBook(book);
-		return row;
+	public void updateBook(Book book) {
+		bookMapper.updateBook(book);
+	}
+	/**
+	 * @apiNote 通过Id查询书籍信息
+	 * @param 
+	 */
+	@Override
+	public Book queryById(int id) {
+		Book book = bookMapper.queryById(id);
+		return book;
 	}
 
 }

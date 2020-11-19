@@ -2,37 +2,18 @@ package com.wyu.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.wyu.dao.TypeMapper;
 import com.wyu.entity.Type;
-
-@Service
-public class TypeService {
-	@Autowired
-	private TypeMapper typeMapper;
+/**
+*
+* @author 李润东
+* @since 2020/11/19
+*
+*/
+public interface TypeService {
 	
-	public List<Type> queryAll(){
-		
-		List<Type> typeList = typeMapper.queryAll();
-		return typeList;
-	}
-	public Type queryById(int id) {
-		Type type = typeMapper.queryById(id);
-		return type;
-	}
-	public int insertType(Type type) {
-		int flag = typeMapper.newType(type);
-		return flag;
-	}
-	public int updateById(Type type,String typeName) {
-		int flag = typeMapper.updateById(type, typeName);
-		return flag;
-	}
-	public int deleteById() {
-		int id = 1;
-		int flag = typeMapper.deleteById(id);
-		return flag;
-	}
+     List<Type> queryAll();
+	 Type queryById(int id);
+	 void insertType(Type type);
+	 void updateById(Type type);
+	 void deleteById(int id);
 }
