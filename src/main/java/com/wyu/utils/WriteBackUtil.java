@@ -13,4 +13,10 @@ public class WriteBackUtil {
         writeBack.setCode(Constant.success.getCode());
         writeBack.setMsg(Constant.success.getMsg());
     }
+
+    public static void setWriteBack(Integer code,String msg,Object data,WriteBack writeBack){
+        writeBack.setCode(code);
+        writeBack.setMsg(msg);
+        writeBack.setData(data);
+    }
 }

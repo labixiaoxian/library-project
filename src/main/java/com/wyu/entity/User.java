@@ -26,7 +26,17 @@ public class User implements Serializable {
 
     private Integer credit;
 
+    private Integer status;
+
     private List<Role> roles;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

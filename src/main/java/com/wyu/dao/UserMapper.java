@@ -10,14 +10,7 @@ import java.util.List;
  */
 public interface UserMapper {
 
-    /**
-     * 查询用户信息
-     * @param user
-     * @param rowIndex
-     * @param pageSize
-     * @return
-     */
-    List<User> queryUserList(@Param("userCondition") User user, @Param("rowIndex") int rowIndex, @Param("pageSize") int pageSize);
+
 
     /**
      * 通过用户名查询用户
@@ -53,6 +46,9 @@ public interface UserMapper {
      * @return
      */
     User findRolesByUsername(@Param("username")String username);
+
+
+    User findUserById(@Param("userId")Integer userId);
 
 
 }
