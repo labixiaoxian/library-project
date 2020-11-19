@@ -26,12 +26,35 @@ public interface BorrowInfoMapper {
 	public BorrowInfo getById(Integer id);
 
 	/**
+	 * 
+	 * @param name
+	 * @param states
+	 * @param current
+	 * @param pageSize
+	 * @return
+	 */
+	@Select("select * from lib_borrow_info where user_id in (select user_id from lib_user_info where nickname like #{name})"
+			+ "where borrow_state = #{states] limit #{current},#{pageSize}")
+	public List<BorrowInfo> getByUserNameAndStatesPagination(String name, Integer states, Integer current,
+			Integer pageSize);
+
+	/**
 	 * @apiNote 通过用户ID查询借阅信息
 	 * @param userId
 	 * @return 有关该用户的所有借阅信息
 	 */
 	@Select("select * from lib_borrow_info where user_id = #{userId}")
 	public List<BorrowInfo> getByUserId(Integer userId);
+
+	/**
+	 * 
+	 * @param userId
+	 * @param current
+	 * @param pageSize
+	 * @return
+	 */
+	@Select("select * from lib_borrow_info where user_id = #{userId} limit #{current},#{pageSize}")
+	public List<BorrowInfo> getByUserIdPagination(Integer userId, int current, int pageSize);
 
 	/**
 	 * @apiNote 通过图书ID查询借阅信息
@@ -104,6 +127,15 @@ public interface BorrowInfoMapper {
 	public List<BorrowInfo> getOverDueInfoPagination(int current, int size);
 
 	/**
+	 * @apiNote 根据用户ID和借阅状态查询借阅信息
+	 * @param userId
+	 * @param status
+	 * @return
+	 */
+	@Select("select * from lib_borrow_info where user_id = #{userId} and borrow_state = #{states}")
+	public List<BorrowInfo> getByUserIdAndBorrowStates(Integer userId, Integer states);
+
+	/**
 	 * @apiNote 查询所有借阅信息
 	 * @return 所有借阅信息
 	 */
@@ -134,10 +166,22 @@ public interface BorrowInfoMapper {
 	public void deleteById(Integer id);
 
 	/**
-	 * @apiNote 更新借阅信息。注：无法更新借书时间和还书时间，故该这两个字段可不设置
+	 * 
+	 * @param id
+	 * @param states
+	 */
+	@Update("update lib_borrow_info set borrow_state = #{states} where id = #{id]")
+	public void updateStates(Integer id, Integer states);
+
+	@Update("update lib_borrow_info set borrow_state = 1,examine_state=1 where id = #{id]")
+	public void approve(Integer id);
+
+	/**
+	 * @apiNote 更新借阅信息。
 	 * @param BorrowInfo对象
 	 */
 	@Update("update lib_borrow_info set user_id=#{info.userId},book_id=#{info.bookId},examine_state=#{info.examineState},"
+			+ "borrow_date = #{info.borrowDate},return_date = #{info.returnDate}"
 			+ "borrow_state=#{info.borrowState},renew_state=#{info.renewState} where id = #{info.id}")
 	public void update(@Param("info") BorrowInfo info);
 }
