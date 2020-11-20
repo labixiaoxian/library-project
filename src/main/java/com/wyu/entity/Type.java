@@ -2,11 +2,19 @@ package com.wyu.entity;
 
 import java.io.Serializable;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
+
 /*
  * 类型实体类
  */
+@ExcelTarget("type")
 public class Type implements Serializable{
+	@ExcelIgnore
+	@Excel(name = "类型ID")
 	private int id;             //类型ID
+	@Excel(name = "类型",orderNum = "4")
 	private String typeName;    //类型名
 	public Type() {
 		super();

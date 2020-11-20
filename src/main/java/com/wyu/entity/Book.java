@@ -3,21 +3,35 @@ package com.wyu.entity;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelEntity;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
+
 /**
 *
 * @author 李润东
 * @since 2020/11/17
 *
 */
+@ExcelTarget("books")
 public class Book implements Serializable{
+	@Excel(name = "图书编号",orderNum = "0")
 	private int id;             //图书ID
+	@Excel(name = "图书名",orderNum = "1",width = 35.0)
 	private String bookName;    //图书名
+	@ExcelEntity
 	private Country country;    //国家
+	@ExcelEntity
 	private Theme theme;        //主题
+	@ExcelEntity
 	private Type type;          //类型
+	@Excel(name = "篇幅",orderNum = "5")
 	private String space;       //篇幅
+	@Excel(name = "图书数量",orderNum = "6")
 	private int bookCount;      //图书数量
+	@Excel(name = "详细信息",width = 60.0,orderNum = "7")
 	private String info;        //详细信息
+	@Excel(name = "图书上架时间",width = 35.0,format = "yyyy-MM-dd HH-mm-ss",orderNum = "8")
 	private Timestamp createDate;  //图书上架时间
 	
 	public Book() {

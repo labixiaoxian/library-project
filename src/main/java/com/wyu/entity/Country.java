@@ -2,11 +2,19 @@ package com.wyu.entity;
 
 import java.io.Serializable;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.afterturn.easypoi.excel.annotation.ExcelIgnore;
+import cn.afterturn.easypoi.excel.annotation.ExcelTarget;
+
 /*
  * 国家实体类
  */
+@ExcelTarget("country")
 public class Country implements Serializable{
+	@ExcelIgnore
+	@Excel(name = "国家ID")
 	private int id;              //国家Id
+	@Excel(name = "国家",orderNum = "2")
 	private String countryName;  //国家名
 	
 	public Country() {

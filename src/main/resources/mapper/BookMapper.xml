@@ -40,7 +40,6 @@
 		LEFT JOIN lib_country c on b.country_id=c.id 
 		LEFT JOIN lib_theme t on b.theme_id=t.id
 		LEFT JOIN lib_type p on b.type_id=p.id
-		order by b.create_date desc
 	</select>
 	
 	<select id="queryById" resultMap="bookResultMap" parameterType="int">
