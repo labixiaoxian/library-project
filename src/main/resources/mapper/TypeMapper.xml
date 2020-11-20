@@ -8,7 +8,7 @@
 		insert into lib_type(type_name) values(#{typeName})
 	</insert>
 	<select id="queryAll" resultType="com.wyu.entity.Type">
-		select * from lib_type
+		select * from lib_type order by id
 	</select>
 	<select id="queryById" resultType="com.wyu.entity.Type" parameterType="int">
 		select * from lib_type where id=#{id}

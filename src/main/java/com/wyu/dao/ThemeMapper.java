@@ -26,18 +26,18 @@ public interface ThemeMapper {
 	 * @param theme
 	 * @return
 	 */
-	public int newTheme(Theme theme);
+	public void newTheme(Theme theme);
 	/**
 	 * @apiNote 通过id删除一个主题信息
 	 * @param id
 	 * @return
 	 */
-	public int deleteById(int id);
+	public void deleteById(int id);
 	/**
 	 * @apiNote 更新一个主题信息
 	 * @param theme
 	 * @param themeName
 	 * @return
 	 */
-	public int updateById(Theme theme,String themeName);
+	public void update(Theme theme);
 }

@@ -8,7 +8,7 @@
 		insert into lib_theme(theme_name) values(#{themeName})
 	</insert>
 	<select id="queryAll" resultType="com.wyu.entity.Theme">
-		select * from lib_theme
+		select * from lib_theme order by id
 	</select>
 	<select id="queryById" resultType="com.wyu.entity.Theme" parameterType="int">
 		select * from lib_theme where id=#{id}
@@ -16,7 +16,7 @@
 	<delete id="deleteById" parameterType="int">
 		delete from lib_theme where id=#{id}
 	</delete>
-	<update id="updateById" parameterType="com.wyu.entity.Theme">
+	<update id="update" parameterType="com.wyu.entity.Theme">
 		update lib_theme SET theme_name=#{themeName} where id=#{id}
 	</update>
 </mapper>

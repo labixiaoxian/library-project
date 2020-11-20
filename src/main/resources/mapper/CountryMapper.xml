@@ -8,7 +8,7 @@
 		insert into lib_country(country_name) values(#{countryName})
 	</insert>
 	<select id="queryAll" resultType="com.wyu.entity.Country">
-		select * from lib_country
+		select * from lib_country order by id
 	</select>
 	<select id="queryById" resultType="com.wyu.entity.Country" parameterType="int">
 		select * from lib_country where id=#{id}
@@ -16,7 +16,7 @@
 	<delete id="deleteById" parameterType="int">
 		delete from lib_country where id=#{id}
 	</delete>
-	<update id="updateById" parameterType="com.wyu.entity.Country">
+	<update id="update" parameterType="com.wyu.entity.Country">
 		update lib_country SET country_name=#{countryName} where id=#{id}
 	</update>
 </mapper>

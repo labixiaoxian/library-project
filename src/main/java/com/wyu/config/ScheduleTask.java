@@ -18,8 +18,10 @@ import com.wyu.dao.BookMapper;
 import com.wyu.dao.BorrowInfoMapper;
 import com.wyu.dao.PunishmentMapper;
 import com.wyu.dao.UserInfoMapper;
+import com.wyu.dao.UserMapper;
 import com.wyu.entity.BorrowInfo;
 import com.wyu.entity.Punishment;
+import com.wyu.entity.User;
 
 /**
  * 
@@ -43,6 +45,9 @@ public class ScheduleTask {
 	UserInfoMapper UserInfoMapper;
 
 	@Autowired
+	UserMapper UserMapper;
+
+	@Autowired
 	private JavaMailSenderImpl mailSender;
 
 	@Value("${spring.mail.username}")
@@ -61,6 +66,9 @@ public class ScheduleTask {
 				try {
 					List<Punishment> list = punishmentMapper.list();
 					for (Punishment punishment : list) {
+						User user = UserMapper.findUserById(punishment.getUserId());
+						user.setCredit((user.getCredit() - 5) <= 0 ? 0 : user.getCredit() - 5);
+						UserMapper.updateUser(user);
 						punishment.setFine(punishment.getFine() + 1);
 						punishmentMapper.updateFine(punishment);
 					}
@@ -84,6 +92,9 @@ public class ScheduleTask {
 				List<BorrowInfo> overDueInfo = borrowInfoMapper.getOverDueInfo();
 				try {
 					for (BorrowInfo borrowInfo : overDueInfo) {
+						User user = UserMapper.findUserById(borrowInfo.getUserId());
+						user.setCredit((user.getCredit() - 10) <= 0 ? 0 : user.getCredit() - 10);
+						UserMapper.updateUser(user);
 						Punishment punishment = new Punishment(null, borrowInfo.getUserId(), 30,
 								bookMapper.queryById(borrowInfo.getBookId()) + "未归还");
 						punishmentMapper.insert(punishment);
@@ -126,6 +137,7 @@ public class ScheduleTask {
 						e.printStackTrace();
 					}
 				}
+				System.gc();
 			}
 		});
 	}
