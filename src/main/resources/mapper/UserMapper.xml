@@ -42,6 +42,7 @@
         status
         FROM lib_user
         WHERE id = #{userId}
+        for update
     </select>
     <insert id="insertUser" parameterType="com.wyu.entity.User"
             useGeneratedKeys="true" keyProperty="id" keyColumn="id">

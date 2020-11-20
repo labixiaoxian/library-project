@@ -25,6 +25,11 @@ public interface BorrowInfoMapper {
 	@Select("select * from lib_borrow_info where id = #{id}")
 	public BorrowInfo getById(Integer id);
 
+	/**
+	 * 
+	 * @param userId
+	 * @return
+	 */
 	@Select("select * from lib_borrow_info where user_id = #{userId} and borrow_state in (0,1)")
 	public List<BorrowInfo> getBookShelf(Integer userId);
 
@@ -37,6 +42,9 @@ public interface BorrowInfoMapper {
 	@Select("select * from lib_borrow_info limit #{current},#{pageSize}")
 	public List<BorrowInfo> getBorrowInfosPagination(Integer current, Integer pageSize);
 
+	@Select("select count(1) from lib_borrow_info")
+	public int getBorrowInfosCount();
+
 	/**
 	 * 
 	 * @param name
@@ -46,9 +54,13 @@ public interface BorrowInfoMapper {
 	 * @return
 	 */
 	@Select("select * from lib_borrow_info where user_id in (select user_id from lib_user_info where nickname like #{name})"
-			+ "where borrow_state = #{states] limit #{current},#{pageSize}")
+			+ "and borrow_state = #{states} limit #{current},#{pageSize}")
 	public List<BorrowInfo> getByUserNameAndStatesPagination(String name, Integer states, Integer current,
 			Integer pageSize);
+
+	@Select("select count(1) from lib_borrow_info where user_id in (select user_id from lib_user_info where nickname like #{name})"
+			+ "and borrow_state = #{states}")
+	public int getByUserNameAndStatesCount(String name, Integer states);
 
 	/**
 	 * @apiNote 通过用户ID查询借阅信息
@@ -67,6 +79,9 @@ public interface BorrowInfoMapper {
 	 */
 	@Select("select * from lib_borrow_info where user_id = #{userId} limit #{current},#{pageSize}")
 	public List<BorrowInfo> getByUserIdPagination(Integer userId, int current, int pageSize);
+
+	@Select("select count(1) from lib_borrow_info where user_id = #{userId}")
+	public int getByUserIdCount(Integer userId);
 
 	/**
 	 * @apiNote 通过图书ID查询借阅信息
@@ -101,7 +116,7 @@ public interface BorrowInfoMapper {
 	 * @param size
 	 * @return
 	 */
-	@Select("select * from lib_borrow_info where examine_state = #{state} limit #{current},#{size}")
+	@Select("select * from lib_borrow_info where examine_state = #{state} limit #{current},#{size} order by borrow_date")
 	public List<BorrowInfo> getByExamineStatePagination(Integer state, int current, int size);
 
 	/**
@@ -111,6 +126,9 @@ public interface BorrowInfoMapper {
 	 */
 	@Select("select * from lib_borrow_info where borrow_state = #{state}")
 	public List<BorrowInfo> getByBorrowState(Integer state);
+
+	@Select("select count(1) from lib_borrow_info where borrow_state = #{state}")
+	public int getByBorrowStateCount(Integer state);
 
 	/**
 	 * @apiNote 通过借阅状态分页查询借阅信息
@@ -126,8 +144,11 @@ public interface BorrowInfoMapper {
 	 * @apiNote 查询逾期借阅信息
 	 * @return 所有逾期的借阅信息
 	 */
-	@Select("select * from lib_borrow_info where TIMESTAMPDIFF(DAY,now(),borrow_date) =31;")
+	@Select("select * from lib_borrow_info where TIMESTAMPDIFF(DAY,now(),borrow_date) =31 and borrow_state=1;")
 	public List<BorrowInfo> getOverDueInfo();
+
+	@Select("select count(1) from lib_borrow_info where TIMESTAMPDIFF(DAY,now(),borrow_date) =31 and borrow_state=1;")
+	public int getOverDueInfoCount();
 
 	/**
 	 * @apiNote 分页查询逾期借阅信息
@@ -156,12 +177,11 @@ public interface BorrowInfoMapper {
 
 	/**
 	 * 
-	 * @param current
-	 * @param size
-	 * @return list
+	 * @param bookId
+	 * @return
 	 */
-	@Select("select * from lib_borrow_info limit #{current},#{size}")
-	public List<BorrowInfo> listPagination(int current, int size);
+	@Select("select * from lib_borrow_info where book_id = #{bookId}")
+	public List<BorrowInfo> getBorrowInfosByBookId(Integer bookId);
 
 	/**
 	 * @apiNote 插入借阅信息。注：可不用填借阅id，审核状态，借阅状态和续借状态
@@ -185,6 +205,10 @@ public interface BorrowInfoMapper {
 	@Update("update lib_borrow_info set borrow_state = #{states} where id = #{id}")
 	public void updateStates(Integer id, Integer states);
 
+	/**
+	 * 
+	 * @param id
+	 */
 	@Update("update lib_borrow_info set borrow_state = 1,examine_state=1 where id = #{id}")
 	public void approve(Integer id);
 
@@ -196,4 +220,5 @@ public interface BorrowInfoMapper {
 			+ "borrow_date = #{info.borrowDate},return_date = #{info.returnDate}"
 			+ "borrow_state=#{info.borrowState},renew_state=#{info.renewState} where id = #{info.id}")
 	public void update(@Param("info") BorrowInfo info);
+
 }
