@@ -26,4 +26,8 @@ public abstract class BorrowInfoService {
 	public abstract void insert(BorrowInfo borrowInfo) throws Exception;
 
 	public abstract List<BorrowInfo> getBorrowInfosPagination(Integer currentPage, Integer pageSize);
+
+	public abstract void refuse(Integer id);
+
+	public abstract List<BorrowInfo> getBorrowInfosByBookId(Integer bookId);
 }

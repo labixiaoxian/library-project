@@ -18,197 +18,251 @@ import com.wyu.service.BorrowInfoService;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 /**
  *
  * @author 李达成
  * @since 2020/11/19
  */
+@Api(value = "借阅信息模块", tags = { "借阅信息模块" })
 @RestController
 public class BorrowInfoController {
 
-    @Autowired
-    BorrowInfoService borrowInfoService;
+	@Autowired
+	BorrowInfoService borrowInfoService;
 
-    @Autowired
-    BorrowInfoMapper borrowInfoMapper;
+	@Autowired
+	BorrowInfoMapper borrowInfoMapper;
 
-    @PutMapping("/borrowInfo/approve")
-    public WriteBack<String> approve(Integer id) {
-        WriteBack<String> writeBack = new WriteBack<>();
-        try {
-            borrowInfoService.approve(id);
-            WriteBackUtil.setSuccess(writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "通过一条审核中的借阅信息", value = "通过一条审核中的借阅信息")
+	@PutMapping("/borrowInfo/approve")
+	public WriteBack<String> approve(@ApiParam(name = "id", value = "借阅信息ID", required = true) Integer id) {
+		WriteBack<String> writeBack = new WriteBack<>();
+		try {
+			borrowInfoService.approve(id);
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @PostMapping("/borrowInfo")
-    public WriteBack<String> borrowBook(@RequestBody String body) {
-        WriteBack<String> writeBack = new WriteBack<>();
-        Gson gson = new Gson();
-        try {
-            HashMap<String, Object> hashMap = gson.fromJson(body, HashMap.class);
-            Integer userId = ((Double) hashMap.get("userId")).intValue();
-            Integer bookId = ((Double) hashMap.get("bookId")).intValue();
-            if (borrowInfoService.getCountByUserId(userId) == 200) {
-                throw new Exception();
-            }
-            BorrowInfo borrowInfo = new BorrowInfo();
-            borrowInfo.setBookId(bookId);
-            borrowInfo.setUserId(userId);
-            borrowInfoService.insert(borrowInfo);
-            WriteBackUtil.setSuccess(writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            WriteBackUtil.setWriteBack(500, "借阅失败，图书数量不足或没有借阅次数", "", writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "拒绝一条审核中的借阅信息", value = "拒绝一条审核中的借阅信息")
+	@PutMapping("/borrowInfo/refuse")
+	public WriteBack<String> refuse(@ApiParam(name = "id", value = "借阅信息ID", required = true) Integer id) {
+		WriteBack<String> writeBack = new WriteBack<>();
+		try {
+			borrowInfoService.refuse(id);
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo/bookShelf")
-    public WriteBack<List<BorrowInfo>> getBookShelf(Integer userId) {
-        WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
-        try {
-            WriteBackUtil.setWriteBack(200, "查询书架成功", borrowInfoService.getBookShelf(userId), writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "插入一条借阅记录", value = "插入一条借阅记录")
+	@PostMapping("/borrowInfo")
+	public WriteBack<String> borrowBook(
+			@ApiParam(name = "body", value = "json格式数据，传入两个属性：userId和bookId", required = true) @RequestBody String body) {
+		WriteBack<String> writeBack = new WriteBack<>();
+		Gson gson = new Gson();
+		try {
+			HashMap<String, Object> hashMap = gson.fromJson(body, HashMap.class);
+			Integer userId = ((Double) hashMap.get("userId")).intValue();
+			Integer bookId = ((Double) hashMap.get("bookId")).intValue();
+			if (borrowInfoService.getCountByUserId(userId) >= 3) {
+				throw new Exception();
+			}
+			BorrowInfo borrowInfo = new BorrowInfo();
+			borrowInfo.setBookId(bookId);
+			borrowInfo.setUserId(userId);
+			borrowInfoService.insert(borrowInfo);
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setWriteBack(500, "借阅失败，图书数量不足或没有借阅次数", "", writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo/count")
-    public WriteBack<Integer> getBorrowCount(@RequestParam("id") Integer id) {
-        WriteBack<Integer> writeBack = new WriteBack<>();
-        try {
-            writeBack.setData(borrowInfoService.getCountByUserId(id));
-            WriteBackUtil.setSuccess(writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "查询某用户的书架", value = "查询某用户的书架")
+	@GetMapping("/borrowInfo/bookShelf")
+	public WriteBack<List<BorrowInfo>> getBookShelf(
+			@ApiParam(name = "userId", value = "用户ID", required = true) Integer userId) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			WriteBackUtil.setWriteBack(200, "查询书架成功", borrowInfoService.getBookShelf(userId), writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo")
-    public WriteBack<List<BorrowInfo>> getBorrowInfos(@RequestParam("currentPage") Integer currentPage,
-            @RequestParam("pageSize") Integer pageSize) {
-        WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
-        try {
-            WriteBackUtil.setWriteBack(200, "查询借阅信息成功",
-                    borrowInfoService.getBorrowInfosPagination(currentPage, pageSize), writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "查询某用户借阅的书籍数", value = "查询某用户借阅的书籍数")
+	@GetMapping("/borrowInfo/borrowCount")
+	public WriteBack<Integer> getBorrowCount(@RequestParam("id") Integer userId) {
+		WriteBack<Integer> writeBack = new WriteBack<>();
+		try {
+			writeBack.setData(borrowInfoService.getCountByUserId(userId));
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo/borrow")
-    public WriteBack<List<BorrowInfo>> getBorrowingBorrowInfos(@RequestParam("currentPage") Integer currentPage,
-            @RequestParam("pageSize") Integer pageSize) {
-        WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
-        try {
-            WriteBackUtil.setWriteBack(200, "查询审核中的借阅记录成功",
-                    borrowInfoService.getBorrowingBorrowInfos(currentPage, pageSize), writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "分页查询所有用户借阅信息", value = "分页查询所有用户借阅信息")
+	@GetMapping("/borrowInfo")
+	public WriteBack<List<BorrowInfo>> getBorrowInfos(@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("pageSize") Integer pageSize) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			writeBack.setCount(borrowInfoMapper.getBorrowInfosCount());
+			WriteBackUtil.setWriteBack(200, "查询借阅信息成功",
+					borrowInfoService.getBorrowInfosPagination(currentPage, pageSize), writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo/Finished")
-    public WriteBack<List<BorrowInfo>> getFinishedBorrowInfos(@RequestParam("currentPage") Integer currentPage,
-            @RequestParam("pageSize") Integer pageSize) {
-        WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
-        try {
-            WriteBackUtil.setWriteBack(200, "查询审核中的借阅记录成功",
-                    borrowInfoService.getFinishedBorrowInfos(currentPage, pageSize), writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "分页查询借阅中的借阅信息", value = "分页查询借阅中的借阅信息")
+	@GetMapping("/borrowInfo/borrow")
+	public WriteBack<List<BorrowInfo>> getBorrowingBorrowInfos(@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("pageSize") Integer pageSize) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			writeBack.setCount(borrowInfoMapper.getByBorrowStateCount(1));
+			WriteBackUtil.setWriteBack(200, "查询审核中的借阅记录成功",
+					borrowInfoService.getBorrowingBorrowInfos(currentPage, pageSize), writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo/reviewing")
-    public WriteBack<List<BorrowInfo>> getReviewingBorrowInfos(@RequestParam("currentPage") Integer currentPage,
-            @RequestParam("pageSize") Integer pageSize) {
-        WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
-        try {
-            WriteBackUtil.setWriteBack(200, "查询审核中的借阅记录成功",
-                    borrowInfoService.getReviewingBorrowInfos(currentPage, pageSize), writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "分页查询已还书的借阅信息", value = "分页查询已还书的借阅信息")
+	@GetMapping("/borrowInfo/Finished")
+	public WriteBack<List<BorrowInfo>> getFinishedBorrowInfos(@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("pageSize") Integer pageSize) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			writeBack.setCount(borrowInfoMapper.getByBorrowStateCount(2));
+			WriteBackUtil.setWriteBack(200, "查询审核中的借阅记录成功",
+					borrowInfoService.getFinishedBorrowInfos(currentPage, pageSize), writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @GetMapping("/borrowInfo/history")
-    public WriteBack<List<BorrowInfo>> getUserHistoryBorrowInfo(@RequestParam("userId") Integer userId,
-            @RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
-        WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
-        try {
-            WriteBackUtil.setWriteBack(200, "查询用户历史借阅记录成功",
-                    borrowInfoService.getUserBorrowHistory(userId, currentPage, pageSize), writeBack);
-            ;
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "分页查询审核中的借阅信息", value = "分页查询审核中的借阅信息")
+	@GetMapping("/borrowInfo/reviewing")
+	public WriteBack<List<BorrowInfo>> getReviewingBorrowInfos(@RequestParam("currentPage") Integer currentPage,
+			@RequestParam("pageSize") Integer pageSize) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			writeBack.setCount(borrowInfoMapper.getByBorrowStateCount(0));
+			WriteBackUtil.setWriteBack(200, "查询审核中的借阅记录成功",
+					borrowInfoService.getReviewingBorrowInfos(currentPage, pageSize), writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @PutMapping("/borrowInfo/renewBook")
-    public WriteBack<String> renewBook(Integer id) {
-        WriteBack<String> writeBack = new WriteBack<>();
-        try {
-            if (borrowInfoMapper.getById(id).getRenewState() == 0) {
-                borrowInfoService.returnBook(id);
-            } else {
-                throw new Exception("已续借过，无法续借");
-            }
-            WriteBackUtil.setSuccess(writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.printStackTrace();
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "分页查询用户借阅历史", value = "分页查询用户借阅历史")
+	@GetMapping("/borrowInfo/userHistory")
+	public WriteBack<List<BorrowInfo>> getUserHistoryBorrowInfo(@RequestParam("userId") Integer userId,
+			@RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer pageSize) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			writeBack.setCount(borrowInfoMapper.getByUserIdCount(userId));
+			WriteBackUtil.setWriteBack(200, "查询用户历史借阅记录成功",
+					borrowInfoService.getUserBorrowHistory(userId, currentPage, pageSize), writeBack);
+			;
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 
-    @PutMapping("/borrowInfo/returnBook")
-    public WriteBack<String> returnBook(Integer id) {
-        WriteBack<String> writeBack = new WriteBack<>();
-        try {
-            borrowInfoService.returnBook(id);
-            WriteBackUtil.setSuccess(writeBack);
-            return writeBack;
-        } catch (Exception e) {
-            // TODO: handle exception
-            WriteBackUtil.setFail(writeBack);
-            return writeBack;
-        }
-    }
+	@ApiOperation(notes = "续借书", value = "续借数")
+	@PutMapping("/borrowInfo/renewBook")
+	public WriteBack<String> renewBook(@ApiParam(name = "id", value = "借阅信息ID", required = true) Integer id) {
+		WriteBack<String> writeBack = new WriteBack<>();
+		try {
+			if (borrowInfoMapper.getById(id).getRenewState() == 0) {
+				borrowInfoService.returnBook(id);
+			} else {
+				throw new Exception("已续借过，无法续借");
+			}
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
+
+	@ApiOperation(notes = "还书", value = "还书")
+	@PutMapping("/borrowInfo/returnBook")
+	public WriteBack<String> returnBook(@ApiParam(name = "id", value = "借阅信息ID") Integer id) {
+		WriteBack<String> writeBack = new WriteBack<>();
+		try {
+			borrowInfoService.returnBook(id);
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
+
+	@ApiOperation(notes = "根据书的id查询该书籍的借阅记录", value = "根据书的id查询该书籍的借阅记录")
+	@GetMapping("/borrowInfo/bookHistory")
+	public WriteBack<List<BorrowInfo>> getByBookId(Integer bookId) {
+		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
+		try {
+			writeBack.setData(borrowInfoService.getBorrowInfosByBookId(bookId));
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
+
 }
