@@ -2,6 +2,7 @@ package com.wyu.service.user;
 
 import com.wyu.entity.UserInfo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,4 +19,12 @@ public interface UserInfoService {
 
     public List<UserInfo> findUserInfoList(UserInfo userInfoCondition,
                                            Integer currentPage,Integer pageSize);
+
+    /**
+     * 更新用户信息
+     * @param userInfo
+     * @param userInfo
+     * @return
+     */
+    int updateUserInfo( UserInfo userInfo);
 }

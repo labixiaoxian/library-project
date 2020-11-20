@@ -52,7 +52,7 @@ public class MyShiroRealm extends AuthorizingRealm  {
         String principal = (String)authenticationToken.getPrincipal();
         User user = userService.findUserByUsername(principal);
         if(user.getStatus()==0){
-            throw new UserException("用户已注销");
+            throw new UserException("用户失效");
         }
         if (!ObjectUtils.isEmpty(user)) {
             SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPwdHash(),

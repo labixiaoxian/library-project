@@ -7,7 +7,12 @@ public enum  UserStatusEnums {
     NULL_PARAMETER(105,"参数为空"),
     NO_USER(106,"查询不到该用户"),
     OLD_EQUAL_NEW(107,"新密码与旧密码相同"),
-    ERROR_PASSWORD(108,"密码错误")
+    ERROR_PASSWORD(108,"密码错误"),
+    HASH_REGISTER(109,"该用户名已注册"),
+    DIFFERENT_PASSWORD(110,"输入的两次密码不相同"),
+    ACTIVE_FAIL(111,"激活失败"),
+    CANCEL_FAIL(112,"注销用户失败"),
+    CAN_NOT_CANCEL(113,"注销用户失败，该用户存在借书记录")
     ;
 
     private int state;

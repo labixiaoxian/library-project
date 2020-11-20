@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,5 +49,14 @@ public class UserInfoServiceImpl implements UserInfoService {
         int rowIndex = PageUtil.calculateRowIndex(currentPage, pageSize);
         List<UserInfo> userInfos = userInfoMapper.queryUserInfo(userInfoCondition, rowIndex, pageSize);
         return userInfos;
+    }
+
+    @Override
+    public int updateUserInfo(UserInfo userInfo) {
+        if(!ObjectUtils.isEmpty(userInfo)){
+            int result = userInfoMapper.updateUserInfo(userInfo);
+            return result;
+        }
+        return 0;
     }
 }
