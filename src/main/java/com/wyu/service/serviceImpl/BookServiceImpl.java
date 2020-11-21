@@ -31,12 +31,12 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Service
-
+@CacheConfig(cacheNames = "book")
 @Transactional
 public class BookServiceImpl implements BookService{
 
-@CacheConfig(cacheNames = "book")
-public class BookServiceImpl implements BookService {
+
+
 
 
 	@Autowired
@@ -182,6 +182,151 @@ public class BookServiceImpl implements BookService {
 			bookMapper.newBook(book);
 		}
 	}
+
+    @Autowired
+    private BookMapper bookMapper;
+
+    @Autowired
+    private CountryMapper countryMapper;
+
+    @Autowired
+    private ThemeMapper themeMapper;
+
+    @Autowired
+    private TypeMapper typeMapper;
+
+    /**
+     * @apiNote 添加书籍信息
+     * @param book
+     */
+    @Override
+    @CacheEvict(allEntries = true)
+    public void addBook(Book book) {
+        bookMapper.newBook(book);
+    }
+
+    /**
+     * @apiNote 删除书籍信息
+     * @param id
+     */
+    @Override
+    @CacheEvict(allEntries = true)
+    public void deleteById(int id) {
+        bookMapper.deleteById(id);
+    }
+
+    /**
+     * 
+     * @apiNote 导入书籍信息
+     */
+    @Override
+    @CacheEvict(allEntries = true)
+    public void insertBookImport(List<BookDto> list) {
+        for (BookDto bookDto : list) {
+            if (bookDto.getBookName() == null) {
+                break;
+            }
+            try {
+                countryMapper.newCountry(new Country(bookDto.getCountry()));
+            } catch (Exception e) {
+
+            }
+            try {
+                themeMapper.newTheme(new Theme(bookDto.getTheme()));
+            } catch (Exception e) {
+
+            }
+            try {
+                typeMapper.newType(new Type(bookDto.getType()));
+            } catch (Exception e) {
+
+            }
+            Country country = countryMapper.queryByName(bookDto.getCountry());
+            Theme theme = themeMapper.queryByName(bookDto.getTheme());
+            Type type = typeMapper.queryByName(bookDto.getType());
+            Book book = new Book(bookDto.getBookName(), country, theme, type, bookDto.getSpace(),
+                    Integer.parseInt(bookDto.getBookCount()), bookDto.getInfo(), new Timestamp(new Date().getTime()));
+            bookMapper.newBook(book);
+        }
+    }
+
+    /**
+     * @apiNote 查询所有书籍信息
+     */
+    @Override
+    @Cacheable(keyGenerator = "myGenerator", sync = true)
+    public List<Book> queryAll() {
+        List<Book> list = bookMapper.queryAll();
+        return list;
+    }
+
+    /**
+     * @apiNote 查询所有书籍信息（分页）
+     * @param current
+     * @param size
+     */
+    @Override
+    @Cacheable(keyGenerator = "myGenerator", sync = true)
+    public List<Book> queryAllDivPage(int current, int size) {
+        List<Book> list = bookMapper.queryAllDivPage((current - 1) * size, size);
+        return list;
+    }
+
+    /**
+     * @apiNote 通过Id查询书籍信息
+     * @param
+     */
+    @Override
+    @Cacheable(keyGenerator = "myGenerator", sync = true)
+    public Book queryById(int id) {
+        Book book = bookMapper.queryById(id);
+        return book;
+    }
+
+    /**
+     * @apiNote 查询所有书籍信息（模糊查询）
+     * @param name
+     * @param country_id
+     * @param theme_id
+     * @param type_id
+     * @param space
+     */
+    @Override
+    @Cacheable(keyGenerator = "myGenerator", sync = true)
+    public List<Book> queryLikeName(String name, int country_id, int theme_id, int type_id, String space) {
+        List<Book> list = bookMapper.queryByNameLike(name, country_id, theme_id, type_id, space);
+        return list;
+    }
+
+    /**
+     * @apiNote 查询所有书籍信息（模糊查询）（分页）
+     * @param name
+     * @param country_id
+     * @param theme_id
+     * @param type_id
+     * @param space
+     * @param current
+     * @param size
+     */
+    @Override
+    @Cacheable(keyGenerator = "myGenerator", sync = true)
+    public List<Book> queryLikeNameDivPage(String name, int country_id, int theme_id, int type_id, String space,
+            int current, int size) {
+        List<Book> list = bookMapper.queryByNameLikeDivPage(name, country_id, theme_id, type_id, space,
+                (current - 1) * size, size);
+        return list;
+    }
+
+    /**
+     * @apiNote 更新书籍信息
+     * @param book
+     */
+    @Override
+    @CacheEvict(allEntries = true)
+    public void updateBook(Book book) {
+        bookMapper.updateBook(book);
+    }
+
 
 	@Override
 	public int queryDivPageCount(String name, Integer country_id, Integer theme_id, Integer type_id, String space) {
