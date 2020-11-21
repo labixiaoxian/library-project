@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.wyu.dao.PunishmentMapper;
@@ -18,6 +21,7 @@ import com.wyu.service.PunishmentService;
  * @since 2020/11/18
  */
 @Service
+@CacheConfig(cacheNames = "punishment")
 public class PunishmentServiceImpl extends PunishmentService {
 	@Autowired
 	PunishmentMapper punishmentMapper;
@@ -31,6 +35,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 * @return
 	 */
 	@Override
+	@CacheEvict(allEntries = true)
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		punishmentMapper.deleteById(id);
@@ -41,6 +46,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 * @param name currentPage size
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Punishment> FuzzyqueryByNickName(String name, int current, int size) {
 		UserInfo userInfo = new UserInfo();
 		userInfo.setNickname(name);
@@ -65,6 +71,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public Punishment get(Integer id) {
 		// TODO Auto-generated method stub
 		Punishment punishment = punishmentMapper.getById(id);
@@ -83,6 +90,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Punishment> getByUserId(Integer userId) {
 		// TODO Auto-generated method stub
 		List<Punishment> list = punishmentMapper.getByUserId(userId);
@@ -97,6 +105,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Punishment> queryAll() {
 		List<Punishment> list = punishmentMapper.list();
 		for (Punishment punishment : list) {
@@ -112,6 +121,7 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Punishment> queryAllPagination(int current, int size) {
 		List<Punishment> list = punishmentMapper.listPagination((current - 1) * size, size);
 		for (Punishment punishment : list) {
@@ -121,12 +131,14 @@ public class PunishmentServiceImpl extends PunishmentService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int listCount() {
 		// TODO Auto-generated method stub
 		return punishmentMapper.listCount();
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int queryUserInfoCount(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		return userInfoMapper.queryUserInfoCount(userInfo);

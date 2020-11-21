@@ -85,14 +85,18 @@ public class NoticeController {
 	public WriteBack<Notice> getOne(
 			@ApiParam(name = "id", value = "公告ID", required = true) @PathVariable("id") Integer id) {
 		WriteBack<Notice> writeBack = new WriteBack<>();
-		Notice notice = service.get(id);
-		if (notice == null) {
-			WriteBackUtil.setFail(writeBack);
-		} else {
+		try {
+			Notice notice = service.get(id);
 			WriteBackUtil.setSuccess(writeBack);
 			writeBack.setData(notice);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
 		}
-		return writeBack;
+
 	}
 
 	@ApiOperation(notes = "增加一条公告", value = "增加一条公告")

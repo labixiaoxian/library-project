@@ -7,6 +7,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +30,7 @@ import com.wyu.service.BorrowInfoService;
  *
  */
 @Service
+@CacheConfig(cacheNames = "borrowInfo")
 public class BorrowInfoServiceImpl extends BorrowInfoService {
 
 	@Autowired
@@ -47,6 +51,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	 * @param id
 	 */
 	@Override
+	@CacheEvict(allEntries = true)
 	public void approve(Integer id) {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);
@@ -59,6 +64,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@CacheEvict(allEntries = true)
 	public void delete(Integer id) {
 		// TODO Auto-generated method stub
 		BorrowInfo borrowInfo = borrowInfoMapper.getById(id);
@@ -77,6 +83,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<BorrowInfo> getBookShelf(Integer userId) {
 		List<BorrowInfo> data = borrowInfoMapper.getBookShelf(userId);
 		relatedQuery(data);
@@ -84,6 +91,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<BorrowInfo> getBorrowInfosByBookId(Integer bookId) {
 		// TODO Auto-generated method stub
 		List<BorrowInfo> data = borrowInfoMapper.getBorrowInfosByBookId(bookId);
@@ -97,6 +105,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<BorrowInfo> getBorrowInfosPagination(Integer currentPage, Integer pageSize) {
 		List<BorrowInfo> data = borrowInfoMapper.getBorrowInfosPagination((currentPage - 1) * pageSize, pageSize);
 		relatedQuery(data);
@@ -104,6 +113,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<BorrowInfo> getByBorrowStatesPagination(Integer states, Integer currentPage, Integer pageSize) {
 		// TODO Auto-generated method stub
 		List<BorrowInfo> data = borrowInfoMapper.getByBorrowStatePagination(states, (currentPage - 1) * pageSize,
@@ -113,6 +123,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int getCountByUserId(Integer id) {
 		return userMapper.findUserById(id).getBorrowCount();
 	}
@@ -123,6 +134,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	 * @return
 	 */
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<BorrowInfo> getUserBorrowHistory(Integer userId, Integer currentPage, Integer pageSize) {
 		List<BorrowInfo> data = borrowInfoMapper.getByUserIdPagination(userId, (currentPage - 1) * pageSize, pageSize);
 		relatedQuery(data);
@@ -134,6 +146,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	 */
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
+	@CacheEvict(allEntries = true)
 	public void insert(BorrowInfo borrowInfo) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);
@@ -175,6 +188,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@CacheEvict(allEntries = true)
 	public void refuse(Integer id) {
 		// TODO Auto-generated method stub
 		BorrowInfo info = borrowInfoMapper.getById(id);
@@ -198,6 +212,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@CacheEvict(allEntries = true)
 	public void renewBook(Integer id) throws Exception {
 		BorrowInfo borrowInfo = borrowInfoMapper.getById(id);
 		if (borrowInfo.getBorrowState() != 1) {
@@ -211,6 +226,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@CacheEvict(allEntries = true)
 	public void returnBook(Integer id) {
 		borrowInfoMapper.updateStates(id, 2);
 		BorrowInfo borrowInfo = borrowInfoMapper.getById(id);
@@ -223,30 +239,35 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int getBorrowInfosCount() {
 		// TODO Auto-generated method stub
 		return borrowInfoMapper.getBorrowInfosCount();
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int getByBorrowStateCount(Integer states) {
 		// TODO Auto-generated method stub
 		return borrowInfoMapper.getByBorrowStateCount(states);
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int getByUserIdCount(Integer userId) {
 		// TODO Auto-generated method stub
 		return borrowInfoMapper.getByUserIdCount(userId);
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public BorrowInfo getById(Integer id) {
 		// TODO Auto-generated method stub
 		return borrowInfoMapper.getById(id);
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<BorrowInfo> getByNameAndStatesPagination(String name, Integer states, Integer currentPage,
 			Integer pageSize) {
 		// TODO Auto-generated method stub
@@ -262,6 +283,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int getByNameAndStatesCount(String name, Integer states) {
 		// TODO Auto-generated method stub
 		return borrowInfoMapper.getByUserNameAndStatesCount("%" + name + "%", states);
