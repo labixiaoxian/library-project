@@ -100,6 +100,25 @@ public class UserController {
     }
 
     /**
+     * 用户退出登录
+     * @return
+     */
+    @ApiOperation(notes = "用户退出登录", value = "用户退出登录")
+    @GetMapping("/logout")
+    public WriteBack logout(){
+        WriteBack writeBack = new WriteBack();
+        try {
+            Subject subject = SecurityUtils.getSubject();
+            subject.logout();
+            WriteBackUtil.setSuccess(writeBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+            WriteBackUtil.setFail(writeBack);
+        }
+        return writeBack;
+    }
+
+    /**
      * 用户没有权限
      *
      * @return
@@ -221,8 +240,10 @@ public class UserController {
         List<UserInfo> userInfoList = null;
         try {
             userInfoList = userInfoService.findUserInfoList(userInfo, currentPage, pageSize);
+            int count = userInfoService.queryUserInfoCount(userInfo);
             WriteBackUtil.setSuccess(writeBack);
             writeBack.setData(userInfoList);
+            writeBack.setCount(count);
         } catch (Exception e) {
             e.printStackTrace();
 

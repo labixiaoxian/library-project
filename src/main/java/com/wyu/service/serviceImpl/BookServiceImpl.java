@@ -17,12 +17,15 @@ import com.wyu.entity.Country;
 import com.wyu.entity.Theme;
 import com.wyu.entity.Type;
 import com.wyu.service.BookService;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  * @since 2020/11/18
  * @author 李润东
  *
  */
 @Service
+@Transactional
 public class BookServiceImpl implements BookService{
 
 	@Autowired
@@ -148,6 +151,11 @@ public class BookServiceImpl implements BookService{
 								new Timestamp(new Date().getTime()));
 			bookMapper.newBook(book);
 		}
+	}
+
+	@Override
+	public int queryDivPageCount(String name, Integer country_id, Integer theme_id, Integer type_id, String space) {
+		return bookMapper.queryDivPageCount(name,country_id,theme_id,type_id,space);
 	}
 
 }

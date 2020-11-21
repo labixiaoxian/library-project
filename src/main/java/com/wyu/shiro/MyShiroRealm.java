@@ -18,11 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 
 
-
 /**
  * Created by XiaoXian on 2020/11/18.
  */
-public class MyShiroRealm extends AuthorizingRealm  {
+public class MyShiroRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
@@ -33,7 +32,7 @@ public class MyShiroRealm extends AuthorizingRealm  {
         String primaryPrincipal = (String) principalCollection.getPrimaryPrincipal();
         //根据用户名获取角色和权限信息
         User user = userService.findRolesByUsername(primaryPrincipal);
-        System.out.println("调用授权验证: "+primaryPrincipal);
+        System.out.println("调用授权验证: " + primaryPrincipal);
         //角色授权
         if (!CollectionUtils.isEmpty(user.getRoles())) {
             SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
@@ -49,15 +48,16 @@ public class MyShiroRealm extends AuthorizingRealm  {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        String principal = (String)authenticationToken.getPrincipal();
+        String principal = (String) authenticationToken.getPrincipal();
         User user = userService.findUserByUsername(principal);
-        if(user.getStatus()==0){
-            throw new UserException("用户失效");
-        }
         if (!ObjectUtils.isEmpty(user)) {
+            if (user.getStatus() == 0) {
+                throw new UserException("用户失效");
+            }
+
             SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPwdHash(),
                     new MyByteSource(user.getPwdSalt()), this.getName());
-            Session session =  SecurityUtils.getSubject().getSession();
+            Session session = SecurityUtils.getSubject().getSession();
             session.setAttribute("USER_SESSION", user);
             return simpleAuthenticationInfo;
         }

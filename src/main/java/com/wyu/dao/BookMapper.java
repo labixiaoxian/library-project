@@ -2,9 +2,11 @@ package com.wyu.dao;
 
 import java.util.List;
 
-import org.springframework.data.repository.query.Param;
+
 
 import com.wyu.entity.Book;
+import org.apache.ibatis.annotations.Param;
+
 /**
  * 
  * @author 李润东
@@ -60,6 +62,9 @@ public interface BookMapper {
 	 * @return
 	 */
 	public List<Book> queryAllDivPage(@Param("current")int current,@Param("size")int size);
+
+
+
 	/**
 	 * @apiNote 模糊查询分页
 	 * @param name
@@ -75,4 +80,17 @@ public interface BookMapper {
 			@Param("country_id")int country_id,@Param("theme_id")int theme_id,
 			@Param("type_id")int type_id,@Param("space")String space,
 			@Param("current")int current,@Param("size")int size);
+
+
+	/**
+	 * 统计数量
+	 * @param name
+	 * @param country_id
+	 * @param theme_id
+	 * @param type_id
+	 * @param space
+	 * @return
+	 */
+	public int queryDivPageCount(@Param("name") String name, @Param("country_id")Integer country_id, @Param("theme_id")Integer theme_id,
+								 @Param("type_id")Integer type_id, @Param("space")String space);
 }
