@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wyu.entity.Punishment;
+import com.wyu.entity.UserInfo;
 import com.wyu.service.PunishmentService;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
@@ -55,6 +56,7 @@ public class PunishmentController {
 		try {
 			List<Punishment> list = punishmentService.queryAllPagination(currentPage, pageSize);
 			writeBack.setData(list);
+			writeBack.setCount(punishmentService.listCount());
 			WriteBackUtil.setSuccess(writeBack);
 			return writeBack;
 		} catch (Exception e) {
@@ -71,6 +73,9 @@ public class PunishmentController {
 			@RequestParam("currentPage") Integer currentPage, @RequestParam("size") Integer size) {
 		WriteBack<List<Punishment>> writeBack = new WriteBack<>();
 		try {
+			UserInfo userInfo = new UserInfo();
+			userInfo.setNickname(name);
+			writeBack.setCount(punishmentService.queryUserInfoCount(userInfo));
 			List<Punishment> list = punishmentService.FuzzyqueryByNickName(name, currentPage, size);
 			writeBack.setData(list);
 			WriteBackUtil.setSuccess(writeBack);

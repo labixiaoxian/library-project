@@ -3,6 +3,9 @@ package com.wyu.service.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.wyu.dao.NoticeMapper;
@@ -15,6 +18,7 @@ import com.wyu.service.NoticeService;
  * @since 2020/11/17
  */
 @Service
+@CacheConfig(cacheNames = "notice")
 public class NoticeServiceImpl extends NoticeService {
 	@Autowired
 	private NoticeMapper noticeMapper;
@@ -23,6 +27,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 根据ID删除一条公告
 	 * @param id
 	 */
+	@Override
+	@CacheEvict(allEntries = true)
 	public void delete(Integer id) {
 		noticeMapper.deleteById(id);
 	}
@@ -32,6 +38,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param name
 	 * @return
 	 */
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Notice> fuzzyQuery(String name) {
 		name = "%" + name + "%";
 		return noticeMapper.fuzzyQueryByname(name);
@@ -44,6 +52,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param size
 	 * @return
 	 */
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Notice> fuzzyQueryPagination(String name, int currentPage, int size) {
 		name = "%" + name + "%";
 		return noticeMapper.fuzzyQueryBynamePagination(name, (currentPage - 1) * size, size);
@@ -54,6 +64,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param id
 	 * @return
 	 */
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public Notice get(Integer id) {
 		return noticeMapper.getById(id);
 	}
@@ -62,6 +74,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 获取最新公告
 	 * @return
 	 */
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public Notice getLatestNotice() {
 		return noticeMapper.getLatestNotice();
 	}
@@ -71,6 +85,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param name
 	 * @param content
 	 */
+	@Override
+	@CacheEvict(allEntries = true)
 	public void insert(Notice notice) {
 		noticeMapper.insert(notice);
 	}
@@ -79,6 +95,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 查询全部公告
 	 * @return
 	 */
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Notice> queryAll() {
 		return noticeMapper.list();
 	}
@@ -89,6 +107,8 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param size
 	 * @return
 	 */
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public List<Notice> queryAllPagination(int currentPage, int size) {
 		return noticeMapper.listPagination((currentPage - 1) * size, size);
 	}
@@ -97,7 +117,24 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 更新一条公告
 	 * @param notice
 	 */
-	public void update(Notice notice) {
+	@Override
+	@CacheEvict(allEntries = true)
+	public Notice update(Notice notice) {
 		noticeMapper.update(notice);
+		return notice;
+	}
+
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
+	public int fuzzyQueryBynameCount(String name) {
+		// TODO Auto-generated method stub
+		return noticeMapper.fuzzyQueryBynameCount(name);
+	}
+
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
+	public int listCount() {
+		// TODO Auto-generated method stub
+		return noticeMapper.listCount();
 	}
 }

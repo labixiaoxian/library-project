@@ -20,6 +20,18 @@ public interface BookMapper {
 	 */
 	public List<Book> queryAll();
 	/**
+	 * @apiNote 查询书籍数量
+	 * @return
+	 */
+	public int queryAllCount();
+	/**
+	 * @apiNote 查询书籍数量（模糊查询）
+	 * @return
+	 */
+	public int queryByLikeCount(@Param("name") String name,
+			@Param("country_id") int country_id,@Param("theme_id") int theme_id,
+			@Param("type_id") int type_id,@Param("space") String space);
+	/**
 	 * @apiNote 通过ID查询书籍
 	 * @param id
 	 * @return

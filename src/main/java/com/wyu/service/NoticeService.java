@@ -27,5 +27,9 @@ public abstract class NoticeService {
 
 	public abstract List<Notice> queryAllPagination(int currentPage, int size);
 
-	public abstract void update(Notice notice);
+	public abstract Notice update(Notice notice);
+
+	public abstract int fuzzyQueryBynameCount(String name);
+
+	public abstract int listCount();
 }
