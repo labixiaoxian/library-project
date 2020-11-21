@@ -147,6 +147,11 @@
                 and u.credit =
                 #{userInfoCondition.user.credit}
             </if>
+            <if test="userInfoCondition.user != null and
+			userInfoCondition.user.status != null">
+                and u.status =
+                #{userInfoCondition.user.status}
+            </if>
             AND
             ui.user_id = u.id
         </where>
@@ -184,6 +189,11 @@
 			userInfoCondition.user.credit != null">
                 and u.credit =
                 #{userInfoCondition.user.credit}
+            </if>
+            <if test="userInfoCondition.user != null and
+			userInfoCondition.user.status != null">
+                and u.status =
+                #{userInfoCondition.user.status}
             </if>
             AND
             ui.user_id = u.id

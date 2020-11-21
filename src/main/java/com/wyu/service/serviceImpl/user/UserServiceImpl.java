@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
 
         //数据为空
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(email)
-                || StringUtils.isEmpty(password) || StringUtils.isEmpty(twicePassword)) {
+                || StringUtils.isEmpty(password) || StringUtils.isEmpty(twicePassword) || StringUtils.isEmpty(nickname)) {
             return 0;
         }
         //防止用户名重复

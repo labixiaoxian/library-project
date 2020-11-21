@@ -59,4 +59,9 @@ public class UserInfoServiceImpl implements UserInfoService {
         }
         return 0;
     }
+
+    @Override
+    public int queryUserInfoCount(UserInfo userInfoCondition) {
+        return userInfoMapper.queryUserInfoCount(userInfoCondition);
+    }
 }

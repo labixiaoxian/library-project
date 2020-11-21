@@ -1,5 +1,7 @@
 package com.wyu.controller;
 
+import com.wyu.dao.CountryMapper;
+import com.wyu.entity.Country;
 import com.wyu.entity.User;
 import com.wyu.entity.UserInfo;
 import com.wyu.enums.Constant;
@@ -13,6 +15,9 @@ import com.wyu.utils.HttpServletRequestUtil;
 import com.wyu.utils.ImageUtil;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -38,6 +43,7 @@ import java.util.Map;
 /**
  * Created by XiaoXian on 2020/11/18.
  */
+@Api(value = "用户模块", tags = { "用于用户的相关接口" })
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -48,14 +54,19 @@ public class UserController {
     @Autowired
     private UserInfoService userInfoService;
 
+    @Autowired
+    private CountryMapper countryMapper;
+
     /**
      * 用户登录
      *
      * @param requestMap
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public WriteBack login(@RequestBody Map<String, Object> requestMap) {
+    @ApiOperation(notes = "用户登录", value = "用户登录")
+    @PostMapping(value = "/login")
+    public WriteBack login(@ApiParam(name = "json", value = "{" + "'username':'username',"
+            + "'password':'password'}", required = true)@RequestBody Map<String, Object> requestMap) {
         WriteBack writeBack = new WriteBack();
         String username = (String) requestMap.get("username");
         String password = (String) requestMap.get("password");
@@ -93,7 +104,8 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/unauth")
+    @ApiOperation(notes = "用户未认证授权", value = "用户未认证授权")
+    @GetMapping(value = "/unauth")
     @ResponseBody
     public WriteBack unauth() {
         WriteBack writeBack = new WriteBack();
@@ -109,8 +121,10 @@ public class UserController {
      * @param requestMap
      * @return
      */
-    @RequestMapping(value = "/modifypassword", method = RequestMethod.POST)
-    public WriteBack modifyPassword(@RequestBody Map<String, Object> requestMap) {
+    @ApiOperation(notes = "修改密码", value = "修改密码")
+    @PostMapping(value = "/modifypassword")
+    public WriteBack modifyPassword(@ApiParam(name = "json", value = "{" + "'userId':1,"
+            + "'oldPassword':'oldPassword' "+"'newPassword':'newPassword'}", required = true)@RequestBody Map<String, Object> requestMap) {
         WriteBack writeBack = new WriteBack();
         Integer userId = (Integer) requestMap.get("userId");
         String oldPassword = (String) requestMap.get("oldPassword");
@@ -146,8 +160,9 @@ public class UserController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/getuserbyuserid", method = RequestMethod.GET)
-    public WriteBack getUserByUserId(@RequestParam("userId") Integer userId) {
+    @ApiOperation(notes = "通过用户userId查询用户详情", value = "通过用户userId查询用户详情")
+    @GetMapping(value = "/getuserbyuserid")
+    public WriteBack getUserByUserId(@ApiParam(name = "userId", value = "用户ID", required = true)@RequestParam("userId") Integer userId) {
         WriteBack writeBack = new WriteBack();
         UserInfo userInfoByUserId = userInfoService.findUserInfoByUserId(userId);
         if (!ObjectUtils.isEmpty(userInfoByUserId)) {
@@ -165,8 +180,9 @@ public class UserController {
      * @param userInfoId
      * @return
      */
-    @RequestMapping(value = "/getuserbyuserinfoid", method = RequestMethod.GET)
-    public WriteBack getUserByuserInfoId(@RequestParam("userInfoId") Integer userInfoId) {
+    @ApiOperation(notes = "通过用户userInfoId查询用户详情", value = "通过用户userInfoId查询用户详情")
+    @GetMapping(value = "/getuserbyuserinfoid")
+    public WriteBack getUserByuserInfoId(@ApiParam(name = "userInfoId", value = "用户详情ID", required = true)@RequestParam("userInfoId") Integer userInfoId) {
         WriteBack writeBack = new WriteBack();
         UserInfo userInfoById = userInfoService.findUserInfoById(userInfoId);
         if (!ObjectUtils.isEmpty(userInfoById)) {
@@ -185,8 +201,11 @@ public class UserController {
      * @param requestMap
      * @return
      */
-    @RequestMapping(value = "/getuserinfolist", method = RequestMethod.GET)
-    public WriteBack getUserInfoList(@RequestBody Map<String, Object> requestMap) {
+    @ApiOperation(notes = "条件查询获取用户详情列表", value = "条件查询获取用户详情列表")
+    @GetMapping(value = "/getuserinfolist")
+    public WriteBack getUserInfoList(@ApiParam(name = "json", value = "{" + "'age':1," + "'sex':2" +"'birthday':'2020-11-12'"
+            + "'nickname':'nickname' "+"'borrowCount':12" +"'credit':100"+"'currentPage':1"+"'status':1"+"'pageSize':5}", required = true)
+                                         @RequestBody Map<String, Object> requestMap) {
         WriteBack writeBack = new WriteBack();
         Integer age = (Integer) requestMap.get("age");
         Integer sex = (Integer) requestMap.get("sex");
@@ -196,7 +215,8 @@ public class UserController {
         Integer credit = (Integer) requestMap.get("credit");
         Integer currentPage = (Integer) requestMap.get("currentPage");
         Integer pageSize = (Integer) requestMap.get("pageSize");
-        UserInfo userInfo = parseToUserInfo(age, sex, borrowCount, credit, birthday, nickname);
+        Integer status = (Integer) requestMap.get("status");
+        UserInfo userInfo = parseToUserInfo(age, sex, borrowCount, credit, birthday, nickname,status);
 
         List<UserInfo> userInfoList = null;
         try {
@@ -205,7 +225,38 @@ public class UserController {
             writeBack.setData(userInfoList);
         } catch (Exception e) {
             e.printStackTrace();
+
             WriteBackUtil.setFail(writeBack);
+        }
+        return writeBack;
+    }
+
+
+    /**
+     * 条件查询获取用户详情数量
+     * @param requestMap
+     * @return
+     */
+    @ApiOperation(notes = "条件查询获取用户详情数量", value = "条件查询获取用户详情数量")
+    @GetMapping(value = "/getuserinfocount")
+    public WriteBack getUserInfoCount(@ApiParam(name = "json", value = "{" + "'age':1," + "'sex':2" +"'birthday':'2020-11-12'"
+            + "'nickname':'nickname' "+"'borrowCount':12"+"'status':1" +"'credit':100}", required = true)
+                                          @RequestBody Map<String, Object> requestMap){
+        WriteBack writeBack = new WriteBack();
+        Integer age = (Integer) requestMap.get("age");
+        Integer sex = (Integer) requestMap.get("sex");
+        String birthday = (String) requestMap.get("birthday");
+        String nickname = (String) requestMap.get("nickname");
+        Integer borrowCount = (Integer) requestMap.get("borrowCount");
+        Integer credit = (Integer) requestMap.get("credit");
+        Integer status = (Integer) requestMap.get("status");
+        UserInfo userInfo = parseToUserInfo(age, sex, borrowCount, credit, birthday, nickname,status);
+        try {
+            int count = userInfoService.queryUserInfoCount(userInfo);
+            WriteBackUtil.setSuccess(writeBack);
+            writeBack.setData(count);
+        } catch (Exception e) {
+            e.printStackTrace();
             WriteBackUtil.setFail(writeBack);
         }
         return writeBack;
@@ -216,8 +267,11 @@ public class UserController {
      * @param requestMap
      * @return
      */
-    @RequestMapping(value = "/register",method = RequestMethod.POST)
-    public WriteBack register(@RequestBody Map<String, Object> requestMap) {
+    @ApiOperation(notes = "用户注册", value = "用户注册")
+    @PostMapping(value = "/register")
+    public WriteBack register(@ApiParam(name = "json", value = "{" + "'userName':'userName',"
+            + "'nickname':'nickname' "+"'email':'email'" +"'password':'password'"+"'twicePassword':'twicePassword'}", required = true)
+            @RequestBody Map<String, Object> requestMap) {
         //获取数据
         WriteBack writeBack = new WriteBack();
         String userName = (String) requestMap.get("userName");
@@ -256,8 +310,9 @@ public class UserController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/active/{userId}", method = RequestMethod.GET)
-    public WriteBack active(@PathVariable("userId")Integer userId){
+    @ApiOperation(notes = "用户激活", value = "用户激活")
+    @GetMapping(value = "/active/{userId}")
+    public WriteBack active(@ApiParam(name = "userId", value = "用户ID", required = true)@PathVariable("userId")Integer userId){
         WriteBack writeBack = new WriteBack();
         int result = userService.activeUser(userId);
         if (result == 0){
@@ -275,8 +330,9 @@ public class UserController {
      * @param userId
      * @return
      */
+    @ApiOperation(notes = "用户注销", value = "用户注销")
     @GetMapping(value = "/usercancellation")
-    public WriteBack userCancellation(@RequestParam("userId")Integer userId){
+    public WriteBack userCancellation(@ApiParam(name = "userId", value = "用户ID", required = true)@RequestParam("userId")Integer userId){
         WriteBack writeBack = new WriteBack();
         int result = userService.cancellation(userId);
         if (result == 0){
@@ -295,8 +351,16 @@ public class UserController {
         return writeBack;
     }
 
-    @PostMapping(value = "/updateuser")
-    public WriteBack updateUser(@RequestParam MultipartFile file, HttpServletRequest request,
+    /**
+     * 更新用户信息
+     * @param file
+     * @param request
+     * @param response
+     * @return
+     */
+    @ApiOperation(notes = "更新用户信息", value = "更新用户信息")
+    @PutMapping(value = "/updateuser")
+    public WriteBack updateUser(@ApiParam(name = "file", value = "用户上传图片", required = true)@RequestParam MultipartFile file, HttpServletRequest request,
                                 HttpServletResponse response){
         WriteBack writeBack = new WriteBack();
 
@@ -341,23 +405,36 @@ public class UserController {
 
 
 
+//    @GetMapping("/caluser")
+//    public WriteBack calUser(){
+//
+//    }
 
-    @RequiresRoles(value = "admin")
-    @RequestMapping(value = "/test")
+
+
+
+    //@RequiresRoles(value = "admin")
+    @GetMapping(value = "/test")
     public String test() {
-        Subject subject = SecurityUtils.getSubject();
-        if (subject.hasRole("admin")) {
-            return "test";
+        for (int i = 0;i<100;i++){
+            Country country = new Country();
+            country.setCountryName("图书");
+            try {
+                countryMapper.newCountry(country);
+            } catch (Exception e) {
+            }
+            System.out.println(i);
         }
         return "error";
     }
 
 
     private UserInfo parseToUserInfo(Integer age, Integer sex, Integer borrowCount, Integer credit,
-                                     String birthday, String nickname) {
+                                     String birthday, String nickname,Integer status) {
         UserInfo userInfo = new UserInfo();
         User user = new User();
         user.setCredit(credit);
+        user.setStatus(status);
         user.setBorrowCount(borrowCount);
         userInfo.setAge(age);
         userInfo.setSex(sex);

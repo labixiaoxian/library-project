@@ -118,7 +118,10 @@ public class BookServiceImpl implements BookService{
 		Book book = bookMapper.queryById(id);
 		return book;
 	}
-
+	/**
+	 * 
+	 * @apiNote 导入书籍信息
+	 */
 	@Override
 	public void insertBookImport(List<BookDto> list) {
 		for (BookDto bookDto : list) {
