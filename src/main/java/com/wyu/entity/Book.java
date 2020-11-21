@@ -31,7 +31,7 @@ public class Book implements Serializable{
 	private int bookCount;      //图书数量
 	@Excel(name = "详细信息",width = 60.0,orderNum = "7")
 	private String info;        //详细信息
-	@Excel(name = "图书上架时间",width = 35.0,format = "yyyy-MM-dd HH-mm-ss",orderNum = "8")
+	@Excel(name = "图书上架时间",width = 35.0,format = "yyyy-MM-dd HH:mm:ss",orderNum = "8")
 	private Timestamp createDate;  //图书上架时间
 	
 	public Book() {

@@ -24,7 +24,35 @@
   			<result property="typeName" column="type_name"/>
 		</association>
 	</resultMap>
-	
+	<select id="queryAllCount" resultType="int">
+		select count(*) from lib_book
+	</select>
+	<select id="queryByLikeCount" resultType="int">
+		select 
+		count(*)
+		from 
+		lib_book b 
+		LEFT JOIN lib_country c on b.country_id=c.id 
+		LEFT JOIN lib_theme t on b.theme_id=t.id
+		LEFT JOIN lib_type p on b.type_id=p.id
+		<where>
+			<if test="name!=null">
+				b.book_name like "%"#{name}"%"
+			</if>
+			<if test="country_id!=0">
+				and b.country_id=#{country_id}
+			</if>
+			<if test="theme_id!=0">
+				and b.theme_id=#{theme_id}
+			</if>
+			<if test="space!=null">
+				and space=#{space}
+			</if>
+			<if test="type_id!=0">
+				and b.type_id=#{type_id}
+			</if>
+		</where>
+	</select>
 	<select id="queryAll" resultMap="bookResultMap">
 		select 
 		b.id,b.book_name,

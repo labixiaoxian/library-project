@@ -81,8 +81,10 @@ public class BookController {
             @ApiParam(name = "currentPage", value = "当前页码", required = true) @RequestParam("currentPage") int currentPage,
             @ApiParam(name = "pageSize", value = "一页显示数据的数量", required = true) @RequestParam("pageSize") int pageSize){
 		List<Book> list = bookServiceImpl.queryAllDivPage(currentPage, pageSize);
+		int count = bookMapper.queryAllCount();
 		WriteBack<Object> wb = new WriteBack<Object>();
 		wb.setCode(369);
+		wb.setCount(count);
 		wb.setData(list);
 		wb.setMsg("查询所有分页");
 		return wb;
@@ -90,7 +92,11 @@ public class BookController {
 	
 	@ApiOperation(notes = "查询全部图书信息（模糊查询）（分页）",value = "查询全部图书信息（模糊查询）（分页）")
 	@GetMapping("/book/query")
-	public WriteBack<Object> queryAllByLike(@RequestBody Map<String,Object> requestMap){
+	public WriteBack<Object> queryAllByLike(@ApiParam(name = "json", 
+											value ="(单引号改为双引号)"+ "{" + "'nickname':'nickname',"
+											+ "'currentPage':页数,"+"'pageSize':一页数据量,"+"'country_id':国家ID,"+
+											"'theme_id':主题ID,"+"'type_id':类型ID,"+"'space':篇幅下标（1-3）,"+
+													"}", required = true)@RequestBody Map<String,Object> requestMap){
 		String nickname = (String) requestMap.get("nickname");
 		int currentPage = (int) requestMap.get("currentPage");
 		int pageSize = (int) requestMap.get("pageSize");
@@ -109,7 +115,9 @@ public class BookController {
 				space="长篇";
 			}
 			List<Book> list = bookServiceImpl.queryLikeNameDivPage(nickname, country_id, theme_id, type_id, space, currentPage, pageSize);
+			int count = bookMapper.queryByLikeCount(nickname, country_id, theme_id, type_id, space);
 			wb.setData(list);
+			wb.setCount(count);
 			wb.setCode(999);
 			wb.setMsg("success");
 			return wb;
