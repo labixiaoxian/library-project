@@ -3,6 +3,7 @@ package com.wyu.service;
 import java.util.List;
 
 import com.wyu.entity.Punishment;
+import com.wyu.entity.UserInfo;
 
 /**
  * 
@@ -22,4 +23,8 @@ public abstract class PunishmentService {
 	public abstract void deleteById(Integer id);
 
 	public abstract List<Punishment> FuzzyqueryByNickName(String name, int current, int size);
+
+	public abstract int listCount();
+
+	public abstract int queryUserInfoCount(UserInfo userInfo);
 }

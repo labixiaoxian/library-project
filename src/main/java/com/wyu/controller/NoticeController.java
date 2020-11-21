@@ -28,15 +28,15 @@ public class NoticeController {
 	@Autowired
 	NoticeServiceImpl service;
 
-	@ApiOperation(notes = "模糊分页查询", value = "模糊分页查询")
+	@ApiOperation(notes = "模糊分页查询", value = "模糊查询")
 	@GetMapping("/notice/query")
 	public WriteBack<List<Notice>> fuzzyQuery(
 			@ApiParam(name = "name", value = "公告标题（模糊或准确皆可）", required = true) @RequestParam("name") String name,
-			@ApiParam(name = "currentPage", value = "当前页码", required = true) @RequestParam("currentPage") int currentPage,
-			@ApiParam(name = "pageSize", value = "一页显示数据的数量", required = true) @RequestParam("pageSize") int pageSize) {
+			Integer currentPage, Integer pageSize) {
 		WriteBack<List<Notice>> writeBack = new WriteBack<>();
 		try {
 			writeBack.setData(service.fuzzyQueryPagination(name, currentPage, pageSize));
+			writeBack.setCount(service.fuzzyQueryBynameCount("%" + name + "%"));
 			WriteBackUtil.setSuccess(writeBack);
 			return writeBack;
 		} catch (Exception e) {
@@ -49,12 +49,11 @@ public class NoticeController {
 
 	@ApiOperation(notes = "分页查询所有数据", value = "分页查询所有数据")
 	@GetMapping("/notice")
-	public WriteBack<List<Notice>> getAll(
-			@ApiParam(name = "currentPage", value = "当前页码", required = true) @RequestParam("currentPage") int currentPage,
-			@ApiParam(name = "pageSize", value = "一页显示数据的数量", required = true) @RequestParam("pageSize") int pageSize) {
+	public WriteBack<List<Notice>> getAll(Integer currentPage, Integer pageSize) {
 		WriteBack<List<Notice>> writeBack = new WriteBack<>();
 		try {
 			List<Notice> dataList = service.queryAllPagination(currentPage, pageSize);
+			writeBack.setCount(service.listCount());
 			writeBack.setData(dataList);
 			WriteBackUtil.setSuccess(writeBack);
 			return writeBack;
@@ -98,8 +97,8 @@ public class NoticeController {
 
 	@ApiOperation(notes = "增加一条公告", value = "增加一条公告")
 	@PostMapping("/notice")
-	public WriteBack<String> insert(@ApiParam(name = "json", value = "{" + "'noticeName':'name',"
-			+ "'content':'myContent'}", required = true) @RequestBody String body) {
+	public WriteBack<String> insert(@ApiParam(name = "json", value = "json的属性要有"
+			+ "noticeName和content", required = true) @RequestBody String body) {
 		WriteBack<String> writeBack = new WriteBack<>();
 		writeBack.setData("");
 		Gson gson = new Gson();

@@ -39,6 +39,9 @@ public interface PunishmentMapper {
 	@Select("select * from lib_punishment")
 	public List<Punishment> list();
 
+	@Select("select count(1) from lib_punishment")
+	public int listCount();
+
 	/**
 	 * @apiNote 分页查询惩罚信息
 	 * @param current

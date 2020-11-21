@@ -23,6 +23,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 根据ID删除一条公告
 	 * @param id
 	 */
+	@Override
 	public void delete(Integer id) {
 		noticeMapper.deleteById(id);
 	}
@@ -32,6 +33,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param name
 	 * @return
 	 */
+	@Override
 	public List<Notice> fuzzyQuery(String name) {
 		name = "%" + name + "%";
 		return noticeMapper.fuzzyQueryByname(name);
@@ -44,6 +46,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param size
 	 * @return
 	 */
+	@Override
 	public List<Notice> fuzzyQueryPagination(String name, int currentPage, int size) {
 		name = "%" + name + "%";
 		return noticeMapper.fuzzyQueryBynamePagination(name, (currentPage - 1) * size, size);
@@ -54,6 +57,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param id
 	 * @return
 	 */
+	@Override
 	public Notice get(Integer id) {
 		return noticeMapper.getById(id);
 	}
@@ -62,6 +66,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 获取最新公告
 	 * @return
 	 */
+	@Override
 	public Notice getLatestNotice() {
 		return noticeMapper.getLatestNotice();
 	}
@@ -71,6 +76,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param name
 	 * @param content
 	 */
+	@Override
 	public void insert(Notice notice) {
 		noticeMapper.insert(notice);
 	}
@@ -79,6 +85,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 查询全部公告
 	 * @return
 	 */
+	@Override
 	public List<Notice> queryAll() {
 		return noticeMapper.list();
 	}
@@ -89,6 +96,7 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @param size
 	 * @return
 	 */
+	@Override
 	public List<Notice> queryAllPagination(int currentPage, int size) {
 		return noticeMapper.listPagination((currentPage - 1) * size, size);
 	}
@@ -97,7 +105,20 @@ public class NoticeServiceImpl extends NoticeService {
 	 * @apiNote 更新一条公告
 	 * @param notice
 	 */
+	@Override
 	public void update(Notice notice) {
 		noticeMapper.update(notice);
+	}
+
+	@Override
+	public int fuzzyQueryBynameCount(String name) {
+		// TODO Auto-generated method stub
+		return noticeMapper.fuzzyQueryBynameCount(name);
+	}
+
+	@Override
+	public int listCount() {
+		// TODO Auto-generated method stub
+		return noticeMapper.listCount();
 	}
 }
