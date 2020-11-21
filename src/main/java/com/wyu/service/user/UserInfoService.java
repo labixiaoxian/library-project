@@ -27,4 +27,6 @@ public interface UserInfoService {
      * @return
      */
     int updateUserInfo( UserInfo userInfo);
+
+    public int queryUserInfoCount(UserInfo userInfoCondition);
 }
