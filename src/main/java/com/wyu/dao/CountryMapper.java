@@ -23,6 +23,12 @@ public interface CountryMapper {
 	 */
 	public Country queryById(int id);
 	/**
+	 * @apiNote 通过国家名查询国家信息
+	 * @param name
+	 * @return
+	 */
+	public Country queryByName(String name);
+	/**
 	 * @apiNote 新增一个国家信息
 	 * @param country
 	 * @return

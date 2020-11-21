@@ -102,11 +102,11 @@ public class BookController {
 		WriteBack<Object> wb = new WriteBack<Object>();
 		try {
 			if(space_count==1) {
-				space="短篇小说";
+				space="短篇";
 			}else if(space_count==2) {
-				space="中篇小说";
+				space="中篇";
 			}else if(space_count==3){
-				space="长篇小说";
+				space="长篇";
 			}
 			List<Book> list = bookServiceImpl.queryLikeNameDivPage(nickname, country_id, theme_id, type_id, space, currentPage, pageSize);
 			wb.setData(list);
@@ -135,11 +135,11 @@ public class BookController {
 		WriteBack<String> wb = new WriteBack<String>();
 		try {
 			if(space_count==1) {
-				space="短篇小说";
+				space="短篇";
 			}else if(space_count==2) {
-				space="中篇小说";
+				space="中篇";
 			}else if(space_count==3){
-				space="长篇小说";
+				space="长篇";
 			}
 			Book book  = new Book(bookName,countryMapper.queryById(country_id),
 								themeMapper.queryById(theme_id),typeMapper.queryById(type_id),
@@ -188,11 +188,11 @@ public class BookController {
 		WriteBack<String> wb = new WriteBack<String>();
 		try {
 			if(space_count==1) {
-				space="短篇小说";
+				space="短篇";
 			}else if(space_count==2) {
-				space="中篇小说";
+				space="中篇";
 			}else if(space_count==3){
-				space="长篇小说";
+				space="长篇";
 			}
 			Book book = bookMapper.queryById(id);
 			book.setBookName(bookName);

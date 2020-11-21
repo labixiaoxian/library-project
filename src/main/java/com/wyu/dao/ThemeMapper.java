@@ -22,6 +22,12 @@ public interface ThemeMapper {
 	 */
 	public Theme queryById(int id);
 	/**
+	 * @apiNote 通过主题名查询主题信息
+	 * @param name
+	 * @return
+	 */
+	public Theme queryByName(String name);
+	/**
 	 * @apiNote 新增一个主题信息
 	 * @param theme
 	 * @return

@@ -40,7 +40,7 @@ public class BookTest {
 			book.setType(type);
 			book.setInfo("三只小猪建造房子的故事"+i);
 			book.setBookCount(100);
-			book.setSpace("1000");
+			book.setSpace("短篇");
 			int flag = bookMapper.newBook(book);
 			System.out.println(flag);
 		}

@@ -13,6 +13,9 @@
 	<select id="queryById" resultType="com.wyu.entity.Country" parameterType="int">
 		select * from lib_country where id=#{id}
 	</select>
+	<select id="queryByName" resultType="com.wyu.entity.Country" parameterType="String">
+		select * from lib_country where country_name=#{countryName}
+	</select>
 	<delete id="deleteById" parameterType="int">
 		delete from lib_country where id=#{id}
 	</delete>

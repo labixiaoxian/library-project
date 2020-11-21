@@ -47,9 +47,28 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 
     Lock lock = new ReentrantLock(true);
 
+    /**
+     * @param id
+     */
     @Override
     public void approve(Integer id) {
-        borrowInfoMapper.approve(id);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 30);
+        BorrowInfo borrowInfo = borrowInfoMapper.getById(id);
+        borrowInfo.setBorrowState(1);
+        borrowInfo.setBorrowDate(new Timestamp(System.currentTimeMillis()));
+        borrowInfo.setReturnDate(new Timestamp(cal.getTime().getTime()));
+        borrowInfoMapper.update(borrowInfo);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        // TODO Auto-generated method stub
+        BorrowInfo borrowInfo = borrowInfoMapper.getById(id);
+        Book book = bookMapper.queryById(borrowInfo.getBookId());
+        book.setBookCount(book.getBookCount() + 1);
+        bookMapper.updateBook(book);
+        borrowInfoMapper.deleteById(id);
     }
 
     /**
@@ -60,6 +79,14 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
     @Override
     public List<BorrowInfo> getBookShelf(Integer userId) {
         List<BorrowInfo> data = borrowInfoMapper.getBookShelf(userId);
+        relatedQuery(data);
+        return data;
+    }
+
+    @Override
+    public List<BorrowInfo> getBorrowInfosByBookId(Integer bookId) {
+        // TODO Auto-generated method stub
+        List<BorrowInfo> data = borrowInfoMapper.getBorrowInfosByBookId(bookId);
         relatedQuery(data);
         return data;
     }
@@ -76,15 +103,11 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
         return data;
     }
 
-    /**
-     *
-     * @param currentPage
-     * @param pageSize
-     * @return
-     */
     @Override
-    public List<BorrowInfo> getBorrowingBorrowInfos(Integer currentPage, Integer pageSize) {
-        List<BorrowInfo> data = borrowInfoMapper.getByBorrowStatePagination(1, (currentPage - 1) * pageSize, pageSize);
+    public List<BorrowInfo> getByBorrowStatesPagination(Integer states, Integer currentPage, Integer pageSize) {
+        // TODO Auto-generated method stub
+        List<BorrowInfo> data = borrowInfoMapper.getByBorrowStatePagination(states, (currentPage - 1) * pageSize,
+                pageSize);
         relatedQuery(data);
         return data;
     }
@@ -92,32 +115,6 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
     @Override
     public int getCountByUserId(Integer id) {
         return userMapper.findUserById(id).getBorrowCount();
-    }
-
-    /**
-     *
-     * @param currentPage
-     * @param pageSize
-     * @return
-     */
-    @Override
-    public List<BorrowInfo> getFinishedBorrowInfos(Integer currentPage, Integer pageSize) {
-        List<BorrowInfo> data = borrowInfoMapper.getByBorrowStatePagination(2, (currentPage - 1) * pageSize, pageSize);
-        relatedQuery(data);
-        return data;
-    }
-
-    /**
-     * @apiNote 分页查询审核中的借阅记录
-     * @param currentPage
-     * @param pageSize
-     * @return
-     */
-    @Override
-    public List<BorrowInfo> getReviewingBorrowInfos(Integer currentPage, Integer pageSize) {
-        List<BorrowInfo> data = borrowInfoMapper.getByBorrowStatePagination(0, (currentPage - 1) * pageSize, pageSize);
-        relatedQuery(data);
-        return data;
     }
 
     /**
@@ -132,6 +129,9 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
         return data;
     }
 
+    /**
+     * @param borrowInfo
+     */
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public void insert(BorrowInfo borrowInfo) throws Exception {
@@ -147,18 +147,19 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
             if (book.getBookCount() != 0) {
                 lock.lock();
                 try {
+                    User user = userMapper.findUserById(borrowInfo.getUserId());
+                    int borrowCount = user.getBorrowCount();
+                    if (borrowCount >= 3) {
+                        throw new Exception("借书数量超过限制");
+                    }
+                    user.setBorrowCount(user.getBorrowCount() + 1);
+                    userMapper.updateUser(user);
                     book.setBookCount(book.getBookCount() - 1);
                     System.out.println(book.getBookCount());
                     bookMapper.updateBook(book);
                     borrowInfo.setBorrowDate(new Timestamp(System.currentTimeMillis()));
                     borrowInfo.setReturnDate(new Timestamp(cal.getTime().getTime()));
                     borrowInfoMapper.insert(borrowInfo);
-                    User user = userMapper.findUserById(borrowInfo.getUserId());
-                    user.setBorrowCount(user.getBorrowCount() + 1);
-                    userMapper.updateUser(user);
-                } catch (Exception e) {
-                    // TODO: handle exception
-                    e.printStackTrace();
                 } finally {
                     lock.unlock();
                     lock.unlock();
@@ -173,6 +174,15 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 
     }
 
+    @Override
+    public void refuse(Integer id) {
+        // TODO Auto-generated method stub
+        BorrowInfo info = borrowInfoMapper.getById(id);
+        info.setBorrowState(-1);
+        info.setExamineState(-1);
+        borrowInfoMapper.update(info);
+    }
+
     /**
      *
      * @param data
@@ -185,10 +195,13 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
     }
 
     @Override
-    public void renewBook(Integer id) {
+    public void renewBook(Integer id) throws Exception {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 30);
         BorrowInfo borrowInfo = borrowInfoMapper.getById(id);
+        if (borrowInfo.getBorrowState() != 1) {
+            throw new Exception();
+        }
         borrowInfo.setBorrowDate(new Timestamp(System.currentTimeMillis()));
         borrowInfo.setReturnDate(new Timestamp(cal.getTime().getTime()));
         borrowInfo.setRenewState(1);
@@ -203,4 +216,5 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
         user.setBorrowCount(user.getBorrowCount() - 1);
         userMapper.updateUser(user);
     }
+
 }

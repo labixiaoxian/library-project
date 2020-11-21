@@ -22,6 +22,12 @@ public interface TypeMapper {
 	 */
 	public Type queryById(int id);
 	/**
+	 * @apiNote 通过类型名查询类型信息
+	 * @param name
+	 * @return
+	 */
+	public Type queryByName(String name);
+	/**
 	 * 新增类型信息
 	 * @param type
 	 * @return

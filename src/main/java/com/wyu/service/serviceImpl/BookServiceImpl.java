@@ -1,12 +1,21 @@
 package com.wyu.service.serviceImpl;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wyu.dao.BookMapper;
+import com.wyu.dao.CountryMapper;
+import com.wyu.dao.ThemeMapper;
+import com.wyu.dao.TypeMapper;
+import com.wyu.dto.BookDto;
 import com.wyu.entity.Book;
+import com.wyu.entity.Country;
+import com.wyu.entity.Theme;
+import com.wyu.entity.Type;
 import com.wyu.service.BookService;
 /**
  * @since 2020/11/18
@@ -18,6 +27,15 @@ public class BookServiceImpl implements BookService{
 
 	@Autowired
 	private BookMapper bookMapper;
+	
+	@Autowired
+	private CountryMapper countryMapper;
+	
+	@Autowired
+	private ThemeMapper themeMapper;
+	
+	@Autowired
+	private TypeMapper typeMapper;
 	
 	/**
 	 * @apiNote 添加书籍信息
@@ -99,6 +117,37 @@ public class BookServiceImpl implements BookService{
 	public Book queryById(int id) {
 		Book book = bookMapper.queryById(id);
 		return book;
+	}
+
+	@Override
+	public void insertBookImport(List<BookDto> list) {
+		for (BookDto bookDto : list) {
+			if(bookDto.getBookName()==null) {
+				break;
+			}
+			try {
+				countryMapper.newCountry(new Country(bookDto.getCountry()));
+			} catch (Exception e) {
+				
+			}
+			try {
+				themeMapper.newTheme(new Theme(bookDto.getTheme()));
+			} catch (Exception e) {
+				
+			}
+			try {
+				typeMapper.newType(new Type(bookDto.getType()));
+			}catch (Exception e) {
+				
+			}
+			Country country = countryMapper.queryByName(bookDto.getCountry());
+			Theme theme = themeMapper.queryByName(bookDto.getTheme());
+			Type type = typeMapper.queryByName(bookDto.getType());
+			Book book = new Book(bookDto.getBookName(), country, theme, type, bookDto.getSpace(), 
+								Integer.parseInt(bookDto.getBookCount()), bookDto.getInfo(), 
+								new Timestamp(new Date().getTime()));
+			bookMapper.newBook(book);
+		}
 	}
 
 }

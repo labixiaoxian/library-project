@@ -32,7 +32,8 @@ public class PunishmentController {
 
 	@ApiOperation(notes = "删除一条惩罚记录", value = "删除一条惩罚记录")
 	@DeleteMapping("/punishment/{id}")
-	public WriteBack<String> delete(@PathVariable("id") Integer id) {
+	public WriteBack<String> delete(
+			@ApiParam(name = "id", value = "惩罚ID", required = true) @PathVariable("id") Integer id) {
 		WriteBack<String> writeBack = new WriteBack<>();
 		try {
 			punishmentService.deleteById(id);
