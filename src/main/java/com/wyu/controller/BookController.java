@@ -93,7 +93,7 @@ public class BookController {
 
 	@ApiOperation(notes = "查询全部图书信息（模糊查询）（分页）", value = "查询全部图书信息（模糊查询）（分页）")
 	@PostMapping("/book/query")
-	public WriteBack<Object> queryAllByLike(
+	public WriteBack<List<Book>> queryAllByLike(
 			@ApiParam(name = "json", value = "(单引号改为双引号)" + "{" + "'nickname':'nickname'," + "'currentPage':页数,"
 					+ "'pageSize':一页数据量," + "'country_id':国家ID," + "'theme_id':主题ID," + "'type_id':类型ID,"
 					+ "'space':篇幅下标（1-3）," + "}", required = true) @RequestBody Map<String, Object> requestMap) {
@@ -105,7 +105,7 @@ public class BookController {
 		Integer type_id = (Integer) requestMap.get("type_id");
 		Integer space_count = (Integer) requestMap.get("space");
 		String space = null;
-		WriteBack<Object> wb = new WriteBack<>();
+		WriteBack<List<Book>> wb = new WriteBack<>();
 		try {
 			if (!ObjectUtils.isEmpty(space_count)) {
 				if (space_count == 1) {
