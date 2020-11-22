@@ -157,15 +157,9 @@ public class BookServiceImpl implements BookService {
 	 * @param size
 	 */
 	@Override
-<<<<<<< HEAD
-	@Cacheable(keyGenerator = "myGenerator", sync = true)
-	public List<Book> queryLikeNameDivPage(String name, int country_id, int theme_id, int type_id, String space,
-			int current, int size) {
-=======
 	@Cacheable(keyGenerator = "myGenerator")
-	public List<Book> queryLikeNameDivPage(String name, Integer country_id, Integer theme_id, Integer type_id, String space,
-										   Integer current, Integer size) {
->>>>>>> 5eddedf6e9b26a642c012a708210d91df477efec
+	public List<Book> queryLikeNameDivPage(String name, Integer country_id, Integer theme_id, Integer type_id,
+			String space, Integer current, Integer size) {
 		List<Book> list = bookMapper.queryByNameLikeDivPage(name, country_id, theme_id, type_id, space,
 				(current - 1) * size, size);
 		return list;
@@ -181,58 +175,6 @@ public class BookServiceImpl implements BookService {
 		bookMapper.updateBook(book);
 	}
 
-<<<<<<< HEAD
-=======
-	/**
-	 * @apiNote 通过Id查询书籍信息
-	 * @param
-	 */
-	@Override
-	@Cacheable(keyGenerator = "myGenerator")
-	public Book queryById(int id) {
-		Book book = bookMapper.queryById(id);
-		return book;
-	}
-
-	/**
-	 * 
-	 * @apiNote 导入书籍信息
-	 */
-	@Override
-	@CacheEvict(allEntries = true)
-	public void insertBookImport(List<BookDto> list) {
-		for (BookDto bookDto : list) {
-			if (bookDto.getBookName() == null) {
-				break;
-			}
-			try {
-				countryMapper.newCountry(new Country(bookDto.getCountry()));
-			} catch (Exception e) {
-
-			}
-			try {
-				themeMapper.newTheme(new Theme(bookDto.getTheme()));
-			} catch (Exception e) {
-
-			}
-			try {
-				typeMapper.newType(new Type(bookDto.getType()));
-			} catch (Exception e) {
-
-			}
-			Country country = countryMapper.queryByName(bookDto.getCountry());
-			Theme theme = themeMapper.queryByName(bookDto.getTheme());
-			Type type = typeMapper.queryByName(bookDto.getType());
-			Book book = new Book(bookDto.getBookName(), country, theme, type, bookDto.getSpace(),
-					Integer.parseInt(bookDto.getBookCount()), bookDto.getInfo(), new Timestamp(new Date().getTime()));
-			bookMapper.newBook(book);
-		}
-	}
-
-
-
-
->>>>>>> 5eddedf6e9b26a642c012a708210d91df477efec
 	@Override
 	public int queryDivPageCount(String name, Integer country_id, Integer theme_id, Integer type_id, String space) {
 		return bookMapper.queryDivPageCount(name, country_id, theme_id, type_id, space);

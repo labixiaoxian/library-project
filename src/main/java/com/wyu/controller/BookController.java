@@ -98,46 +98,22 @@ public class BookController {
 					+ "'pageSize':一页数据量," + "'country_id':国家ID," + "'theme_id':主题ID," + "'type_id':类型ID,"
 					+ "'space':篇幅下标（1-3）," + "}", required = true) @RequestBody Map<String, Object> requestMap) {
 		String nickname = (String) requestMap.get("nickname");
-		int currentPage = (int) requestMap.get("currentPage");
-		int pageSize = (int) requestMap.get("pageSize");
-		int country_id = (int) requestMap.get("country_id");
-		int theme_id = (int) requestMap.get("theme_id");
-		int type_id = (int) requestMap.get("type_id");
-		int space_count = (int) requestMap.get("space");
-		String space = null;
-		WriteBack<Object> wb = new WriteBack<>();
-		try {
-			if (space_count == 1) {
-				space = "短篇";
-			} else if (space_count == 2) {
-				space = "中篇";
-			} else if (space_count == 3) {
-				space = "长篇";
-	
-	@ApiOperation(notes = "查询全部图书信息（模糊查询）（分页）",value = "查询全部图书信息（模糊查询）（分页）")
-	@PostMapping("/book/query")
-	public WriteBack<Object> queryAllByLike(@ApiParam(name = "json", 
-											value ="(单引号改为双引号)"+ "{" + "'nickname':'nickname',"
-											+ "'currentPage':页数,"+"'pageSize':一页数据量,"+"'country_id':国家ID,"+
-											"'theme_id':主题ID,"+"'type_id':类型ID,"+"'space':篇幅下标（1-3）,"+
-													"}", required = true)@RequestBody Map<String,Object> requestMap){
-		String nickname = (String) requestMap.get("nickname");
 		Integer currentPage = (Integer) requestMap.get("currentPage");
 		Integer pageSize = (Integer) requestMap.get("pageSize");
 		Integer country_id = (Integer) requestMap.get("country_id");
 		Integer theme_id = (Integer) requestMap.get("theme_id");
 		Integer type_id = (Integer) requestMap.get("type_id");
 		Integer space_count = (Integer) requestMap.get("space");
-		String space=null;
-		WriteBack<Object> wb = new WriteBack<Object>();
+		String space = null;
+		WriteBack<Object> wb = new WriteBack<>();
 		try {
-			if (!ObjectUtils.isEmpty(space_count)){
-				if(space_count==1) {
-					space="短篇";
-				}else if(space_count==2) {
-					space="中篇";
-				}else if(space_count==3){
-					space="长篇";
+			if (!ObjectUtils.isEmpty(space_count)) {
+				if (space_count == 1) {
+					space = "短篇";
+				} else if (space_count == 2) {
+					space = "中篇";
+				} else if (space_count == 3) {
+					space = "长篇";
 				}
 			}
 			List<Book> list = bookServiceImpl.queryLikeNameDivPage(nickname, country_id, theme_id, type_id, space,
