@@ -19,7 +19,7 @@ public interface BookService {
 	List<Book> queryAll();
 	List<Book> queryAllDivPage(int current,int size);
 	List<Book> queryLikeName(String name,int country_id,int theme_id,int type_id,String space);
-	List<Book> queryLikeNameDivPage(String name,int country_id,int theme_id,int type_id,String space,int current,int size);
+	List<Book> queryLikeNameDivPage(String name,Integer country_id,Integer theme_id,Integer type_id,String space,Integer current,Integer size);
 	void updateBook(Book book);
 	void insertBookImport(List<BookDto> list);
 
