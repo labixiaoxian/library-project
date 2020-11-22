@@ -165,20 +165,20 @@
 			<if test="name!=null">
 				b.book_name like "%"#{name}"%"
 			</if>
-			<if test="country_id!=0">
+			<if test="country_id!=null">
 				and b.country_id=#{country_id}
 			</if>
-			<if test="theme_id!=0">
+			<if test="theme_id!=null">
 				and b.theme_id=#{theme_id}
 			</if>
 			<if test="space!=null">
 				and space=#{space}
 			</if>
-			<if test="type_id!=0">
+			<if test="type_id!=null">
 				and b.type_id=#{type_id}
 			</if>
 		</where>
-		order by b.create_date desc
+		order by b.id
 		limit #{current},#{size}
 	</select>
 
@@ -194,16 +194,16 @@
 			<if test="name!=null">
 				b.book_name like "%"#{name}"%"
 			</if>
-			<if test="country_id!=0">
+			<if test="country_id!=null">
 				and b.country_id=#{country_id}
 			</if>
-			<if test="theme_id!=0">
+			<if test="theme_id!=null">
 				and b.theme_id=#{theme_id}
 			</if>
 			<if test="space!=null">
 				and space=#{space}
 			</if>
-			<if test="type_id!=0">
+			<if test="type_id!=null">
 				and b.type_id=#{type_id}
 			</if>
 		</where>

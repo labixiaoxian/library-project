@@ -221,7 +221,7 @@ public class UserController {
      * @return
      */
     @ApiOperation(notes = "条件查询获取用户详情列表", value = "条件查询获取用户详情列表")
-    @GetMapping(value = "/getuserinfolist")
+    @PostMapping(value = "/getuserinfolist")
     public WriteBack getUserInfoList(@ApiParam(name = "json", value = "{" + "'age':1," + "'sex':2" +"'birthday':'2020-11-12'"
             + "'nickname':'nickname' "+"'borrowCount':12" +"'credit':100"+"'currentPage':1"+"'status':1"+"'pageSize':5}", required = true)
                                          @RequestBody Map<String, Object> requestMap) {

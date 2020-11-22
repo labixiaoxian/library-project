@@ -29,8 +29,8 @@ public interface BookMapper {
 	 * @return
 	 */
 	public int queryByLikeCount(@Param("name") String name,
-			@Param("country_id") int country_id,@Param("theme_id") int theme_id,
-			@Param("type_id") int type_id,@Param("space") String space);
+			@Param("country_id") Integer country_id,@Param("theme_id") Integer theme_id,
+			@Param("type_id") Integer type_id,@Param("space") String space);
 	/**
 	 * @apiNote 通过ID查询书籍
 	 * @param id
@@ -89,9 +89,9 @@ public interface BookMapper {
 	 * @return
 	 */
 	public List<Book> queryByNameLikeDivPage(@Param("name") String name,
-			@Param("country_id")int country_id,@Param("theme_id")int theme_id,
-			@Param("type_id")int type_id,@Param("space")String space,
-			@Param("current")int current,@Param("size")int size);
+			@Param("country_id")Integer country_id,@Param("theme_id")Integer theme_id,
+			@Param("type_id")Integer type_id,@Param("space")String space,
+			@Param("current")Integer current,@Param("size")Integer size);
 
 
 	/**
