@@ -282,6 +282,7 @@ public class BorrowInfoController {
 		}
 	}
 
+	@ApiOperation(value = "统计接口", notes = "统计接口")
 	@GetMapping("/borrowInfo/statistics")
 	public WriteBack<Map<String, Integer>> statistics() {
 		WriteBack<Map<String, Integer>> writeBack = new WriteBack<>();
@@ -298,6 +299,7 @@ public class BorrowInfoController {
 			return writeBack;
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			WriteBackUtil.setFail(writeBack);
 			return writeBack;
 		}

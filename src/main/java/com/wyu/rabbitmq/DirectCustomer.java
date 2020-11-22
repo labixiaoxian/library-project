@@ -3,7 +3,6 @@ package com.wyu.rabbitmq;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -42,9 +41,9 @@ public class DirectCustomer {
 			// 改成前端页面，前端页面再调用下面的接口
 			helper.setText("<a href='http://192.168.3.78:8080/#/waiting?userId=" + userId + "'>激活邮箱</a>", true);
 			mailSender.send(message);
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			System.err.println("邮件发送失败");
-			e.printStackTrace();
+			// e.printStackTrace();
 		}
 	}
 

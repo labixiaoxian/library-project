@@ -227,10 +227,10 @@ public interface BorrowInfoMapper {
 	@Select("select count(1) from lib_borrow_info where to_days(now())=to_days(borrow_date)")
 	public int numOfBorrowingToday();
 
-	@Select("SELECT * FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' );")
+	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' );")
 	public int numOfBorrowingThisMonth();
 
-	@Select("SELECT * FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' );")
+	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' );")
 	public int numOfBorrowingThisYear();
 
 }
