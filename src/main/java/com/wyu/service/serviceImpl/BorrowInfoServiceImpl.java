@@ -197,7 +197,7 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	 */
 	@Override
 	@Transactional(isolation = Isolation.READ_COMMITTED)
-	@CacheEvict(allEntries = true)
+	@CacheEvict(cacheNames = { "borrowInfo", "book" }, allEntries = true)
 	public void insert(BorrowInfo borrowInfo) throws Exception {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, 30);

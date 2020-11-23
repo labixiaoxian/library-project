@@ -140,7 +140,13 @@ public class BookController {
 		int theme_id = (int) requestMap.get("theme_id");
 		int type_id = (int) requestMap.get("type_id");
 		int space_count = (int) requestMap.get("space_count");
-		int bookCount = (int) requestMap.get("bookCount");
+		int bookCount = 1;
+		try {
+			bookCount = Integer.parseInt((String) requestMap.get("bookCount"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		String info = (String) requestMap.get("info");
 		String space = null;
 		WriteBack<String> wb = new WriteBack<>();
@@ -190,20 +196,12 @@ public class BookController {
 		String bookName = (String) requestMap.get("bookName");
 		int country_id = (int) requestMap.get("country_id");
 		int theme_id = (int) requestMap.get("theme_id");
-		int type_id = (int) requestMap.get("theme_id");
-		int space_count = (int) requestMap.get("space_count");
-		int bookCount = (int) requestMap.get("bookCount");
+		int type_id = (int) requestMap.get("type_id");
+		String space = (String) requestMap.get("space");
+		int bookCount = Integer.parseInt((String) requestMap.get("bookCount"));
 		String info = (String) requestMap.get("info");
-		String space = null;
 		WriteBack<String> wb = new WriteBack<>();
 		try {
-			if (space_count == 1) {
-				space = "短篇";
-			} else if (space_count == 2) {
-				space = "中篇";
-			} else if (space_count == 3) {
-				space = "长篇";
-			}
 			Book book = bookMapper.queryById(id);
 			book.setBookName(bookName);
 			book.setCountry(countryMapper.queryById(country_id));
