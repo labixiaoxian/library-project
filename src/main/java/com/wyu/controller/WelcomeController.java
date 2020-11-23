@@ -76,7 +76,7 @@ public class WelcomeController {
 			// 获取用户数量
 			userCount = userInfoService.queryUserInfoCount(userInfo);
 			// 获取图书数量
-			bookCount = bookService.queryDivPageCount(null, 0, 0, 0, null);
+			bookCount = bookService.queryDivPageCount(null, null, null, null, null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			WriteBackUtil.setFail(writeBack);
@@ -119,7 +119,7 @@ public class WelcomeController {
 
 		// 统计数量
 		for (int i = 0; i < countryList.size(); i++) {
-			int count = bookService.queryDivPageCount(null, countryList.get(i).getId(), 0, 0, null);
+			int count = bookService.queryDivPageCount(null, countryList.get(i).getId(), null, null, null);
 			EchartSeriesData echartSeriesData = new EchartSeriesData();
 			echartSeriesData.setName(countryList.get(i).getCountryName());
 			echartSeriesData.setValue(count);
@@ -161,7 +161,7 @@ public class WelcomeController {
 
 		// 统计数量
 		for (int i = 0; i < typeList.size(); i++) {
-			int count = bookService.queryDivPageCount(null, typeList.get(i).getId(), 0, 0, null);
+			int count = bookService.queryDivPageCount(null, typeList.get(i).getId(), null, null, null);
 			EchartSeriesData echartSeriesData = new EchartSeriesData();
 			echartSeriesData.setName(typeList.get(i).getTypeName());
 			echartSeriesData.setValue(count);
@@ -203,7 +203,7 @@ public class WelcomeController {
 
 		// 统计数量
 		for (int i = 0; i < themeList.size(); i++) {
-			int count = bookService.queryDivPageCount(null, themeList.get(i).getId(), 0, 0, null);
+			int count = bookService.queryDivPageCount(null, themeList.get(i).getId(), null, null, null);
 			EchartSeriesData echartSeriesData = new EchartSeriesData();
 			echartSeriesData.setName(themeList.get(i).getThemeName());
 			echartSeriesData.setValue(count);
