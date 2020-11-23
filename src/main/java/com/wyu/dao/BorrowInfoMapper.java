@@ -245,4 +245,11 @@ public interface BorrowInfoMapper {
 	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' );")
 	public int numOfBorrowingThisYear();
 
+	@Select("select count(1) from lib_user_info where book_id in (select id from lib_book where book_name like #{bookName}) "
+			+ "and user_id = #{userId}")
+	public int getByBookNameAndUserIdCount(String bookName, Integer userId);
+
+	@Select("select * from lib_user_info where book_id in (select id from lib_book where book_name like #{bookName}) "
+			+ "and user_id = #{userId} limit #{current},#{pageSize}")
+	public List<BorrowInfo> getByBookNameAndUserId(String bookName, Integer userId, Integer current, Integer pageSize);
 }
