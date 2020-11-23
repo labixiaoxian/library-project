@@ -41,4 +41,12 @@ public abstract class BorrowInfoService {
 			Integer pageSize);
 
 	public abstract int getByNameAndStatesCount(String name, Integer states);
+
+	public abstract int numOfBorrowingToday();
+
+	public abstract int numOfBorrowingThisMonth();
+
+	public abstract int numOfBorrowingThisYear();
+
+	public abstract int getOverDueCount();
 }

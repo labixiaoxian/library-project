@@ -1,5 +1,32 @@
 package com.wyu.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.wyu.dao.CountryMapper;
 import com.wyu.entity.Country;
 import com.wyu.entity.User;
@@ -15,30 +42,10 @@ import com.wyu.utils.HttpServletRequestUtil;
 import com.wyu.utils.ImageUtil;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.ObjectUtils;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by XiaoXian on 2020/11/18.
@@ -47,6 +54,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
 
     @Autowired
     private UserService userService;
@@ -428,44 +436,41 @@ public class UserController {
 
 
 
+
 //    @GetMapping("/caluser")
 //    public WriteBack calUser(){
 //
 //    }
 
+	// @RequiresRoles(value = "admin")
+	@GetMapping(value = "/test")
+	public String test() {
+		for (int i = 0; i < 100; i++) {
+			Country country = new Country();
+			country.setCountryName("图书");
+			try {
+				countryMapper.newCountry(country);
+			} catch (Exception e) {
+			}
+			System.out.println(i);
+		}
+		return "error";
+	}
 
-
-
-    //@RequiresRoles(value = "admin")
-    @GetMapping(value = "/test")
-    public String test() {
-        for (int i = 0;i<100;i++){
-            Country country = new Country();
-            country.setCountryName("图书");
-            try {
-                countryMapper.newCountry(country);
-            } catch (Exception e) {
-            }
-            System.out.println(i);
-        }
-        return "error";
-    }
-
-
-    private UserInfo parseToUserInfo(Integer age, Integer sex, Integer borrowCount, Integer credit,
-                                     String birthday, String nickname,Integer status) {
-        UserInfo userInfo = new UserInfo();
-        User user = new User();
-        user.setCredit(credit);
-        user.setStatus(status);
-        user.setBorrowCount(borrowCount);
-        userInfo.setAge(age);
-        userInfo.setSex(sex);
-        userInfo.setNickname(nickname);
-        userInfo.setBirthday(DateFormateUtile.stampToString(birthday));
-        userInfo.setUser(user);
-        return userInfo;
-    }
+	private UserInfo parseToUserInfo(Integer age, Integer sex, Integer borrowCount, Integer credit, String birthday,
+			String nickname, Integer status) {
+		UserInfo userInfo = new UserInfo();
+		User user = new User();
+		user.setCredit(credit);
+		user.setStatus(status);
+		user.setBorrowCount(borrowCount);
+		userInfo.setAge(age);
+		userInfo.setSex(sex);
+		userInfo.setNickname(nickname);
+		userInfo.setBirthday(DateFormateUtile.stampToString(birthday));
+		userInfo.setUser(user);
+		return userInfo;
+	}
 
 //    int id = HttpServletRequestUtil.getInt(request,"id");
 //    int age = HttpServletRequestUtil.getInt(request, "age");
@@ -477,18 +482,18 @@ public class UserController {
 //    String address = HttpServletRequestUtil.getString(request, "address");
 //    String personalDesc = HttpServletRequestUtil.getString(request, "personalDesc");
 
-    private UserInfo parseToUserInfo2(Integer id,Integer age, Integer sex,String birthday, String nickname,
-                                      String email,String telephone,String address,String personalDesc) {
-        UserInfo userInfo = new UserInfo();
-        userInfo.setId(id);
-        userInfo.setAge(age);
-        userInfo.setSex(sex);
-        userInfo.setNickname(nickname);
-        userInfo.setBirthday(DateFormateUtile.stampToString(birthday));
-        userInfo.setTelephone(telephone);
-        userInfo.setEmail(email);
-        userInfo.setAddress(address);
-        userInfo.setPersonalDesc(personalDesc);
-        return userInfo;
-    }
+	private UserInfo parseToUserInfo2(Integer id, Integer age, Integer sex, String birthday, String nickname,
+			String email, String telephone, String address, String personalDesc) {
+		UserInfo userInfo = new UserInfo();
+		userInfo.setId(id);
+		userInfo.setAge(age);
+		userInfo.setSex(sex);
+		userInfo.setNickname(nickname);
+		userInfo.setBirthday(DateFormateUtile.stampToString(birthday));
+		userInfo.setTelephone(telephone);
+		userInfo.setEmail(email);
+		userInfo.setAddress(address);
+		userInfo.setPersonalDesc(personalDesc);
+		return userInfo;
+	}
 }

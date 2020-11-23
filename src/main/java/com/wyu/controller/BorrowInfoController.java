@@ -2,6 +2,7 @@ package com.wyu.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -281,4 +282,26 @@ public class BorrowInfoController {
 		}
 	}
 
+	@ApiOperation(value = "统计接口", notes = "统计接口")
+	@GetMapping("/borrowInfo/statistics")
+	public WriteBack<Map<String, Integer>> statistics() {
+		WriteBack<Map<String, Integer>> writeBack = new WriteBack<>();
+		HashMap<String, Integer> hashMap = new HashMap<>();
+		try {
+			hashMap.put("borrowToday", borrowInfoService.numOfBorrowingToday());
+			hashMap.put("borrowThisMonth", borrowInfoService.numOfBorrowingThisMonth());
+			hashMap.put("borrowThisYear", borrowInfoService.numOfBorrowingThisYear());
+			hashMap.put("overdue", borrowInfoService.getOverDueCount());
+			hashMap.put("reviewing", borrowInfoService.getByBorrowStateCount(0));
+			hashMap.put("borrowing", borrowInfoService.getByBorrowStateCount(1));
+			writeBack.setData(hashMap);
+			WriteBackUtil.setSuccess(writeBack);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
 }

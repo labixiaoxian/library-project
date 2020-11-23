@@ -9,100 +9,107 @@ import java.util.List;
  */
 public class User implements Serializable {
 
+	private static final long serialVersionUID = -5648543508440105862L;
 
-    private static final long serialVersionUID = -5648543508440105862L;
+	private Integer id;
 
-    private Integer id;
+	private String username;
 
-    private String username;
+	private String pwdHash;
 
-    private String pwdHash;
+	private String pwdSalt;
 
-    private String pwdSalt;
+	private Integer borrowCount;
 
-    private Integer borrowCount;
+	private Date registerTime;
 
-    private Date registerTime;
+	private Integer credit;
 
-    private Integer credit;
+	private Integer status;
 
-    private Integer status;
+	private List<Role> roles;
 
-    private List<Role> roles;
+	public Integer getStatus() {
+		return status;
+	}
 
-    public Integer getStatus() {
-        return status;
-    }
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+	public List<Role> getRoles() {
+		return roles;
+	}
 
-    public List<Role> getRoles() {
-        return roles;
-    }
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public String getPwdHash() {
+		return pwdHash;
+	}
 
-    public String getPwdHash() {
-        return pwdHash;
-    }
+	public void setPwdHash(String pwdHash) {
+		this.pwdHash = pwdHash;
+	}
 
-    public void setPwdHash(String pwdHash) {
-        this.pwdHash = pwdHash;
-    }
+	public String getPwdSalt() {
+		return pwdSalt;
+	}
 
-    public String getPwdSalt() {
-        return pwdSalt;
-    }
+	public void setPwdSalt(String pwdSalt) {
+		this.pwdSalt = pwdSalt;
+	}
 
-    public void setPwdSalt(String pwdSalt) {
-        this.pwdSalt = pwdSalt;
-    }
+	public Integer getBorrowCount() {
+		return borrowCount;
+	}
 
-    public Integer getBorrowCount() {
-        return borrowCount;
-    }
+	public void setBorrowCount(Integer borrowCount) {
+		this.borrowCount = borrowCount;
+	}
 
-    public void setBorrowCount(Integer borrowCount) {
-        this.borrowCount = borrowCount;
-    }
+	public Date getRegisterTime() {
+		return registerTime;
+	}
 
-    public Date getRegisterTime() {
-        return registerTime;
-    }
+	public void setRegisterTime(Date registerTime) {
+		this.registerTime = registerTime;
+	}
 
-    public void setRegisterTime(Date registerTime) {
-        this.registerTime = registerTime;
-    }
+	public Integer getCredit() {
+		return credit;
+	}
 
-    public Integer getCredit() {
-        return credit;
-    }
+	public void setCredit(Integer credit) {
+		this.credit = credit;
+	}
 
-    public void setCredit(Integer credit) {
-        this.credit = credit;
-    }
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", pwdHash=" + pwdHash + ", pwdSalt=" + pwdSalt
+				+ ", borrowCount=" + borrowCount + ", registerTime=" + registerTime + ", credit=" + credit + ", status="
+				+ status + ", roles=" + roles + "]";
+	}
+
 }

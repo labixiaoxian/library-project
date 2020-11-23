@@ -179,6 +179,9 @@ public interface BorrowInfoMapper {
 	public List<BorrowInfo> getOverDueInfo();
 
 	@Select("select count(1) from lib_borrow_info where now()>return_date and borrow_state=1;")
+	public int getOverDueCount();
+
+	@Select("select count(1) from lib_borrow_info where now()>return_date and borrow_state=1;")
 	public int getOverDueInfoCount();
 
 	/**
@@ -220,5 +223,26 @@ public interface BorrowInfoMapper {
 	 */
 	@Update("update lib_borrow_info set borrow_state = #{states} where id = #{id}")
 	public void updateStates(Integer id, Integer states);
+
+	/**
+	 * @apiNote 今日借书人数
+	 * @return
+	 */
+	@Select("select count(1) from lib_borrow_info where to_days(now())=to_days(borrow_date)")
+	public int numOfBorrowingToday();
+
+	/**
+	 * @apiNote 本月借阅人数
+	 * @return
+	 */
+	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' );")
+	public int numOfBorrowingThisMonth();
+
+	/**
+	 * @apiNote 今年借阅人数
+	 * @return
+	 */
+	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' );")
+	public int numOfBorrowingThisYear();
 
 }
