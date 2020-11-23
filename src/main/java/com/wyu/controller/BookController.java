@@ -159,7 +159,7 @@ public class BookController {
 			} else if (space_count == 3) {
 				space = "长篇";
 			}
-			Book book = new Book(bookName,author, countryMapper.queryById(country_id), themeMapper.queryById(theme_id),
+			Book book = new Book(bookName, author, countryMapper.queryById(country_id), themeMapper.queryById(theme_id),
 					typeMapper.queryById(type_id), space, bookCount, info, new Timestamp(new Date().getTime()));
 			bookServiceImpl.addBook(book);
 			wb.setData("");
@@ -193,32 +193,40 @@ public class BookController {
 	@ApiOperation(notes = "更新一本书籍信息", value = "更新一本书籍信息")
 	@PutMapping("/book")
 	public WriteBack<String> update(@RequestBody Map<String, Object> requestMap) {
-		int id = (int) requestMap.get("id");
-		String bookName = (String) requestMap.get("bookName");
-		String author = (String) requestMap.get("author");
-		int country_id = (int) requestMap.get("country_id");
-		int theme_id = (int) requestMap.get("theme_id");
-		int type_id = (int) requestMap.get("type_id");
-		String space = (String) requestMap.get("space");
-		int bookCount = Integer.parseInt((String) requestMap.get("bookCount"));
-		String info = (String) requestMap.get("info");
-		WriteBack<String> wb = new WriteBack<>();
 		try {
-			Book book = bookMapper.queryById(id);
-			book.setBookName(bookName);
-			book.setAuthor(author);
-			book.setCountry(countryMapper.queryById(country_id));
-			book.setTheme(themeMapper.queryById(theme_id));
-			book.setType(typeMapper.queryById(type_id));
-			book.setSpace(space);
-			book.setBookCount(bookCount);
-			book.setInfo(info);
-			bookServiceImpl.updateBook(book);
-			WriteBackUtil.setSuccess(wb);
-			wb.setData("");
-			return wb;
+			int id = (int) requestMap.get("id");
+			String bookName = (String) requestMap.get("bookName");
+			String author = (String) requestMap.get("author");
+			int country_id = (int) requestMap.get("country_id");
+			int theme_id = (int) requestMap.get("theme_id");
+			int type_id = (int) requestMap.get("type_id");
+			String space = (String) requestMap.get("space");
+			int bookCount = Integer.parseInt(requestMap.get("bookCount").toString());
+			String info = (String) requestMap.get("info");
+			WriteBack<String> wb = new WriteBack<>();
+			try {
+				Book book = bookMapper.queryById(id);
+				book.setBookName(bookName);
+				book.setAuthor(author);
+				book.setCountry(countryMapper.queryById(country_id));
+				book.setTheme(themeMapper.queryById(theme_id));
+				book.setType(typeMapper.queryById(type_id));
+				book.setSpace(space);
+				book.setBookCount(bookCount);
+				book.setInfo(info);
+				bookServiceImpl.updateBook(book);
+				WriteBackUtil.setSuccess(wb);
+				wb.setData("");
+				return wb;
+			} catch (Exception e) {
+				e.printStackTrace();
+				WriteBackUtil.setFail(wb);
+				return wb;
+			}
 		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
+			WriteBack wb = new WriteBack<>();
 			WriteBackUtil.setFail(wb);
 			return wb;
 		}

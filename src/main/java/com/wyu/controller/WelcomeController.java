@@ -161,7 +161,7 @@ public class WelcomeController {
 
 		// 统计数量
 		for (int i = 0; i < typeList.size(); i++) {
-			int count = bookService.queryDivPageCount(null, typeList.get(i).getId(), null, null, null);
+			int count = bookService.queryDivPageCount(null, null, null, typeList.get(i).getId(), null);
 			EchartSeriesData echartSeriesData = new EchartSeriesData();
 			echartSeriesData.setName(typeList.get(i).getTypeName());
 			echartSeriesData.setValue(count);
@@ -203,7 +203,7 @@ public class WelcomeController {
 
 		// 统计数量
 		for (int i = 0; i < themeList.size(); i++) {
-			int count = bookService.queryDivPageCount(null, themeList.get(i).getId(), null, null, null);
+			int count = bookService.queryDivPageCount(null, null, themeList.get(i).getId(), null, null);
 			EchartSeriesData echartSeriesData = new EchartSeriesData();
 			echartSeriesData.setName(themeList.get(i).getThemeName());
 			echartSeriesData.setValue(count);

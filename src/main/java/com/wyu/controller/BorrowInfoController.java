@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.wyu.entity.Book;
 import com.wyu.entity.BorrowInfo;
+import com.wyu.service.BookService;
 import com.wyu.service.BorrowInfoService;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
@@ -35,6 +37,9 @@ public class BorrowInfoController {
 
 	@Autowired
 	BorrowInfoService borrowInfoService;
+
+	@Autowired
+	BookService bookService;
 
 	@ApiOperation(notes = "审核操作", value = "审核操作")
 	@PutMapping("/borrowInfo/operate")
@@ -60,6 +65,9 @@ public class BorrowInfoController {
 			case 2:
 				try {
 					borrowInfoService.refuse(id);
+					Book book = bookService.queryById(borrowInfoService.getById(id).getBookId());
+					book.setBookCount(book.getBookCount() + 1);
+					bookService.updateBook(book);
 					WriteBackUtil.setSuccess(writeBack);
 					return writeBack;
 				} catch (Exception e) {
