@@ -78,6 +78,8 @@ public class UserController {
             //登录成功
             subject.login(token);
             map.put("token", subject.getSession().getId());
+            User userByUsername = userService.findUserByUsername(username);
+            map.put("user", userByUsername);
             WriteBackUtil.setWriteBack(LoginStatusEnums.LOGIN_SUCCESS.getState(),
                     LoginStatusEnums.LOGIN_SUCCESS.getStateInfo(), map, writeBack);
         } catch (IncorrectCredentialsException e) {

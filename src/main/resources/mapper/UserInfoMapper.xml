@@ -16,7 +16,7 @@
         <result property="picture" column="picture"/>
         <association property="user" column="user_id"
                      javaType="com.wyu.entity.User">
-            <id column="id" property="id" />
+            <id column="uid" property="id" />
             <result column="username" property="username" />
             <result column="borrow_count" property="borrowCount" />
             <result column="register_time" property="registerTime" />
@@ -36,6 +36,7 @@
      ui.address,
      ui.personal_desc,
      ui.picture,
+     u.id uid,
      u.username,
      u.borrow_count,
      u.register_time,
@@ -61,6 +62,7 @@
         ui.address,
         ui.personal_desc,
         ui.picture,
+        u.id uid,
         u.username,
         u.borrow_count,
         u.register_time,
@@ -116,6 +118,7 @@
         ui.address,
         ui.personal_desc,
         ui.picture,
+        u.id uid,
         u.username,
         u.borrow_count,
         u.register_time,
