@@ -14,7 +14,7 @@ public class Country implements Serializable{
 	@ExcelIgnore
 	@Excel(name = "国家ID")
 	private int id;              //国家Id
-	@Excel(name = "国家",orderNum = "2")
+	@Excel(name = "国家",orderNum = "3")
 	private String countryName;  //国家名
 	
 	public Country() {

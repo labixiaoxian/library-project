@@ -14,7 +14,7 @@ public class Type implements Serializable{
 	@ExcelIgnore
 	@Excel(name = "类型ID")
 	private int id;             //类型ID
-	@Excel(name = "类型",orderNum = "4")
+	@Excel(name = "类型",orderNum = "5")
 	private String typeName;    //类型名
 	public Type() {
 		super();

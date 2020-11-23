@@ -136,6 +136,7 @@ public class BookController {
 	@PostMapping("/book")
 	public WriteBack<String> insert(@RequestBody Map<String, Object> requestMap) {
 		String bookName = (String) requestMap.get("bookName");
+		String author = (String) requestMap.get("author");
 		int country_id = (int) requestMap.get("country_id");
 		int theme_id = (int) requestMap.get("theme_id");
 		int type_id = (int) requestMap.get("type_id");
@@ -158,7 +159,7 @@ public class BookController {
 			} else if (space_count == 3) {
 				space = "长篇";
 			}
-			Book book = new Book(bookName, countryMapper.queryById(country_id), themeMapper.queryById(theme_id),
+			Book book = new Book(bookName,author, countryMapper.queryById(country_id), themeMapper.queryById(theme_id),
 					typeMapper.queryById(type_id), space, bookCount, info, new Timestamp(new Date().getTime()));
 			bookServiceImpl.addBook(book);
 			wb.setData("");
@@ -194,6 +195,7 @@ public class BookController {
 	public WriteBack<String> update(@RequestBody Map<String, Object> requestMap) {
 		int id = (int) requestMap.get("id");
 		String bookName = (String) requestMap.get("bookName");
+		String author = (String) requestMap.get("author");
 		int country_id = (int) requestMap.get("country_id");
 		int theme_id = (int) requestMap.get("theme_id");
 		int type_id = (int) requestMap.get("type_id");
@@ -204,6 +206,7 @@ public class BookController {
 		try {
 			Book book = bookMapper.queryById(id);
 			book.setBookName(bookName);
+			book.setAuthor(author);
 			book.setCountry(countryMapper.queryById(country_id));
 			book.setTheme(themeMapper.queryById(theme_id));
 			book.setType(typeMapper.queryById(type_id));

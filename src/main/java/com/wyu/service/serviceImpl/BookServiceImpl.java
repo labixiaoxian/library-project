@@ -92,7 +92,7 @@ public class BookServiceImpl implements BookService {
 			Country country = countryMapper.queryByName(bookDto.getCountry());
 			Theme theme = themeMapper.queryByName(bookDto.getTheme());
 			Type type = typeMapper.queryByName(bookDto.getType());
-			Book book = new Book(bookDto.getBookName(), country, theme, type, bookDto.getSpace(),
+			Book book = new Book(bookDto.getBookName(),bookDto.getAuthor(), country, theme, type, bookDto.getSpace(),
 					Integer.parseInt(bookDto.getBookCount()), bookDto.getInfo(), new Timestamp(new Date().getTime()));
 			bookMapper.newBook(book);
 		}

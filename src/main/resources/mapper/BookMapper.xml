@@ -11,6 +11,7 @@
 		<result property="bookCount" column="book_count"/>
 		<result property="info" column="info"/>
 		<result property="createDate" column="create_date"/>
+		<result property="author" column="author"/>
 		<association property="country" column="country_id" javaType="com.wyu.entity.Country" >
 			<id property="id" column="cid"/>
   			<result property="countryName" column="country_name"/>
@@ -62,7 +63,8 @@
 		b.space,
 		b.book_count,
 		b.info,
-		b.create_date
+		b.create_date,
+		b.author
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -80,7 +82,8 @@
 		b.space,
 		b.book_count,
 		b.info,
-		b.create_date
+		b.create_date,
+		b.author
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -99,7 +102,8 @@
 		b.space,
 		b.book_count,
 		b.info,
-		b.create_date
+		b.create_date,
+		b.author
 		from 
 		lib_book b , lib_country c , lib_theme t , lib_type p 
 		where 
@@ -121,7 +125,8 @@
 		b.space,
 		b.book_count,
 		b.info,
-		b.create_date
+		b.create_date,
+		b.author
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -156,7 +161,8 @@
 		b.space,
 		b.book_count,
 		b.info,
-		b.create_date
+		b.create_date,
+		b.author
 		from 
 		lib_book b 
 		LEFT JOIN lib_country c on b.country_id=c.id 
@@ -212,9 +218,9 @@
 	
 	<insert id="newBook" parameterType="com.wyu.entity.Book">
 		insert into 
-		lib_book(book_name,country_id,theme_id,type_id,space,book_count,info,create_date) 
+		lib_book(book_name,author,country_id,theme_id,type_id,space,book_count,info,create_date) 
 		values
-		(#{bookName},#{country.id},#{theme.id},#{type.id},#{space},#{bookCount},#{info},#{createDate})
+		(#{bookName},#{author},#{country.id},#{theme.id},#{type.id},#{space},#{bookCount},#{info},#{createDate})
 	</insert>
 	<delete id="deleteById" parameterType="int">
 		delete from lib_book where id=#{id}
@@ -225,6 +231,9 @@
 		<set>
 			<if test="bookName!=null">
 				book_name=#{bookName},
+			</if>
+			<if test="author!=null">
+				author=#{author},
 			</if>
 			<if test="country!=null">
 				country_id=#{country.id},
