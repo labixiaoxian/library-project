@@ -6,6 +6,7 @@ import com.wyu.shiro.MyShiroRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authz.Authorizer;
 import org.apache.shiro.authz.ModularRealmAuthorizer;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -53,8 +54,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/ajaxLogin", "anon");
         filterChainDefinitionMap.put("/user/login", "anon");
         filterChainDefinitionMap.put("/user/active", "anon");
+        filterChainDefinitionMap.put("/user/logout", "anon");
         filterChainDefinitionMap.put("/**", "anon");
-//        filterChainDefinitionMap.put("/**", "authc");
+  //     filterChainDefinitionMap.put("/**", "authc");
         //配置shiro默认登录界面地址，前后端分离中登录界面跳转应由前端路由控制，后台仅返回json数据
         shiroFilterFactoryBean.setLoginUrl("/user/unauth");
         // 登录成功后要跳转的链接
@@ -84,6 +86,11 @@ public class ShiroConfig {
     public MyShiroRealm myShiroRealm() {
         MyShiroRealm myShiroRealm = new MyShiroRealm();
         myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
+
+        myShiroRealm.setCachingEnabled(true);
+        myShiroRealm.setAuthorizationCachingEnabled(true);
+        myShiroRealm.setAuthorizationCachingEnabled(true);
+        myShiroRealm.setCacheManager(new EhCacheManager());
         return myShiroRealm;
     }
 
@@ -95,7 +102,8 @@ public class ShiroConfig {
         // 自定义session管理 使用redis
         securityManager.setSessionManager(sessionManager());
         // 自定义缓存实现 使用redis
-        securityManager.setCacheManager(cacheManager());
+    //    securityManager.setCacheManager(cacheManager());
+
         return securityManager;
     }
 
