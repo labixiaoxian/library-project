@@ -16,12 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.wyu.dao.BookMapper;
-import com.wyu.dao.CountryMapper;
-import com.wyu.dao.ThemeMapper;
-import com.wyu.dao.TypeMapper;
 import com.wyu.entity.Book;
 import com.wyu.service.serviceImpl.BookServiceImpl;
+import com.wyu.service.serviceImpl.CountryServiceImpl;
+import com.wyu.service.serviceImpl.ThemeServiceImpl;
+import com.wyu.service.serviceImpl.TypeServiceImpl;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
 
@@ -41,13 +40,11 @@ public class BookController {
 	@Autowired
 	private BookServiceImpl bookServiceImpl;
 	@Autowired
-	private CountryMapper countryMapper;
+	private CountryServiceImpl countryServiceImpl;
 	@Autowired
-	private ThemeMapper themeMapper;
+	private ThemeServiceImpl themeServiceImpl;
 	@Autowired
-	private TypeMapper typeMapper;
-	@Autowired
-	private BookMapper bookMapper;
+	private TypeServiceImpl typeServiceImpl;
 //	@ApiOperation(notes = "查询全部图书信息",value = "查询全部图书信息")
 //	@GetMapping("/book/query")
 //	public WriteBack<List<Book>> queryAll() {
@@ -82,7 +79,7 @@ public class BookController {
 			@ApiParam(name = "currentPage", value = "当前页码", required = true) @RequestParam("currentPage") int currentPage,
 			@ApiParam(name = "pageSize", value = "一页显示数据的数量", required = true) @RequestParam("pageSize") int pageSize) {
 		List<Book> list = bookServiceImpl.queryAllDivPage(currentPage, pageSize);
-		int count = bookMapper.queryAllCount();
+		int count = bookServiceImpl.queryAllCount();
 		WriteBack<Object> wb = new WriteBack<>();
 		wb.setCode(369);
 		wb.setCount(count);
@@ -118,7 +115,7 @@ public class BookController {
 			}
 			List<Book> list = bookServiceImpl.queryLikeNameDivPage(nickname, country_id, theme_id, type_id, space,
 					currentPage, pageSize);
-			int count = bookMapper.queryByLikeCount(nickname, country_id, theme_id, type_id, space);
+			int count = bookServiceImpl.queryByLikeCount(nickname, country_id, theme_id, type_id, space);
 			wb.setData(list);
 			wb.setCount(count);
 			wb.setCode(999);
@@ -159,8 +156,8 @@ public class BookController {
 			} else if (space_count == 3) {
 				space = "长篇";
 			}
-			Book book = new Book(bookName, author, countryMapper.queryById(country_id), themeMapper.queryById(theme_id),
-					typeMapper.queryById(type_id), space, bookCount, info, new Timestamp(new Date().getTime()));
+			Book book = new Book(bookName,author, countryServiceImpl.queryById(country_id), themeServiceImpl.queryById(theme_id),
+					typeServiceImpl.queryById(type_id), space, bookCount, info, new Timestamp(new Date().getTime()));
 			bookServiceImpl.addBook(book);
 			wb.setData("");
 			WriteBackUtil.setSuccess(wb);
@@ -193,40 +190,32 @@ public class BookController {
 	@ApiOperation(notes = "更新一本书籍信息", value = "更新一本书籍信息")
 	@PutMapping("/book")
 	public WriteBack<String> update(@RequestBody Map<String, Object> requestMap) {
+		int id = (int) requestMap.get("id");
+		String bookName = (String) requestMap.get("bookName");
+		String author = (String) requestMap.get("author");
+		int country_id = (int) requestMap.get("country_id");
+		int theme_id = (int) requestMap.get("theme_id");
+		int type_id = (int) requestMap.get("type_id");
+		String space = (String) requestMap.get("space");
+		int bookCount = Integer.parseInt((String) requestMap.get("bookCount"));
+		String info = (String) requestMap.get("info");
+		WriteBack<String> wb = new WriteBack<>();
 		try {
-			int id = (int) requestMap.get("id");
-			String bookName = (String) requestMap.get("bookName");
-			String author = (String) requestMap.get("author");
-			int country_id = (int) requestMap.get("country_id");
-			int theme_id = (int) requestMap.get("theme_id");
-			int type_id = (int) requestMap.get("type_id");
-			String space = (String) requestMap.get("space");
-			int bookCount = Integer.parseInt(requestMap.get("bookCount").toString());
-			String info = (String) requestMap.get("info");
-			WriteBack<String> wb = new WriteBack<>();
-			try {
-				Book book = bookMapper.queryById(id);
-				book.setBookName(bookName);
-				book.setAuthor(author);
-				book.setCountry(countryMapper.queryById(country_id));
-				book.setTheme(themeMapper.queryById(theme_id));
-				book.setType(typeMapper.queryById(type_id));
-				book.setSpace(space);
-				book.setBookCount(bookCount);
-				book.setInfo(info);
-				bookServiceImpl.updateBook(book);
-				WriteBackUtil.setSuccess(wb);
-				wb.setData("");
-				return wb;
-			} catch (Exception e) {
-				e.printStackTrace();
-				WriteBackUtil.setFail(wb);
-				return wb;
-			}
+			Book book = bookServiceImpl.queryById(id);
+			book.setBookName(bookName);
+			book.setAuthor(author);
+			book.setCountry(countryServiceImpl.queryById(country_id));
+			book.setTheme(themeServiceImpl.queryById(theme_id));
+			book.setType(typeServiceImpl.queryById(type_id));
+			book.setSpace(space);
+			book.setBookCount(bookCount);
+			book.setInfo(info);
+			bookServiceImpl.updateBook(book);
+			WriteBackUtil.setSuccess(wb);
+			wb.setData("");
+			return wb;
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
-			WriteBack wb = new WriteBack<>();
 			WriteBackUtil.setFail(wb);
 			return wb;
 		}

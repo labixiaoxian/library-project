@@ -216,6 +216,10 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 					if (borrowCount >= 3) {
 						throw new Exception("借书数量超过限制");
 					}
+					int credit = user.getCredit();
+					if (credit < 60) {
+						throw new Exception("信用分不足");
+					}
 					user.setBorrowCount(user.getBorrowCount() + 1);
 					userMapper.updateUser(user);
 					book.setBookCount(book.getBookCount() - 1);
