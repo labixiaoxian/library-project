@@ -10,6 +10,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -117,6 +118,7 @@ public class UserController {
 		try {
 			Subject subject = SecurityUtils.getSubject();
 			subject.logout();
+
 			WriteBackUtil.setSuccess(writeBack);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -385,8 +387,8 @@ public class UserController {
 	 * 更新用户信息
 	 * 
 	 * @param file
-	 * @param request
-	 * @param response
+	 * @param
+	 * @param
 	 * @return
 	 */
 	@ApiOperation(notes = "更新用户信息", value = "更新用户信息")
@@ -438,19 +440,26 @@ public class UserController {
 //
 //    }
 
-	// @RequiresRoles(value = "admin")
+
+	//@RequiresRoles("admin")
 	@GetMapping(value = "/test")
 	public String test() {
-		for (int i = 0; i < 100; i++) {
-			Country country = new Country();
-			country.setCountryName("图书");
-			try {
-				countryMapper.newCountry(country);
-			} catch (Exception e) {
-			}
-			System.out.println(i);
+//		for (int i = 0; i < 100; i++) {
+//			Country country = new Country();
+//			country.setCountryName("图书");
+//			try {
+//				countryMapper.newCountry(country);
+//			} catch (Exception e) {
+//			}
+//			System.out.println(i);
+//		}
+		Subject subject = SecurityUtils.getSubject();
+		if(subject.hasRole("admin")){
+			return "success";
+		}else {
+			return "error";
 		}
-		return "error";
+
 	}
 
 	private UserInfo parseToUserInfo(Integer age, Integer sex, Integer borrowCount, Integer credit, String birthday,
