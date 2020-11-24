@@ -1,6 +1,5 @@
 package com.wyu.service.serviceImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +7,14 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.wyu.dao.PunishmentMapper;
 import com.wyu.dao.UserInfoMapper;
+import com.wyu.dao.UserMapper;
 import com.wyu.entity.Punishment;
+import com.wyu.entity.User;
 import com.wyu.entity.UserInfo;
 import com.wyu.service.PunishmentService;
 
@@ -29,6 +32,9 @@ public class PunishmentServiceImpl extends PunishmentService {
 	@Autowired
 	UserInfoMapper userInfoMapper;
 
+	@Autowired
+	UserMapper userMapper;
+
 	/**
 	 * @apiNote 删除一条惩罚记录
 	 * @param id
@@ -36,9 +42,14 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 */
 	@Override
 	@CacheEvict(allEntries = true)
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
 		punishmentMapper.deleteById(id);
+		Punishment punishment = punishmentMapper.getById(id);
+		User user = userMapper.findUserById(punishment.getUserId());
+		user.setCredit(user.getCredit() < 60 ? 60 : user.getCredit());
+		userMapper.updateUser(user);
 	}
 
 	/**
@@ -47,22 +58,13 @@ public class PunishmentServiceImpl extends PunishmentService {
 	 */
 	@Override
 	@Cacheable(keyGenerator = "myGenerator")
-	public List<Punishment> FuzzyqueryByNickName(String name, int current, int size) {
-		UserInfo userInfo = new UserInfo();
-		userInfo.setNickname(name);
-		try {
-			List<Punishment> result = new ArrayList<>();
-			List<UserInfo> list = userInfoMapper.queryUserInfo(userInfo, (current - 1) * size, size);
-			for (UserInfo info : list) {
-				result.addAll(punishmentMapper.getByUserId(info.getUser().getId()));
-			}
-			return result;
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return null;
+	public List<Punishment> FuzzyqueryByNickName(String name, int currentPage, int pageSize) {
+		List<Punishment> list = punishmentMapper.queryByNickName("%" + name + "%", (currentPage - 1) * pageSize,
+				pageSize);
+		for (Punishment punishment : list) {
+			punishment.setUserInfo(userInfoMapper.findUserInfoByUserId(punishment.getUserId()));
 		}
-
+		return list;
 	}
 
 	/**
@@ -142,5 +144,11 @@ public class PunishmentServiceImpl extends PunishmentService {
 	public int queryUserInfoCount(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		return userInfoMapper.queryUserInfoCount(userInfo);
+	}
+
+	@Override
+	public int FuzzyqueryByNickNameCount(String name) {
+		// TODO Auto-generated method stub
+		return punishmentMapper.queryByNickNameCount("%" + name + "%");
 	}
 }

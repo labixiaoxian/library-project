@@ -92,7 +92,7 @@ public class BookServiceImpl implements BookService {
 			Country country = countryMapper.queryByName(bookDto.getCountry());
 			Theme theme = themeMapper.queryByName(bookDto.getTheme());
 			Type type = typeMapper.queryByName(bookDto.getType());
-			Book book = new Book(bookDto.getBookName(),bookDto.getAuthor(), country, theme, type, bookDto.getSpace(),
+			Book book = new Book(bookDto.getBookName(), bookDto.getAuthor(), country, theme, type, bookDto.getSpace(),
 					Integer.parseInt(bookDto.getBookCount()), bookDto.getInfo(), new Timestamp(new Date().getTime()));
 			bookMapper.newBook(book);
 		}
@@ -176,8 +176,23 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator", sync = true)
 	public int queryDivPageCount(String name, Integer country_id, Integer theme_id, Integer type_id, String space) {
 		return bookMapper.queryDivPageCount(name, country_id, theme_id, type_id, space);
+	}
+
+	@Override
+	@Cacheable(keyGenerator = "myGenerator", sync = true)
+	public int queryAllCount() {
+		int count = bookMapper.queryAllCount();
+		return count;
+	}
+
+	@Override
+	@Cacheable(keyGenerator = "myGenerator", sync = true)
+	public int queryByLikeCount(String name, Integer country_id, Integer theme_id, Integer type_id, String space) {
+		int count = bookMapper.queryByLikeCount(name, country_id, theme_id, type_id, space);
+		return count;
 	}
 
 }

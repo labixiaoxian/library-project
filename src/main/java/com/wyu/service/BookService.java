@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.wyu.dto.BookDto;
 import com.wyu.entity.Book;
-import org.springframework.data.repository.query.Param;
 
 /**
  * @since 2020/11/18
@@ -13,6 +12,8 @@ import org.springframework.data.repository.query.Param;
  */
 public interface BookService {
 	
+	int queryAllCount();
+	int queryByLikeCount(String name,Integer country_id,Integer theme_id,Integer type_id,String space);
 	void addBook(Book book);
 	void deleteById(int id);
 	Book queryById(int id);

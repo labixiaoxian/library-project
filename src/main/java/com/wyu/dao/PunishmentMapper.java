@@ -79,4 +79,19 @@ public interface PunishmentMapper {
 	 */
 	@Update("update lib_punishment set fine = #{punishment.fine} where id = #{punishment.id}")
 	public void updateFine(@Param("punishment") Punishment punishment);
+
+	/**
+	 * @apiNote 根据用户姓名模糊查询惩罚记录
+	 * @param name
+	 * @param current
+	 * @param pageSize
+	 * @return
+	 */
+	@Select("select * from lib_punishment where user_id in (select user_id from lib_user_info "
+			+ "where nickname like #{name}) limit #{current},#{pageSize}")
+	public List<Punishment> queryByNickName(String name, Integer current, Integer pageSize);
+
+	@Select("select count(1) from lib_punishment where user_id in (select user_id from lib_user_info "
+			+ "where nickname like #{name})")
+	public int queryByNickNameCount(String name);
 }

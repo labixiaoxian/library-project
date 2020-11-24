@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.wyu.entity.Punishment;
-import com.wyu.entity.UserInfo;
 import com.wyu.service.PunishmentService;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
@@ -70,12 +69,10 @@ public class PunishmentController {
 	@ApiOperation(notes = "分页根据名字模糊查询惩罚记录", value = "分页根据名字模糊查询惩罚记录")
 	@GetMapping("/punishment/query")
 	public WriteBack<List<Punishment>> queryByName(@RequestParam("name") String name,
-			@RequestParam("currentPage") Integer currentPage, @RequestParam("size") Integer size) {
+			@RequestParam("currentPage") Integer currentPage, @RequestParam("pageSize") Integer size) {
 		WriteBack<List<Punishment>> writeBack = new WriteBack<>();
 		try {
-			UserInfo userInfo = new UserInfo();
-			userInfo.setNickname(name);
-			writeBack.setCount(punishmentService.queryUserInfoCount(userInfo));
+			writeBack.setCount(punishmentService.FuzzyqueryByNickNameCount(name));
 			List<Punishment> list = punishmentService.FuzzyqueryByNickName(name, currentPage, size);
 			writeBack.setData(list);
 			WriteBackUtil.setSuccess(writeBack);

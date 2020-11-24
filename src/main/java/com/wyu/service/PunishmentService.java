@@ -22,7 +22,9 @@ public abstract class PunishmentService {
 
 	public abstract void deleteById(Integer id);
 
-	public abstract List<Punishment> FuzzyqueryByNickName(String name, int current, int size);
+	public abstract List<Punishment> FuzzyqueryByNickName(String name, int currentPage, int pageSize);
+
+	public abstract int FuzzyqueryByNickNameCount(String name);
 
 	public abstract int listCount();
 
