@@ -172,6 +172,8 @@ public class UserController {
 			} else if (result == -3) {// 旧密码不正确
 				WriteBackUtil.setWriteBack(UserStatusEnums.ERROR_PASSWORD.getState(),
 						UserStatusEnums.ERROR_PASSWORD.getStateInfo(), null, writeBack);
+			} else if (result == -4) {// 该用户被注销
+				WriteBackUtil.setFail(writeBack);
 			} else {// 修改成功
 				WriteBackUtil.setSuccess(writeBack);
 			}
@@ -425,7 +427,7 @@ public class UserController {
 		}
 
 		int result = userInfoService.updateUserInfo(userInfo);
-		if (result == 0) {
+		if (result == 0 || result == -1) {
 			WriteBackUtil.setFail(writeBack);
 		} else {
 			WriteBackUtil.setSuccess(writeBack);

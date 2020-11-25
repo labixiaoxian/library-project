@@ -64,7 +64,7 @@ public interface BorrowInfoMapper {
 	 * @param bookId
 	 * @return 有关该图书的所有借阅信息
 	 */
-	@Select("select * from lib_borrow_info where book_id = #{bookId}")
+	@Select("select * from lib_borrow_info where book_id = #{bookId} where borrow_state>=0")
 	public List<BorrowInfo> getByBookId(Integer bookId);
 
 	/**
@@ -137,7 +137,7 @@ public interface BorrowInfoMapper {
 	 * @param bookId
 	 * @return
 	 */
-	@Select("select count(1) from lib_borrow_info where book_id = #{bookId} and borrow_state!=2")
+	@Select("select count(1) from lib_borrow_info where book_id = #{bookId} and borrow_state!=2 and borrow_state!=-1")
 	public int getByBookIdAndNotReturnCount(Integer bookId);
 
 	/**
@@ -233,21 +233,21 @@ public interface BorrowInfoMapper {
 	 * @apiNote 今日借书人数
 	 * @return
 	 */
-	@Select("select count(1) from lib_borrow_info where to_days(now())=to_days(borrow_date)")
+	@Select("select count(1) from lib_borrow_info where to_days(now())=to_days(borrow_date) and borrow_state>0")
 	public int numOfBorrowingToday();
 
 	/**
 	 * @apiNote 本月借阅人数
 	 * @return
 	 */
-	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' );")
+	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' ) and borrow_state>0;")
 	public int numOfBorrowingThisMonth();
 
 	/**
 	 * @apiNote 今年借阅人数
 	 * @return
 	 */
-	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' );")
+	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' ) and borrow_state>0;")
 	public int numOfBorrowingThisYear();
 
 	@Select("select count(1) from lib_user_info where book_id in (select id from lib_book where book_name like #{bookName}) "

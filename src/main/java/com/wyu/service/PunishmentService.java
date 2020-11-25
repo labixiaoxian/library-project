@@ -31,4 +31,5 @@ public abstract class PunishmentService {
 	public abstract int queryUserInfoCount(UserInfo userInfo);
 
 	public abstract int getByUserIdCount(Integer userId);
+
 }

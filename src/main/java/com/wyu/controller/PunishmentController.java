@@ -41,6 +41,7 @@ public class PunishmentController {
 			return writeBack;
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			WriteBackUtil.setFail(writeBack);
 			return writeBack;
 		}

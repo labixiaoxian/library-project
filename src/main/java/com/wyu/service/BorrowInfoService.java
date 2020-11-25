@@ -49,4 +49,6 @@ public abstract class BorrowInfoService {
 	public abstract int numOfBorrowingThisYear();
 
 	public abstract int getOverDueCount();
+
+	public abstract boolean bookIsBorrowing(Integer bookId);
 }

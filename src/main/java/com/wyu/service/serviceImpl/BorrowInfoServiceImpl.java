@@ -212,6 +212,9 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 				lock.lock();
 				try {
 					User user = userMapper.findUserById(borrowInfo.getUserId());
+					if (user.getStatus() == 0) {
+						throw new Exception("用户不存在");
+					}
 					int borrowCount = user.getBorrowCount();
 					if (borrowCount >= 3) {
 						throw new Exception("借书数量超过限制");
@@ -319,6 +322,12 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	public int getOverDueCount() {
 		// TODO Auto-generated method stub
 		return borrowInfoMapper.getOverDueCount();
+	}
+
+	@Override
+	public boolean bookIsBorrowing(Integer bookId) {
+		// TODO Auto-generated method stub
+		return borrowInfoMapper.getByBookIdAndNotReturnCount(bookId) == 0 ? false : true;
 	}
 
 }

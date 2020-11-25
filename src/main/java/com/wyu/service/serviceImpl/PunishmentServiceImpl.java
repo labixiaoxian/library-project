@@ -45,8 +45,8 @@ public class PunishmentServiceImpl extends PunishmentService {
 	@Transactional(isolation = Isolation.READ_COMMITTED)
 	public void deleteById(Integer id) {
 		// TODO Auto-generated method stub
-		punishmentMapper.deleteById(id);
 		Punishment punishment = punishmentMapper.getById(id);
+		punishmentMapper.deleteById(id);
 		User user = userMapper.findUserById(punishment.getUserId());
 		user.setCredit(user.getCredit() < 60 ? 60 : user.getCredit());
 		userMapper.updateUser(user);
@@ -159,4 +159,5 @@ public class PunishmentServiceImpl extends PunishmentService {
 		// TODO Auto-generated method stub
 		return punishmentMapper.getByUserIdCount(userId);
 	}
+
 }

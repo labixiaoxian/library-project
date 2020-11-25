@@ -313,4 +313,20 @@ public class BorrowInfoController {
 		}
 	}
 
+	@ApiOperation(value = "检查书籍是否正在被借阅", notes = "检查书籍是否正在被借阅(true为正在被借阅，false为未正在被借阅)")
+	@GetMapping("/borrowInfo/bookIsBorrowing")
+	public WriteBack<Boolean> bookIsBorrowing(@RequestParam("bookId") Integer bookId) {
+		WriteBack<Boolean> writeBack = new WriteBack<>();
+		try {
+			writeBack.setData(borrowInfoService.bookIsBorrowing(bookId));
+			WriteBackUtil.setSuccess(writeBack);
+			System.out.println(writeBack.getData());
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
+
 }
