@@ -140,7 +140,7 @@ public class BookController {
 		int space_count = (int) requestMap.get("space_count");
 		int bookCount = 1;
 		try {
-			bookCount = Integer.parseInt((String) requestMap.get("bookCount"));
+			bookCount = Integer.parseInt(requestMap.get("bookCount").toString());
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -156,8 +156,9 @@ public class BookController {
 			} else if (space_count == 3) {
 				space = "长篇";
 			}
-			Book book = new Book(bookName,author, countryServiceImpl.queryById(country_id), themeServiceImpl.queryById(theme_id),
-					typeServiceImpl.queryById(type_id), space, bookCount, info, new Timestamp(new Date().getTime()));
+			Book book = new Book(bookName, author, countryServiceImpl.queryById(country_id),
+					themeServiceImpl.queryById(theme_id), typeServiceImpl.queryById(type_id), space, bookCount, info,
+					new Timestamp(new Date().getTime()));
 			bookServiceImpl.addBook(book);
 			wb.setData("");
 			WriteBackUtil.setSuccess(wb);
@@ -190,34 +191,42 @@ public class BookController {
 	@ApiOperation(notes = "更新一本书籍信息", value = "更新一本书籍信息")
 	@PutMapping("/book")
 	public WriteBack<String> update(@RequestBody Map<String, Object> requestMap) {
-		int id = (int) requestMap.get("id");
-		String bookName = (String) requestMap.get("bookName");
-		String author = (String) requestMap.get("author");
-		int country_id = (int) requestMap.get("country_id");
-		int theme_id = (int) requestMap.get("theme_id");
-		int type_id = (int) requestMap.get("type_id");
-		String space = (String) requestMap.get("space");
-		int bookCount = Integer.parseInt((String) requestMap.get("bookCount"));
-		String info = (String) requestMap.get("info");
-		WriteBack<String> wb = new WriteBack<>();
 		try {
-			Book book = bookServiceImpl.queryById(id);
-			book.setBookName(bookName);
-			book.setAuthor(author);
-			book.setCountry(countryServiceImpl.queryById(country_id));
-			book.setTheme(themeServiceImpl.queryById(theme_id));
-			book.setType(typeServiceImpl.queryById(type_id));
-			book.setSpace(space);
-			book.setBookCount(bookCount);
-			book.setInfo(info);
-			bookServiceImpl.updateBook(book);
-			WriteBackUtil.setSuccess(wb);
-			wb.setData("");
-			return wb;
+			int id = (int) requestMap.get("id");
+			String bookName = (String) requestMap.get("bookName");
+			String author = (String) requestMap.get("author");
+			int country_id = (int) requestMap.get("country_id");
+			int theme_id = (int) requestMap.get("theme_id");
+			int type_id = (int) requestMap.get("type_id");
+			String space = (String) requestMap.get("space");
+			int bookCount = Integer.parseInt(requestMap.get("bookCount").toString());
+			String info = (String) requestMap.get("info");
+			WriteBack<String> wb = new WriteBack<>();
+			try {
+				Book book = bookServiceImpl.queryById(id);
+				book.setBookName(bookName);
+				book.setAuthor(author);
+				book.setCountry(countryServiceImpl.queryById(country_id));
+				book.setTheme(themeServiceImpl.queryById(theme_id));
+				book.setType(typeServiceImpl.queryById(type_id));
+				book.setSpace(space);
+				book.setBookCount(bookCount);
+				book.setInfo(info);
+				bookServiceImpl.updateBook(book);
+				WriteBackUtil.setSuccess(wb);
+				wb.setData("");
+				return wb;
+			} catch (Exception e) {
+				e.printStackTrace();
+				WriteBackUtil.setFail(wb);
+				return wb;
+			}
 		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
-			WriteBackUtil.setFail(wb);
-			return wb;
+			WriteBack<String> writeBack = new WriteBack<>();
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
 		}
 	}
 }

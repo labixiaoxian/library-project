@@ -109,7 +109,7 @@ public class BorrowInfoController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			// e.printStackTrace();
-			WriteBackUtil.setWriteBack(500, "借阅失败，图书数量不足或没有借阅次数", "", writeBack);
+			WriteBackUtil.setWriteBack(500, "借阅失败，图书数量不足或没有借阅次数或信用分不足", "", writeBack);
 			return writeBack;
 		}
 	}

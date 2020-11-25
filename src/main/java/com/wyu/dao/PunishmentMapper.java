@@ -59,6 +59,9 @@ public interface PunishmentMapper {
 	@Select("select * from lib_punishment where user_id = #{userId}")
 	public List<Punishment> getByUserId(Integer userId);
 
+	@Select("select count(1) from lib_punishment where user_id = #{userId}")
+	public int getByUserIdCount(Integer userId);
+
 	/**
 	 * @apiNote 新增一条惩罚记录
 	 * @param punishment

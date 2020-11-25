@@ -61,6 +61,7 @@ public class ScheduleTask {
 		Executors.newSingleThreadExecutor().execute(() -> {
 			// TODO Auto-generated method stub
 			List<BorrowInfo> overDueInfo = borrowInfoMapper.getOverDueInfo();
+			System.out.println(overDueInfo);
 			try {
 				for (BorrowInfo borrowInfo : overDueInfo) {
 					User user = UserMapper.findUserById(borrowInfo.getUserId());

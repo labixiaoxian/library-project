@@ -126,7 +126,8 @@
         u.credit
         FROM
         lib_user_info ui,
-        lib_user u
+        lib_user u,
+        lib_user_role ur
         <where>
             <if test="userInfoCondition.age != null ">
                 and ui.age = #{userInfoCondition.age}
@@ -157,6 +158,10 @@
             </if>
             AND
             ui.user_id = u.id
+            AND
+            ur.user_id = ui.user_id
+            AND
+            ur.role_id = 2
         </where>
         ORDER BY
         ui.id DESC
@@ -169,7 +174,8 @@
         count(1)
         FROM
         lib_user_info ui,
-        lib_user u
+        lib_user u,
+        lib_user_role ur
         <where>
             <if test="userInfoCondition.age != null ">
                 and ui.age = #{userInfoCondition.age}
@@ -200,6 +206,10 @@
             </if>
             AND
             ui.user_id = u.id
+            AND
+            ur.user_id = ui.user_id
+            AND
+            ur.role_id = 2
         </where>
 
     </select>

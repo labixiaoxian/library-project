@@ -172,17 +172,14 @@ public interface BorrowInfoMapper {
 			Integer pageSize);
 
 	/**
-	 * @apiNote 查询逾期借阅信息
-	 * @return 所有逾期的借阅信息
+	 * @apiNote 查询当天逾期借阅信息
+	 * @return 当天逾期的借阅信息
 	 */
-	@Select("select * from lib_borrow_info where now()>return_date and borrow_state=1;")
+	@Select("select * from lib_borrow_info where to_days(now())-to_days(return_date)=1 and borrow_state=1;")
 	public List<BorrowInfo> getOverDueInfo();
 
-	@Select("select count(1) from lib_borrow_info where now()>return_date and borrow_state=1;")
+	@Select("select count(1) from lib_borrow_info where to_days(now())-to_days(return_date)>=1 and borrow_state=1;")
 	public int getOverDueCount();
-
-	@Select("select count(1) from lib_borrow_info where now()>return_date and borrow_state=1;")
-	public int getOverDueInfoCount();
 
 	/**
 	 * @apiNote 分页查询逾期借阅信息
@@ -190,7 +187,7 @@ public interface BorrowInfoMapper {
 	 * @param size
 	 * @return
 	 */
-	@Select("select * from lib_borrow_info where now()>return_date limit #{current},#{size}")
+	@Select("select * from lib_borrow_info where to_days(now())-to_days(return_date)>=1 limit #{current},#{size}")
 	public List<BorrowInfo> getOverDueInfoPagination(int current, int size);
 
 	/**

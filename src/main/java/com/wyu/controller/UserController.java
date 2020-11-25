@@ -2,6 +2,8 @@ package com.wyu.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +12,6 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.wyu.dao.CountryMapper;
-import com.wyu.entity.Country;
 import com.wyu.entity.User;
 import com.wyu.entity.UserInfo;
 import com.wyu.enums.Constant;
@@ -407,7 +407,6 @@ public class UserController {
 		String address = (String) requestMap.get("address");
 		String personalDesc = (String) requestMap.get("personalDesc");
 		UserInfo userInfo = parseToUserInfo2(id, age, sex, birthday, nickname, email, telephone, address, personalDesc);
-
 		// 上传图片
 		if (file != null) {
 			try {
@@ -440,8 +439,7 @@ public class UserController {
 //
 //    }
 
-
-	//@RequiresRoles("admin")
+	// @RequiresRoles("admin")
 	@GetMapping(value = "/test")
 	public String test() {
 //		for (int i = 0; i < 100; i++) {
@@ -454,9 +452,9 @@ public class UserController {
 //			System.out.println(i);
 //		}
 		Subject subject = SecurityUtils.getSubject();
-		if(subject.hasRole("admin")){
+		if (subject.hasRole("admin")) {
 			return "success";
-		}else {
+		} else {
 			return "error";
 		}
 
@@ -494,7 +492,15 @@ public class UserController {
 		userInfo.setAge(age);
 		userInfo.setSex(sex);
 		userInfo.setNickname(nickname);
-		userInfo.setBirthday(DateFormateUtile.stampToString(birthday));
+		Calendar instance = Calendar.getInstance();
+		Date date = DateFormateUtile.stampToString(birthday);
+		if (date != null) {
+			instance.setTime(date);
+			instance.add(Calendar.DAY_OF_MONTH, 1);
+			date = instance.getTime();
+		}
+
+		userInfo.setBirthday(date);
 		userInfo.setTelephone(telephone);
 		userInfo.setEmail(email);
 		userInfo.setAddress(address);

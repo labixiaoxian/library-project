@@ -147,8 +147,16 @@ public class PunishmentServiceImpl extends PunishmentService {
 	}
 
 	@Override
+	@Cacheable(keyGenerator = "myGenerator")
 	public int FuzzyqueryByNickNameCount(String name) {
 		// TODO Auto-generated method stub
 		return punishmentMapper.queryByNickNameCount("%" + name + "%");
+	}
+
+	@Override
+	@Cacheable(keyGenerator = "myGenerator")
+	public int getByUserIdCount(Integer userId) {
+		// TODO Auto-generated method stub
+		return punishmentMapper.getByUserIdCount(userId);
 	}
 }

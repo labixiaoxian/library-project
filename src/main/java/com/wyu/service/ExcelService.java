@@ -2,6 +2,8 @@ package com.wyu.service;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -11,7 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
  *
  */
 public interface ExcelService {
-	
+
 	void ExcelImport(MultipartFile file);
-	void ExcelExport()throws IOException;
+
+	void ExcelExport(HttpServletResponse response) throws IOException;
 }

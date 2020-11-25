@@ -66,6 +66,22 @@ public class PunishmentController {
 		}
 	}
 
+	@ApiOperation(notes = "判断用户是否存在逾期记录", value = "判断用户是否存在逾期记录")
+	@GetMapping("/punishment/isOverdue")
+	public WriteBack<Boolean> isOverdue(@RequestParam("userId") Integer userId) {
+		WriteBack<Boolean> writeBack = new WriteBack<>();
+		try {
+			int count = punishmentService.getByUserIdCount(userId);
+			WriteBackUtil.setSuccess(writeBack);
+			writeBack.setData(count == 0 ? false : true);
+			return writeBack;
+		} catch (Exception e) {
+			// TODO: handle exception
+			WriteBackUtil.setFail(writeBack);
+			return writeBack;
+		}
+	}
+
 	@ApiOperation(notes = "分页根据名字模糊查询惩罚记录", value = "分页根据名字模糊查询惩罚记录")
 	@GetMapping("/punishment/query")
 	public WriteBack<List<Punishment>> queryByName(@RequestParam("name") String name,
