@@ -79,12 +79,13 @@ public class ScheduleTask {
 	}
 
 	/**
-	 * 定时任务，每天0点执行一次，发送邮件提醒逾期用户还书，并告知罚款金额
+	 * 定时任务，每天0点执行一次，发送邮件提醒逾期用户还书，并告知罚款金额。发送邮件提醒还书时间快到的用户
 	 *
 	 * @throws MessagingException
 	 */
 	@Scheduled(cron = "40 0 0 * * *")
 	public void sendEmail() throws MessagingException {
+		// 发送逾期提醒邮件
 		Executors.newSingleThreadExecutor().execute(() -> {
 			// TODO Auto-generated method stub
 			List<Punishment> list = punishmentMapper.list();
@@ -103,12 +104,34 @@ public class ScheduleTask {
 					e.printStackTrace();
 				}
 			}
-			System.gc();
+
 		});
+		// 发送即将逾期邮件提醒
+		Executors.newSingleThreadExecutor().execute(() -> {
+			List<BorrowInfo> toExpireList = borrowInfoMapper.getToExpire();
+			for (BorrowInfo borrowInfo : toExpireList) {
+				try {
+					MimeMessage mimeMessage = mailSender.createMimeMessage();
+					MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+					mimeMessageHelper.setSubject("图书即将逾期");
+					mimeMessageHelper.setText(
+							"<h1 style='color:red;text-align:center'>您有图书即将逾期</h1>" + "<p>您借阅的图书"
+									+ bookMapper.queryById(borrowInfo.getBookId()).getBookName() + "即将到期，请尽快归还</p>",
+							true);
+					mimeMessageHelper.setTo(UserInfoMapper.findUserInfoByUserId(borrowInfo.getUserId()).getEmail());
+					mimeMessageHelper.setFrom(mailUserName);
+					mailSender.send(mimeMessage);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+			}
+		});
+		System.gc();
 	}
 
 	/**
-	 * 定时任务，每天0点进行一次，更新扔逾期的用户的罚金金额
+	 * 定时任务，每天0点进行一次，更新仍逾期的用户的罚金金额
 	 */
 	@Scheduled(cron = "0 0 0 * * *")
 	public void updateFine() {

@@ -33,7 +33,7 @@ public class MyRedisConfig {
 		RedisSerializationContext.SerializationPair<Object> pair = RedisSerializationContext.SerializationPair
 				.fromSerializer(jsonSerializer);
 		RedisCacheConfiguration defaultCacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-				.serializeValuesWith(pair).entryTtl(Duration.ofMinutes(2)).disableCachingNullValues();
+				.serializeValuesWith(pair).entryTtl(Duration.ofSeconds(40L)).disableCachingNullValues();
 		// 初始化RedisCacheManager
 		return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
 	}

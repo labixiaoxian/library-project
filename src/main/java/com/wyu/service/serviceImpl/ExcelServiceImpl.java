@@ -63,11 +63,10 @@ public class ExcelServiceImpl implements ExcelService {
 	}
 
 	@Override
-	public void ExcelExport(HttpServletResponse response) throws IOException {
+	public void ExcelExport(HttpServletResponse response, List<Book> list) throws IOException {
 		// 获取路径
 		String path = ExcelUtil.exportPath();
 		// 获取数据
-		List<Book> list = bookServiceImpl.queryAll();
 		System.out.println(list);
 		File saveFile = new File(path);
 		if (!saveFile.exists()) {

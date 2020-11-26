@@ -17,6 +17,10 @@ import com.wyu.entity.BorrowInfo;
  *
  */
 public interface BorrowInfoMapper {
+
+	@Select("select * from lib_borrow_info where to_days(return_date)-to_days(now())=3 and borrow_state=1;")
+	public List<BorrowInfo> getToExpire();
+
 	/**
 	 * 
 	 * @param id
@@ -250,10 +254,24 @@ public interface BorrowInfoMapper {
 	@Select("SELECT count(1) FROM lib_borrow_info WHERE DATE_FORMAT( borrow_date, '%Y' ) = DATE_FORMAT( CURDATE( ) , '%Y' ) and borrow_state>0;")
 	public int numOfBorrowingThisYear();
 
+	/**
+	 * 
+	 * @param bookName
+	 * @param userId
+	 * @return
+	 */
 	@Select("select count(1) from lib_user_info where book_id in (select id from lib_book where book_name like #{bookName}) "
 			+ "and user_id = #{userId}")
 	public int getByBookNameAndUserIdCount(String bookName, Integer userId);
 
+	/**
+	 * 
+	 * @param bookName
+	 * @param userId
+	 * @param current
+	 * @param pageSize
+	 * @return
+	 */
 	@Select("select * from lib_user_info where book_id in (select id from lib_book where book_name like #{bookName}) "
 			+ "and user_id = #{userId} limit #{current},#{pageSize}")
 	public List<BorrowInfo> getByBookNameAndUserId(String bookName, Integer userId, Integer current, Integer pageSize);

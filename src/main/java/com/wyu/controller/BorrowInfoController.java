@@ -208,6 +208,7 @@ public class BorrowInfoController {
 		WriteBack<List<BorrowInfo>> writeBack = new WriteBack<>();
 		try {
 			writeBack.setData(borrowInfoService.getBorrowInfosByBookId(bookId));
+			writeBack.setCount(borrowInfoService.getBorrowInfosByBookId(bookId).size());
 			WriteBackUtil.setSuccess(writeBack);
 			return writeBack;
 		} catch (Exception e) {

@@ -141,7 +141,7 @@ public class BookServiceImpl implements BookService {
 	 */
 	@Override
 	@Cacheable(keyGenerator = "myGenerator", sync = true)
-	public List<Book> queryLikeName(String name, int country_id, int theme_id, int type_id, String space) {
+	public List<Book> queryLikeName(String name, Integer country_id, Integer theme_id, Integer type_id, String space) {
 		List<Book> list = bookMapper.queryByNameLike(name, country_id, theme_id, type_id, space);
 		return list;
 	}
