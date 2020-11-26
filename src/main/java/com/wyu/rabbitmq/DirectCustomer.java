@@ -1,5 +1,6 @@
 package com.wyu.rabbitmq;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -39,7 +40,8 @@ public class DirectCustomer {
 			helper.setTo((String) map.get("email"));
 			helper.setSubject("激活邮箱");
 			// 改成前端页面，前端页面再调用下面的接口
-			helper.setText("<a href='http://192.168.3.78:8080/#/waiting?userId=" + userId + "'>激活邮箱</a>", true);
+			helper.setText("<a href='http://192.168.3.78:8080/#/waiting?userId=" + userId + "&time="
+					+ (new Date()).getTime() + "'>激活邮箱</a>", true);
 			mailSender.send(message);
 		} catch (Exception e) {
 			System.err.println("邮件发送失败");

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -16,7 +18,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,6 +37,7 @@ import com.wyu.exception.UserException;
 import com.wyu.service.user.UserInfoService;
 import com.wyu.service.user.UserService;
 import com.wyu.utils.DateFormateUtile;
+import com.wyu.utils.HttpServletRequestUtil;
 import com.wyu.utils.ImageUtil;
 import com.wyu.utils.WriteBackUtil;
 import com.wyu.vo.WriteBack;
@@ -344,10 +346,18 @@ public class UserController {
 	 * @return
 	 */
 	@ApiOperation(notes = "用户激活", value = "用户激活")
-	@GetMapping(value = "/active/{userId}")
-	public WriteBack active(
-			@ApiParam(name = "userId", value = "用户ID", required = true) @PathVariable("userId") Integer userId) {
+	@GetMapping(value = "/active")
+	public WriteBack active(@ApiParam(name = "userId", value = "用户ID", required = true) HttpServletRequest request) {
 		WriteBack writeBack = new WriteBack();
+		Integer userId = HttpServletRequestUtil.getInt(request, "userId");
+		Long time = HttpServletRequestUtil.getLong(request, "time");
+		System.out.println(userId + "     " + time);
+		Long nowTime = new Date().getTime();
+		if (nowTime - time >= 1000 * 60 * 5) {
+			WriteBackUtil.setWriteBack(UserStatusEnums.ACTIVE_FAIL.getState(),
+					UserStatusEnums.ACTIVE_FAIL.getStateInfo(), null, writeBack);
+			return writeBack;
+		}
 		int result = userService.activeUser(userId);
 		if (result == 0) {
 			WriteBackUtil.setWriteBack(UserStatusEnums.ACTIVE_FAIL.getState(),
