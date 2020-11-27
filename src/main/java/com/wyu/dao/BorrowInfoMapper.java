@@ -141,8 +141,8 @@ public interface BorrowInfoMapper {
 	 * @param bookId
 	 * @return
 	 */
-	@Select("select count(1) from lib_borrow_info where book_id = #{bookId} and borrow_state!=2 and borrow_state!=-1")
-	public int getByBookIdAndNotReturnCount(Integer bookId);
+	@Select("select count(1) from lib_punishment where user_id = #{userId} ")
+	public int getByBookIdAndNotReturnCount(Integer userId);
 
 	/**
 	 * @apiNote 根据用户ID和借阅状态查询借阅信息

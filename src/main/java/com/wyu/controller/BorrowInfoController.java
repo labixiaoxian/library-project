@@ -316,10 +316,10 @@ public class BorrowInfoController {
 
 	@ApiOperation(value = "检查书籍是否正在被借阅", notes = "检查书籍是否正在被借阅(true为正在被借阅，false为未正在被借阅)")
 	@GetMapping("/borrowInfo/bookIsBorrowing")
-	public WriteBack<Boolean> bookIsBorrowing(@RequestParam("bookId") Integer bookId) {
+	public WriteBack<Boolean> bookIsBorrowing(@RequestParam("userId") Integer userId) {
 		WriteBack<Boolean> writeBack = new WriteBack<>();
 		try {
-			writeBack.setData(borrowInfoService.bookIsBorrowing(bookId));
+			writeBack.setData(borrowInfoService.bookIsBorrowing(userId));
 			WriteBackUtil.setSuccess(writeBack);
 			System.out.println(writeBack.getData());
 			return writeBack;

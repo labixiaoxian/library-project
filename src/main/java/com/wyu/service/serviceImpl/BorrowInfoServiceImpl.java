@@ -325,9 +325,9 @@ public class BorrowInfoServiceImpl extends BorrowInfoService {
 	}
 
 	@Override
-	public boolean bookIsBorrowing(Integer bookId) {
+	public boolean bookIsBorrowing(Integer userId) {
 		// TODO Auto-generated method stub
-		return borrowInfoMapper.getByBookIdAndNotReturnCount(bookId) == 0 ? false : true;
+		return borrowInfoMapper.getByBookIdAndNotReturnCount(userId) == 0 ? false : true;
 	}
 
 }
